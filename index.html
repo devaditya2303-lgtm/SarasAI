@@ -354,10 +354,9 @@ const inventorMap = {
   "x-ray":"X-rays were discovered by Wilhelm Röntgen in 1895.",
   "radio":"Guglielmo Marconi developed practical radio systems; many scientists (Hertz, Tesla, Popov) contributed.",
   "wheel":"The wheel developed in ancient times (~3500–3000 BCE); it was not a single inventor but a technological innovation.",
-  "computer":"Early concepts by Charles Babbage; modern electronic computers built in the 20th century by many contributors (Turing, von Neumann, Eckert, Mauchly).",
+  "computer":"Early concepts by Charles Babbage; modern electronic computers were built by many contributors (Turing, von Neumann, Eckert, Mauchly).",
   "electricity":"Knowledge built over centuries: Franklin, Volta, Faraday, Maxwell and many others advanced electrical science.",
-  "vaccination":"Edward Jenner developed the smallpox vaccine concept in the late 18th century using cowpox to protect from smallpox.",
-  "steam engine":"James Watt improved the steam engine (late 18th century) though earlier designs existed (Newcomen)."
+  "vaccination":"Edward Jenner developed the smallpox vaccine concept in the late 18th century using cowpox to protect from smallpox."
 };
 
 /* ===== Improved summariser: pick top sentences by keyword frequency ===== */
@@ -406,34 +405,66 @@ function processUser(text){
   if(!text) return;
   if(processOneTime(text)) return;
   addMessage(text, 'user');
-  autoSwitchPersona(text); // mood + forced teacher for facts
-  // show typing
+
+  // Auto-personality & pleasant typing feel
+  autoSwitchPersona(text);
   addTyping();
-  // small natural delay
+
   setTimeout(()=>{
     removeTyping();
-    // 1) math
+
+    // 1) Math first (if user asked to solve)
     if(isMathExpression(text)){
-      try{ const res = evalMath(text); const out = personaWrap("Answer: " + res); reply(out); return; }catch(e){}
+      try{
+        const res = evalMath(text);
+        reply(personaWrap("Answer: " + res));
+        return;
+      }catch(e){}
     }
-    // 2) conversion
+
+    // 2) Conversion (convert 10 km to m)
     const conv = tryConvert(text);
-    if(conv){ reply(personaWrap(conv)); return; }
-    // 3) rules
-    const r = matchRules(text);
-    if(r){ reply(personaWrap(r)); return; }
-    // 4) short explain
+    if(conv){
+      reply(personaWrap(conv));
+      return;
+    }
+
+    // 3) DEFINITIONS & "what is / define X" — run BEFORE the generic rules
     const s = shortExplain(text);
-    if(s){ reply(personaWrap(s)); return; }
-    // 5) shopping intent
+    if(s){
+      reply(personaWrap(s));
+      return;
+    }
+
+    // 4) Shopping / recommendation intent (student-friendly)
     const shop = handleShoppingIntent(text);
-    if(shop){ reply(personaWrap(shop)); return; }
-    // 6) mini AI fallback
+    if(shop){
+      reply(personaWrap(shop));
+      return;
+    }
+
+    // 5) Generic rules (greetings, study tips, etc.)
+    const r = matchRules(text);
+    if(r){
+      reply(personaWrap(r));
+      return;
+    }
+
+    // 6) mini-AI fallback (stories, poems, assist)
     const mini = miniAIFallback(text);
-    if(typeof mini === 'string'){ reply(personaWrap(mini)); return; }
-    if(mini && mini.suggestSearch){ replyWithSearch(mini.text, text); return; }
+    if(typeof mini === 'string'){
+      reply(personaWrap(mini));
+      return;
+    }
+    if(mini && mini.suggestSearch){
+      replyWithSearch(mini.text, text);
+      return;
+    }
+
+    // 7) final fallback with search helper
     reply(personaWrap("I am not sure. Try rephrasing or click Search web."), true);
-  }, 600 + Math.min(1200, text.length*6));
+
+  }, 600 + Math.min(1200, text.length * 6));
 }
 
 /* ===== Reply helpers ===== */
@@ -455,44 +486,20 @@ function personaWrap(text){
 }
 
 /* ===== Rules & shopping (student-first) ===== */
+/* NOTE: removed the generic ['define','what is'] trigger so shortExplain runs first */
 const rules = [
   {q:['hello','hi','hey'], a:'Hello! Ready to study or have fun?'},
   {q:['your name','who are you'], a:'I am SarasAI — your student helper.'},
   {q:['who created you','creator'], a:'I was created lovingly by Mamatha.'},
   {q:['what can you do','what can you do for me'], a:'I can solve math, create flashcards, summarize text, run quick quizzes, convert units, and suggest study tips.'},
   {q:['study tips','how to study'], a:'Use Pomodoro, active recall (flashcards), and practice problems. Short sessions & spaced repetition help.'},
-  {q:['thank you','thanks'], a:'You’re welcome — happy studying!'}
+  {q:['thank you','thanks'], a:'You’re welcome — happy studying!'},
+  {q:['help','how to use'], a:'Type a question or press the mic. Try: "Define photosynthesis", "What is gravity", "Solve 2+2", or click Summarize.'}
 ];
 function matchRules(text){
   const t=text.toLowerCase();
   for(const r of rules) for(const kw of r.q) if(t.includes(kw)) return r.a;
   return null;
-}
-function handleShoppingIntent(text){
-  const t=text.toLowerCase();
-  if(/buy.*phone|how to buy.*phone|recommend.*phone|which phone|best phone/i.test(t)){
-    const guide = [
-      "1) Decide your budget (low ≈ ₹8k–15k, mid ≈ ₹15k–30k, high ₹30k+).",
-      "2) Choose priorities: camera, battery, gaming, or software updates.",
-      "3) Battery: ≥4000 mAh recommended; check fast charging wattage.",
-      "4) Camera: sample photos > specs. Look for OIS for low-light shots.",
-      "5) Performance: recent chipset + 6-8GB RAM for smooth use.",
-      "6) Buy from trusted sellers with warranty; compare official store vs marketplace."
-    ].join('\n\n');
-    return guide + '\n\nTell me your budget and main use (e.g., "Budget 20000 gaming").';
-  }
-  const m = t.match(/(?:budget\s*)(\d{3,6})\s*(?:in|₹)?\s*(.*)/i);
-  if(m){ const b=parseInt(m[1],10); const use=(m[2]||'').trim(); const rec=getRecommendation(b); if(rec){ let out=`Budget: ${b}. Category: ${rec.label}.\n${rec.desc}`; if(use.includes('camera')) out+='\n\nFocus on OIS & sample photos.'; if(use.includes('gaming')) out+='\n\nFocus on chipset & display refresh.'; return out; } }
-  return null;
-}
-function getRecommendation(b){
-  const recs = [
-    {min:0,max:15000,label:'Budget',desc:'Basic smartphone: 4GB RAM, 64GB storage, ~4000mAh battery.'},
-    {min:15001,max:30000,label:'Mid-range',desc:'6-8GB RAM, 128GB storage, ~5000mAh battery, decent cameras.'},
-    {min:30001,max:70000,label:'Upper-mid',desc:'Flag-like features: AMOLED, better cameras, faster chips.'},
-    {min:70001,max:9999999,label:'Flagship',desc:'Top-tier performance & cameras, best displays.'}
-  ];
-  return recs.find(r=>b>=r.min && b<=r.max) || null;
 }
 
 /* ===== Search helper for fallback ===== */
@@ -529,7 +536,7 @@ toggleSpeak.addEventListener('click', ()=>{ voiceReply = !voiceReply; toggleSpea
 
 flashBtn.addEventListener('click', ()=>{ openModal('Create Flashcards (Q | A per line)', 'Q | A\nExample: What is photosynthesis? | Process by which plants...', (val)=>{ if(val) createFlashcardsFromInput(val); }); });
 quizBtn.addEventListener('click', ()=> runQuickQuiz());
-summBtn.addEventListener('click', ()=>{ openModal('Summarize text (paste paragraph)', 'Paste paragraph...', (val)=>{ if(!val) return addMessage('No text provided.','bot'); const s = summarizeText(val,3); addMessage('Summary:\\n'+s,'bot'); }); });
+summBtn.addEventListener('click', ()=>{ openModal('Summarize text (paste paragraph)', 'Paste paragraph...', (val)=>{ if(!val) return addMessage('No text provided.','bot'); const s = summarizeText(val,3); addMessage('Summary:\n'+s,'bot'); }); });
 pomBtn.addEventListener('click', ()=>{ if(!pomOn) startPomodoro(25); else stopPomodoro(); });
 notesBtn.addEventListener('click', ()=>{ openModal('Save a quick note', 'Type note...', (val)=>{ if(val) saveNote(val); }); });
 exportBtn.addEventListener('click', ()=> exportAll());
@@ -559,32 +566,6 @@ function importAll(){ openModal('Import JSON data (paste)', 'Paste previously ex
 window.addEventListener('load', ()=>{ setTimeout(()=>{ addMessage('Welcome! SarasAI Student Pro ready — try math, conversions, flashcards, summarize, or speak using the mic.'); },200); // ensure voices loaded
   speechSynthesis.getVoices();
 });
-
-/* ===== Helper: processOneTime when user replies during quiz ===== */
-function processOneTime(text){ if(oneTimeHandlers.length){ const f = oneTimeHandlers.shift(); try{ f(text); }catch(e){} return true } return false; }
-
-/* ===== Rules & matching helper (reused) ===== */
-function matchRules(text){
-  const t=text.toLowerCase();
-  for(const r of rules) for(const kw of r.q) if(t.includes(kw)) return r.a;
-  return null;
-}
-
-/* ===== Helper: shopping intent (reuse) ===== */
-function handleShoppingIntent(text){
-  const t=text.toLowerCase();
-  if(/buy.*phone|how to buy.*phone|recommend.*phone|which phone|best phone/i.test(t)){
-    return "I can guide phone buying step-by-step. Tell me your budget and main use (e.g., 'Budget 20000 gaming').";
-  }
-  const m = t.match(/(?:budget\s*)(\d{3,6})\s*(?:in|₹)?\s*(.*)/i);
-  if(m){ const b=parseInt(m[1],10); const use=(m[2]||'').trim(); const rec=getRecommendation(b); if(rec){ let out=`Budget: ${b}. Category: ${rec.label}.\n${rec.desc}`; if(use.includes('camera')) out+='\nFocus on OIS and software.'; if(use.includes('gaming')) out+='\nFocus on chipset & display.'; return out; } }
-  return null;
-}
-
-/* ===== Final note: simple example rules already in place ===== */
-
-/* ===== End of script ===== */
-
 </script>
 </body>
 </html>
