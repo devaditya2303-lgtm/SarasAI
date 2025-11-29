@@ -3,67 +3,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>SarasAI — Student Pro (Free)</title>
+<title>SarasAI — Student Pro (Worksheets, Samples)</title>
 <style>
-:root{
-  --bg:#071017; --panel:#0d1418; --muted:#9aa6b2; --accent:#6ad1ff;
-  --user:#0e3b4a; --bot:#07212a;
-  --bubble-radius:16px;
-}
-*{box-sizing:border-box}
-body{margin:0;height:100%;font-family:Inter,Segoe UI,Arial,system-ui;background:linear-gradient(180deg,var(--bg),#031018);color:#eaf5ff}
-.container{max-width:1000px;margin:18px auto;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(0,0,0,0.6)}
-.header{display:flex;align-items:center;gap:12px;justify-content:space-between}
-.brand{display:flex;gap:12px;align-items:center}
-.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#0ba6e6,#6ad1ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#04202a}
-h1{margin:0;font-size:20px}
-.sub{color:var(--muted);font-size:13px}
-.controls{display:flex;gap:8px;align-items:center}
-.btn{background:var(--panel);border:1px solid rgba(255,255,255,0.03);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
-.iconbtn{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center}
-.tools{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.tool-btn{background:linear-gradient(90deg,#072c36,#0b2630);border:1px solid rgba(106,209,255,0.08);color:#bff0ff;padding:8px 10px;border-radius:10px;cursor:pointer}
-.panel{margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
-.chat-area{display:flex;gap:16px;margin-top:12px}
-.left{flex:1}
-.right{width:300px}
-.chat-wrap{border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:14px;height:560px;overflow:auto;border:1px solid rgba(255,255,255,0.02)}
-.messages{display:flex;flex-direction:column;gap:12px}
-.msg{max-width:78%;padding:12px 16px;border-radius:var(--bubble-radius);line-height:1.35;word-break:break-word;box-shadow:0 10px 30px rgba(0,0,0,0.45)}
-.msg.bot{align-self:flex-start;background:linear-gradient(180deg,var(--bot),#03151b);color:#dff6ff;border-bottom-left-radius:8px}
-.msg.user{align-self:flex-end;background:linear-gradient(180deg,var(--user),#063642);color:#e9fbff;border-bottom-right-radius:8px}
-.meta{font-size:12px;color:var(--muted);margin-bottom:6px}
-.footer{display:flex;gap:8px;align-items:center;margin-top:12px}
-.input{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:#071218;color:#eaffff}
-.small{font-size:13px;color:var(--muted)}
-.personality{display:flex;gap:8px;align-items:center}
-.personality label{cursor:pointer;padding:6px 10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
-.activeP{background:linear-gradient(90deg,#143b4a,#0c2e3a);color:#bff0ff;border:1px solid rgba(106,209,255,0.15)}
-.tools-col{display:flex;flex-direction:column;gap:8px}
-.card{background:linear-gradient(180deg,#05121a,#07151a);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
-.search-button{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.12);color:#bff0ff;cursor:pointer}
-.typing-dots{display:inline-block;height:22px;padding:6px;border-radius:12px;background:rgba(255,255,255,0.02)}
-.dot{display:inline-block;width:6px;height:6px;margin:0 3px;border-radius:50%;background:#9fdfff;opacity:0.9;animation:blink 1s infinite}
-@keyframes blink{0%{opacity:.9}50%{opacity:.2}100%{opacity:.9}}
-.link{color:var(--accent);cursor:pointer;text-decoration:underline}
-.footer-right{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
-
+:root{--bg:#071017;--panel:#0d1418;--muted:#9aa6b2;--accent:#6ad1ff;--user:#0e3b4a;--bot:#07212a;--bubble-radius:16px}
+*{box-sizing:border-box}body{margin:0;height:100%;font-family:Inter,Segoe UI,Arial,system-ui;background:linear-gradient(180deg,var(--bg),#031018);color:#eaf5ff}
+.container{max-width:1200px;margin:18px auto;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+.header{display:flex;align-items:center;gap:12px;justify-content:space-between}.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#0ba6e6,#6ad1ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#04202a}h1{margin:0;font-size:20px}.sub{color:var(--muted);font-size:13px}.controls{display:flex;gap:8px;align-items:center}.btn{background:var(--panel);border:1px solid rgba(255,255,255,0.03);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}.iconbtn{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center}.tools{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.tool-btn{background:linear-gradient(90deg,#072c36,#0b2630);border:1px solid rgba(106,209,255,0.08);color:#bff0ff;padding:8px 10px;border-radius:10px;cursor:pointer}.panel{margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02);color:var(--muted)}.chat-area{display:flex;gap:12px;margin-top:12px}.left{flex:1}.right{width:320px}.chat-wrap{border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:14px;height:560px;overflow:auto;border:1px solid rgba(255,255,255,0.02)}.messages{display:flex;flex-direction:column;gap:12px}.msg{max-width:78%;padding:12px 16px;border-radius:var(--bubble-radius);line-height:1.35;word-break:break-word;box-shadow:0 10px 30px rgba(0,0,0,0.45)}.msg.bot{align-self:flex-start;background:linear-gradient(180deg,var(--bot),#03151b);color:#dff6ff;border-bottom-left-radius:8px}.msg.user{align-self:flex-end;background:linear-gradient(180deg,var(--user),#063642);color:#e9fbff;border-bottom-right-radius:8px}.meta{font-size:12px;color:var(--muted);margin-bottom:6px}.footer{display:flex;gap:8px;align-items:center;margin-top:12px}.input{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:#071218;color:#eaffff}.small{font-size:13px;color:var(--muted)}.personality{display:flex;gap:8px;align-items:center}.personality label{cursor:pointer;padding:6px 10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}.activeP{background:linear-gradient(90deg,#143b4a,#0c2e3a);color:#bff0ff;border:1px solid rgba(106,209,255,0.15)}.card{background:linear-gradient(180deg,#05121a,#07151a);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}.search-button{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.12);color:#bff0ff;cursor:pointer}.typing-dots{display:inline-block;height:22px;padding:6px;border-radius:12px;background:rgba(255,255,255,0.02)}.dot{display:inline-block;width:6px;height:6px;margin:0 3px;border-radius:50%;background:#9fdfff;opacity:0.9;animation:blink 1s infinite}@keyframes blink{0%{opacity:.9}50%{opacity:.2}100%{opacity:.9}}.side-panel{position:fixed;right:18px;top:18px;width:420px;bottom:18px;background:#06141a;border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 40px rgba(0,0,0,0.6);display:none;flex-direction:column;z-index:2000}.side-header{display:flex;justify-content:space-between;align-items:center;gap:8px}.side-list{overflow:auto;padding-top:8px;flex:1}.item{background:linear-gradient(180deg,#071b22,#091a1e);padding:10px;border-radius:8px;margin:8px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.item .text{flex:1}.item .meta{color:var(--muted);font-size:12px}.item .actions{display:flex;gap:6px}.smallbtn{padding:6px 8px;border-radius:8px}.worksheet-area{margin-top:8px}.worksheet-output{background:#06161a;padding:10px;border-radius:8px;max-height:300px;overflow:auto}.controls-row{display:flex;gap:8px;margin-top:8px;align-items:center}.hide{display:none}.pack-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pack-btn{padding:8px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.07);cursor:pointer;color:#bff0ff}.tips{font-size:13px;color:var(--muted);margin-top:8px}
 /* responsive */
-@media(max-width:900px){ .chat-area{flex-direction:column}.right{width:100%} .chat-wrap{height:420px} }
+@media(max-width:1000px){ .side-panel{position:static;width:100%;height:50vh;margin-top:12px} .right{display:none} .container{max-width:920px} }
 </style>
 </head>
 <body>
-<div class="container" role="application" aria-label="SarasAI Pro">
+<div class="container" role="application" aria-label="SarasAI Pro with Worksheets">
   <div class="header">
     <div class="brand">
       <div class="logo">S</div>
       <div>
-        <h1>SarasAI — Student Pro (Free)</h1>
-        <div class="sub">Auto-mood • Teacher mode • Flashcards • Pomodoro • Voice & Text</div>
+        <h1>SarasAI — Student Pro</h1>
+        <div class="sub">Notes, Flashcards, Worksheet generator, Pomodoro, Voice & Text</div>
       </div>
     </div>
     <div class="controls">
-      <div class="small">Voice Reply</div>
+      <div class="small">Voice</div>
       <button id="toggleSpeak" class="btn">ON</button>
     </div>
   </div>
@@ -74,11 +35,13 @@ h1{margin:0;font-size:20px}
     <button id="summBtn" class="tool-btn">Summarize</button>
     <button id="pomBtn" class="tool-btn">Pomodoro</button>
     <button id="notesBtn" class="tool-btn">Notes</button>
+    <button id="worksheetBtn" class="tool-btn">Create Worksheet</button>
+    <button id="loadSamples" class="tool-btn">Load Sample Packs</button>
     <button id="exportBtn" class="tool-btn">Export Data</button>
     <button id="importBtn" class="tool-btn">Import Data</button>
   </div>
 
-  <div class="panel card small">SarasAI student mode active. Try: <strong>Solve 2+2</strong>, <strong>Convert 10 km to m</strong>, <strong>How to buy a phone</strong>, or use Flashcards & Quiz.</div>
+  <div class="panel card small">Now with sample packs, printable worksheet layout, marks/time settings, and MCQ/Short/Mixed worksheet options.</div>
 
   <div class="chat-area">
     <div class="left">
@@ -111,20 +74,67 @@ h1{margin:0;font-size:20px}
         </div>
         <hr style="border-color:rgba(255,255,255,0.02);margin:8px 0"/>
         <div style="display:flex;flex-direction:column;gap:8px">
-          <button id="showFlash" class="btn">View Flashcards</button>
-          <button id="showNotes" class="btn">View Notes</button>
-          <button id="showForm" class="btn">Formula Sheet</button>
+          <button id="viewNotes" class="btn">View Notes</button>
+          <button id="viewFlash" class="btn">View Flashcards</button>
+          <button id="viewForm" class="btn">Formula Sheet</button>
         </div>
       </div>
 
       <div class="card" style="margin-top:12px">
         <div><strong>Quick Tips</strong></div>
         <ul style="padding-left:18px;color:var(--muted);font-size:13px">
-          <li>Use flashcards + quiz for revision</li>
+          <li>Use flashcards + quiz for active recall</li>
           <li>Try Pomodoro for focused sessions</li>
-          <li>Click Search web for live prices/results</li>
+          <li>Create worksheets and print to PDF for practice</li>
         </ul>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Side panel -->
+<div id="sidePanel" class="side-panel" role="region" aria-label="Side panel">
+  <div class="side-header">
+    <div><strong id="sideTitle">Notes</strong><div class="small" id="sideSubtitle">Manage and edit</div></div>
+    <div><button id="closeSide" class="btn">Close</button></div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:8px">
+    <button id="addItemBtn" class="btn smallbtn">Add</button>
+    <button id="deleteAllBtn" class="btn smallbtn">Delete All</button>
+    <div style="margin-left:auto" class="small">Total: <span id="sideCount">0</span></div>
+  </div>
+  <div class="pack-row" id="packRow">
+    <button class="pack-btn" data-pack="math">Load Math Pack</button>
+    <button class="pack-btn" data-pack="physics">Load Physics Pack</button>
+    <button class="pack-btn" data-pack="bio">Load Biology Pack</button>
+    <button class="pack-btn" id="loadAllPacks">Load All Packs</button>
+  </div>
+  <div class="side-list" id="sideList"></div>
+
+  <div class="worksheet-area">
+    <hr style="border-color:rgba(255,255,255,0.02)"/>
+    <div style="display:flex;gap:8px;align-items:center">
+      <label class="small">Number</label>
+      <input id="numQ" type="number" min="1" max="50" value="10" style="width:70px;padding:6px;border-radius:6px;background:#071218;border:1px solid rgba(255,255,255,0.03);color:#eaffff">
+      <label class="small">Type</label>
+      <select id="wsType" style="padding:6px;border-radius:6px;background:#071218;border:1px solid rgba(255,255,255,0.03);color:#eaffff">
+        <option value="mixed">Mixed</option><option value="mcq">MCQ only</option><option value="short">Short answer</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+      <label class="small">Marks/Q</label>
+      <input id="marksQ" type="number" min="1" max="20" value="1" style="width:70px;padding:6px;border-radius:6px;background:#071218;border:1px solid rgba(255,255,255,0.03);color:#eaffff">
+      <label class="small">Time/Q (min)</label>
+      <input id="timeQ" type="number" min="0" max="60" value="2" style="width:70px;padding:6px;border-radius:6px;background:#071218;border:1px solid rgba(255,255,255,0.03);color:#eaffff">
+      <button id="genWorksheet" class="btn">Generate</button>
+    </div>
+    <div class="tips">When printing: use browser Print → Save as PDF. Use "Include answers" to print teacher copy.</div>
+    <div class="worksheet-output" id="worksheetOutput" style="margin-top:8px;display:none"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="downloadWS" class="btn">Download HTML</button>
+      <button id="printWS" class="btn">Print (PDF)</button>
+      <button id="copyWS" class="btn">Copy</button>
+      <label style="margin-left:auto"><input id="includeAnswers" type="checkbox"> Include answers</label>
     </div>
   </div>
 </div>
@@ -142,10 +152,12 @@ h1{margin:0;font-size:20px}
 </div>
 
 <script>
-/* ---------- SarasAI Pro (Zero-cost, client-only) ---------- */
+/* SarasAI — upgraded with sample packs & printable worksheets */
 
-/* ===== State & Storage keys ===== */
-const STORAGE = { FLASH:'saras_flash_v2', NOTES:'saras_notes_v2', FORM:'saras_form_v2' };
+/* STORAGE */
+const STORAGE = { FLASH:'saras_flash_v3', NOTES:'saras_notes_v3', FORM:'saras_form_v3' };
+
+/* DOM */
 const messagesEl = document.getElementById('messages');
 const inputEl = document.getElementById('input');
 const sendBtn = document.getElementById('sendBtn');
@@ -155,81 +167,164 @@ const quizBtn = document.getElementById('quizBtn');
 const summBtn = document.getElementById('summBtn');
 const pomBtn = document.getElementById('pomBtn');
 const notesBtn = document.getElementById('notesBtn');
+const worksheetBtn = document.getElementById('worksheetBtn');
+const loadSamplesBtn = document.getElementById('loadSamples');
 const exportBtn = document.getElementById('exportBtn');
 const importBtn = document.getElementById('importBtn');
-const flashView = document.getElementById('showFlash');
-const notesView = document.getElementById('showNotes');
-const formView = document.getElementById('showForm');
+const viewNotesBtn = document.getElementById('viewNotes');
+const viewFlashBtn = document.getElementById('viewFlash');
+const viewFormBtn = document.getElementById('viewForm');
 const toggleSpeak = document.getElementById('toggleSpeak');
 const personalityBar = document.getElementById('personalityBar');
 const modalRoot = document.getElementById('modalRoot');
-const modalTitle = document.getElementById('modalTitle');
 const modalInput = document.getElementById('modalInput');
+const modalTitle = document.getElementById('modalTitle');
 const modalCancel = document.getElementById('modalCancel');
 const modalSave = document.getElementById('modalSave');
-const pomStatus = document.getElementById('pomStatus');
+
+const sidePanel = document.getElementById('sidePanel');
+const sideTitle = document.getElementById('sideTitle');
+const sideList = document.getElementById('sideList');
+const sideCount = document.getElementById('sideCount');
+const addItemBtn = document.getElementById('addItemBtn');
+const deleteAllBtn = document.getElementById('deleteAllBtn');
+const closeSide = document.getElementById('closeSide');
+const packRow = document.getElementById('packRow');
+
+const genWorksheetBtn = document.getElementById('genWorksheet');
+const worksheetOutput = document.getElementById('worksheetOutput');
+const downloadWS = document.getElementById('downloadWS');
+const printWS = document.getElementById('printWS');
+const copyWS = document.getElementById('copyWS');
+const numQ = document.getElementById('numQ');
+const wsType = document.getElementById('wsType');
+const marksQ = document.getElementById('marksQ');
+const timeQ = document.getElementById('timeQ');
+const includeAnswers = document.getElementById('includeAnswers');
 
 let voiceReply = true;
-let currentPersona = 'lovely'; // auto switches
+let currentPersona = 'lovely';
 let oneTimeHandlers = [];
 let pomTimer = null, pomRemaining = 0, pomOn = false;
 
-/* ===== Utilities ===== */
+/* Sample packs */
+const samplePacks = {
+  math: [
+    {q:"What is 7*8?", a:"56"},
+    {q:"Differentiate x^2", a:"2x"},
+    {q:"Integrate 2x dx", a:"x^2 + C"},
+    {q:"What is the area of a circle with radius r?", a:"πr^2"},
+    {q:"Solve: 3x+5=20", a:"x=5"}
+  ],
+  physics: [
+    {q:"State Newton's second law.", a:"F = ma"},
+    {q:"What is the speed of light (approx)?", a:"3×10^8 m/s"},
+    {q:"Define kinetic energy.", a:"½ mv^2"},
+    {q:"Ohm's law equation?", a:"V = IR"},
+    {q:"Unit of force?", a:"Newton (N)"}
+  ],
+  bio: [
+    {q:"What is photosynthesis?", a:"Process by which plants convert sunlight into chemical energy."},
+    {q:"Where is DNA stored in a cell?", a:"Nucleus"},
+    {q:"Name the basic unit of life.", a:"Cell"},
+    {q:"What carries oxygen in blood?", a:"Hemoglobin"},
+    {q:"What organelle makes ATP?", a:"Mitochondria"}
+  ]
+};
+
+/* utils */
 function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function addMessage(text, who='bot', extraHTML=''){
-  const div = document.createElement('div');
-  div.className = 'msg ' + (who==='user'?'user':'bot');
-  const name = (who==='user'?'You':'SarasAI');
-  const safe = escapeHtml(text).replace(/\n/g,'<br>');
-  div.innerHTML = `<strong>${name}:</strong> ${safe}${extraHTML||''}`;
-  messagesEl.appendChild(div);
-  document.getElementById('chat-wrap').scrollTop = document.getElementById('chat-wrap').scrollHeight;
-}
-function addTyping(){
-  const div = document.createElement('div'); div.id='typing'; div.className='msg bot';
-  div.innerHTML = `<div class="typing-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
-  messagesEl.appendChild(div);
-  document.getElementById('chat-wrap').scrollTop = document.getElementById('chat-wrap').scrollHeight;
-}
+function addMessage(text, who='bot', extraHTML=''){ const div=document.createElement('div'); div.className='msg '+(who==='user'?'user':'bot'); const name=(who==='user'?'You':'SarasAI'); const safe=escapeHtml(text).replace(/\n/g,'<br>'); div.innerHTML=`<strong>${name}:</strong> ${safe}${extraHTML||''}`; messagesEl.appendChild(div); document.getElementById('chat-wrap').scrollTop = document.getElementById('chat-wrap').scrollHeight;}
+function addTyping(){ const div=document.createElement('div'); div.id='typing'; div.className='msg bot'; div.innerHTML=`<div class="typing-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`; messagesEl.appendChild(div); document.getElementById('chat-wrap').scrollTop=document.getElementById('chat-wrap').scrollHeight;}
 function removeTyping(){ const t=document.getElementById('typing'); if(t) t.remove(); }
 
-/* ===== Mood detection & auto-personality ===== */
-function detectMood(text){
-  const t = text.toLowerCase();
-  const sadWords = ['sad','depressed','upset','stressed','anxious','tired','angry','frustrat','failed','lost'];
-  const happyWords = ['happy','great','good','thanks','thanks!','yay','love','excited','cool'];
-  const questionStarts = ['how','what','why','explain','define','solve','calculate','help','who','when','where'];
-  for(const w of sadWords) if(t.includes(w)) return 'caring';
-  for(const w of happyWords) if(t.includes(w)) return 'lovely';
-  for(const s of questionStarts) if(t.startsWith(s) || t.includes('how to') || t.includes('solve')) return 'teacher';
-  if(t.includes('joke')||t.includes('lol')||t.includes('haha')) return 'funny';
-  if(t.endsWith('?')) return 'teacher';
-  return null;
-}
-function autoSwitchPersona(text){
-  // Force teacher for clear facts
-  if(/^(what is|define|who (?:invented|discovered)|solve|calculate|evaluate|convert)/i.test(text.trim())) {
-    setPersona('teacher', true);
-    return;
-  }
-  const mood = detectMood(text);
-  if(mood && mood !== currentPersona) setPersona(mood, true);
-}
-function setPersona(p, auto=false){
-  currentPersona = p;
-  personalityBar.querySelectorAll('label').forEach(l=>l.classList.remove('activeP'));
-  const lbl = personalityBar.querySelector(`label[data-p="${p}"]`);
-  if(lbl) lbl.classList.add('activeP');
-  if(auto) addMessage(`(Auto) switched personality to: ${p}`, 'bot');
-}
-
-/* ===== Storage helpers ===== */
-function loadJSON(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback)); } catch(e){ return fallback; } }
+/* storage */
+function loadJSON(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback)); }catch(e){return fallback;} }
 function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
-
-/* ===== Flashcards ===== */
 function loadFlashcards(){ return loadJSON(STORAGE.FLASH, []); }
 function saveFlashcards(list){ saveJSON(STORAGE.FLASH, list); }
+function loadNotes(){ return loadJSON(STORAGE.NOTES, []); }
+function saveNotes(list){ saveJSON(STORAGE.NOTES, list); }
+function loadFormulas(){ return loadJSON(STORAGE.FORM, {}); }
+function saveFormulas(obj){ saveJSON(STORAGE.FORM, obj); }
+
+/* add sample packs*/
+function mergeSamplePack(name){
+  const pack = samplePacks[name];
+  if(!pack) return;
+  const cur = loadFlashcards();
+  let added = 0;
+  pack.forEach(p=>{
+    cur.push({q:p.q, a:p.a});
+    added++;
+  });
+  saveFlashcards(cur);
+  addMessage(`Loaded ${added} flashcards from ${name} pack.`, 'bot');
+}
+
+/* open side panel */
+function openSide(kind){
+  sidePanel.style.display='flex';
+  worksheetOutput.style.display='none';
+  sideList.innerHTML=''; sideTitle.textContent = kind === 'notes' ? 'Notes' : (kind === 'flash' ? 'Flashcards' : 'Formula Sheet');
+  if(kind === 'notes'){ renderNotesList(); addItemBtn.onclick = ()=> openAddNoteModal(); deleteAllBtn.onclick = ()=> { if(confirm('Delete all notes?')){ saveNotes([]); renderNotesList(); addMessage('All notes deleted.','bot'); } } }
+  if(kind === 'flash'){ renderFlashList(); addItemBtn.onclick = ()=> openAddFlashModal(); deleteAllBtn.onclick = ()=> { if(confirm('Delete all flashcards?')){ saveFlashcards([]); renderFlashList(); addMessage('All flashcards deleted.','bot'); } } }
+  if(kind === 'form'){ renderFormList(); addItemBtn.onclick = ()=> openAddFormulaModal(); deleteAllBtn.onclick = ()=> { if(confirm('Delete all formulas?')){ saveFormulas({}); renderFormList(); addMessage('All formulas deleted.','bot'); } } }
+}
+
+/* renderers */
+function renderNotesList(){
+  const notes = loadNotes().slice().reverse();
+  sideCount.textContent = notes.length;
+  sideList.innerHTML = '';
+  notes.forEach((n, idx)=> {
+    const el = document.createElement('div'); el.className='item';
+    const txt = document.createElement('div'); txt.className='text'; txt.innerHTML = `<div class="meta">${new Date(n.ts).toLocaleString()}</div><div>${escapeHtml(n.text)}</div>`;
+    const actions = document.createElement('div'); actions.className='actions';
+    const edit = document.createElement('button'); edit.className='btn smallbtn'; edit.textContent='Edit'; edit.onclick = ()=> openEditNoteModal(notes.length-1-idx);
+    const del = document.createElement('button'); del.className='btn smallbtn'; del.textContent='Delete'; del.onclick = ()=> { if(confirm('Delete this note?')){ const all=loadNotes(); all.splice(all.length-1-idx,1); saveNotes(all); renderNotesList(); addMessage('Note deleted.','bot'); } };
+    actions.appendChild(edit); actions.appendChild(del);
+    el.appendChild(txt); el.appendChild(actions); sideList.appendChild(el);
+  });
+}
+function renderFlashList(){
+  const cards = loadFlashcards();
+  sideCount.textContent = cards.length;
+  sideList.innerHTML='';
+  cards.forEach((f, idx)=>{
+    const el=document.createElement('div'); el.className='item';
+    const txt=document.createElement('div'); txt.className='text'; txt.innerHTML=`<div class="meta">Q</div><div><strong>${escapeHtml(f.q)}</strong></div><div class="meta">A</div><div>${escapeHtml(f.a||'—')}</div>`;
+    const actions=document.createElement('div'); actions.className='actions';
+    const edit=document.createElement('button'); edit.className='btn smallbtn'; edit.textContent='Edit'; edit.onclick=()=> openEditFlashModal(idx);
+    const del=document.createElement('button'); del.className='btn smallbtn'; del.textContent='Delete'; del.onclick=()=>{ if(confirm('Delete this flashcard?')){ const all=loadFlashcards(); all.splice(idx,1); saveFlashcards(all); renderFlashList(); addMessage('Flashcard deleted.','bot'); } };
+    actions.appendChild(edit); actions.appendChild(del);
+    el.appendChild(txt); el.appendChild(actions); sideList.appendChild(el);
+  });
+}
+function renderFormList(){
+  const f = loadFormulas(); const keys = Object.keys(f);
+  sideCount.textContent = keys.length;
+  sideList.innerHTML='';
+  keys.forEach((k)=>{ const el=document.createElement('div'); el.className='item';
+    const txt=document.createElement('div'); txt.className='text'; txt.innerHTML=`<div class="meta">${escapeHtml(k)}</div><div>${escapeHtml(f[k])}</div>`;
+    const actions=document.createElement('div'); actions.className='actions';
+    const edit=document.createElement('button'); edit.className='btn smallbtn'; edit.textContent='Edit'; edit.onclick=()=> openEditFormulaModal(k);
+    const del=document.createElement('button'); del.className='btn smallbtn'; del.textContent='Delete'; del.onclick=()=>{ if(confirm('Delete this formula?')){ const cur=loadFormulas(); delete cur[k]; saveFormulas(cur); renderFormList(); addMessage('Formula deleted.','bot'); } };
+    actions.appendChild(edit); actions.appendChild(del);
+    el.appendChild(txt); el.appendChild(actions); sideList.appendChild(el);
+  });
+}
+
+/* modal helpers */
+function openModal(title, placeholder, callback, initial=''){ modalRoot.style.display='flex'; modalTitle.textContent = title; modalInput.value = initial; modalInput.placeholder = placeholder; modalSave.onclick = ()=>{ const val=modalInput.value.trim(); modalRoot.style.display='none'; if(callback) callback(val); }; modalCancel.onclick = ()=> modalRoot.style.display='none'; }
+function openAddNoteModal(){ openModal('Add Note','Type your note here (short).', (val)=>{ if(!val) return; const notes = loadNotes(); notes.push({text:val,ts:Date.now()}); saveNotes(notes); renderNotesList(); addMessage('Note saved.','bot'); }); }
+function openEditNoteModal(indexFromStart){ const notes = loadNotes(); const idx = indexFromStart; const item = notes[idx]; openModal('Edit Note','Edit note text', (val)=>{ if(val===null) return; notes[idx].text = val; saveNotes(notes); renderNotesList(); addMessage('Note updated.','bot'); }, item.text); }
+function openAddFlashModal(){ openModal('Add Flashcards (Q | A)', 'One per line: Q | A', (val)=>{ if(!val) return createFlashcardsFromInput(val); }); }
+function openEditFlashModal(idx){ const cards = loadFlashcards(); const c = cards[idx]; openModal('Edit Flashcard','Q | A', (val)=>{ if(!val) return; const sep = val.includes('|') ? '|' : (val.includes('-')?'-':null); if(sep){ const [q,a] = val.split(sep).map(s=>s.trim()); cards[idx] = {q,a}; saveFlashcards(cards); renderFlashList(); addMessage('Flashcard updated.','bot'); } else addMessage('Invalid format. Use Q | A','bot'); }, `${c.q} | ${c.a}`); }
+function openAddFormulaModal(){ openModal('Add Formula (name | formula)','e.g. Quadratic | x = (-b ± sqrt(b^2-4ac))/(2a)', (val)=>{ if(!val) return; const sep = val.includes('|') ? '|' : '-'; if(!sep){ addMessage('Use format: name | formula','bot'); return; } const [n,f] = val.split(sep).map(s=>s.trim()); if(n && f){ const all = loadFormulas(); all[n] = f; saveFormulas(all); renderFormList(); addMessage(`Saved formula "${n}".`,'bot'); } }); }
+function openEditFormulaModal(key){ const all = loadFormulas(); openModal('Edit formula', 'name | formula', (val)=>{ if(!val) return; const sep = val.includes('|') ? '|' : '-'; const [n,f] = val.split(sep).map(s=>s.trim()); if(n && f){ delete all[key]; all[n]=f; saveFormulas(all); renderFormList(); addMessage('Formula updated.','bot'); } }, `${key} | ${all[key]}`); }
+
+/* flashcard parsing */
 function createFlashcardsFromInput(text){
   const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
   const existing = loadFlashcards();
@@ -238,29 +333,138 @@ function createFlashcardsFromInput(text){
     const sep = line.includes('|') ? '|' : (line.includes('-')?'-':null);
     if(sep){ const [q,a] = line.split(sep).map(s=>s.trim()); if(q){ existing.push({q,a}); added++; } } else { existing.push({q:line,a:''}); added++; }
   }
-  saveFlashcards(existing); addMessage(`Saved ${added} flashcards.`, 'bot');
-}
-function viewFlashcards(){
-  const list = loadFlashcards();
-  if(!list.length) return addMessage('No flashcards yet. Create some using Flashcards tool.', 'bot');
-  addMessage(`You have ${list.length} flashcards:`, 'bot');
-  list.slice(0,20).forEach(f=> addMessage(`Q: ${f.q}\nA: ${f.a||'—'}`,'bot'));
+  saveFlashcards(existing); addMessage(`Saved ${added} flashcard(s).`,'bot');
 }
 
-/* ===== Quick Quiz ===== */
+/* worksheet content gathering */
+function gatherContentForWorksheet(){
+  const notes = loadNotes();
+  const flash = loadFlashcards();
+  const qpool = [];
+  flash.forEach(f=>{ if(f.q) qpool.push({type:'short',q:f.q,a:f.a}); });
+  notes.forEach(n=>{
+    const sents = n.text.match(/[^.!?]+[.!?]?/g) || [n.text];
+    sents.slice(0,5).forEach(sent=>{
+      const trimmed = sent.trim();
+      if(trimmed.length>20) qpool.push({type:'short',q:`Explain: ${trimmed.substring(0,140)}`, a: trimmed});
+    });
+  });
+  return qpool;
+}
+
+/* make MCQ */
+function makeMCQFromPair(q,a){
+  const correct = a || 'Answer';
+  const wrong1 = (correct.length>10)? correct.slice(0,Math.floor(correct.length/2)) + '...' : correct + 'X';
+  const wrong2 = 'Not ' + (correct.split(' ')[0] || 'that');
+  const wrong3 = correct.split(' ').reverse().slice(0,3).join(' ') || (correct + 'Y');
+  const opts = [correct, wrong1, wrong2, wrong3].map(s=>s.trim());
+  for(let i=opts.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [opts[i],opts[j]]=[opts[j],opts[i]]; }
+  return opts;
+}
+
+/* generate worksheet html (student view or teacher with answers) */
+function generateWorksheetHTML(numQuestions=10, type='mixed', marksPerQ=1, timePerQ=2, includeAns=false){
+  const pool = gatherContentForWorksheet();
+  if(!pool.length) return '<div>No study content found. Add notes or flashcards first.</div>';
+  const out = []; let used=0;
+  shuffleArray(pool);
+  for(let i=0;i<pool.length && used<numQuestions;i++){
+    const item = pool[i];
+    // choose question type based on requested type
+    let chooseMCQ = (type==='mcq') || (type==='mixed' && Math.random()>0.4);
+    if(type==='short') chooseMCQ = false;
+    if(chooseMCQ){
+      const opts = makeMCQFromPair(item.q, item.a||'—');
+      out.push({q:item.q, type:'mcq', opts, ans:item.a});
+    } else {
+      out.push({q:item.q, type:'short', ans:item.a});
+    }
+    used++;
+  }
+  // build printable HTML
+  let totalMarks = used * marksPerQ;
+  let timeTotal = used * timePerQ;
+  let html = `<div style="font-family:Arial,Helvetica,sans-serif;color:#061a1e"><h2>SarasAI Worksheet</h2><div>Questions: ${used} &nbsp; Marks/Q: ${marksPerQ} &nbsp; Total Marks: ${totalMarks} &nbsp; Time: ${timeTotal} min</div><hr/>`;
+  html += `<ol>`;
+  out.forEach((it, idx)=>{
+    if(it.type==='mcq'){
+      html += `<li style="margin-bottom:10px"><div style="font-weight:600">${escapeHtml(it.q)}</div><div style="margin-left:12px">`;
+      it.opts.forEach((o,j)=> html += `<div>${String.fromCharCode(65+j)}. ${escapeHtml(o)}</div>`);
+      html += `</div><div style="margin-top:6px;color:#333">${marksPerQ} mark(s)</div></li>`;
+    } else {
+      html += `<li style="margin-bottom:12px"><div style="font-weight:600">${escapeHtml(it.q)}</div><div style="margin-top:6px;color:#333">Answer: _________________________</div><div style="margin-top:6px;color:#333">${marksPerQ} mark(s)</div></li>`;
+    }
+  });
+  html += `</ol>`;
+  if(includeAns){
+    html += `<hr/><h3>Answer Key</h3><ol>`;
+    out.forEach(it=>{ if(it.type==='mcq'){ html += `<li>${escapeHtml(it.ans||'—')}</li>` } else { html += `<li>${escapeHtml(it.ans||'—')}</li>` } });
+    html += `</ol>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
+/* helpers */
+function shuffleArray(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } }
+function normalize(s){ return (s||'').toString().trim().toLowerCase().replace(/[^\w\s]/g,''); }
+
+/* small mini-AI (math, conv, short facts) */
+function isMathExpression(s){ const t=s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+|^evaluate\s+/,''); return /^[0-9\s+\-*/().,^%]+$/.test(t); }
+function evalMath(s){ const t=s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+|^evaluate\s+/,'').replace(/\^/g,'**').replace(/%/g,'/100'); if(t.length>200) throw new Error('too long'); if(!/^[0-9+\-*/().\s*]+$/.test(t.replace(/\*\*/g,'*'))) throw new Error('invalid'); try{ const r = Function('"use strict";return ('+t+')')(); return String(typeof r==='number' && !Number.isInteger(r) ? parseFloat(r.toFixed(6)) : r); }catch(e){ throw e; } }
+function tryConvert(text){ const m=text.toLowerCase().match(/convert\s+([\d.]+)\s*(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)\s+to\s+(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)/); if(!m) return null; const val=parseFloat(m[1]); const from=m[2].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb'); const to=m[3].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb'); const dist={km:1000,m:1,cm:0.01,mm:0.001}; const mass={kg:1000,g:1,lb:453.59237}; if(from in dist && to in dist){ const out=(val*dist[from])/dist[to]; return `${val} ${from} = ${out} ${to}`; } if(from in mass && to in mass){ const out=(val*mass[from])/mass[to]; return `${val} ${from} = ${out} ${to}`; } return null; }
+const shortFacts = { photosynthesis:"Photosynthesis: plants convert sunlight + CO₂ + water into sugars and oxygen using chlorophyll.", gravity:"Gravity is the force that pulls masses toward each other; Newton described the law.", nucleus:"Nucleus: cell's control center storing DNA and managing cell functions." };
+function shortExplain(text){ const m=text.toLowerCase().match(/(?:what is|define|definition of)\s+(.+)/); const topic = m?m[1].split(/[?.]/)[0].trim():text; if(shortFacts[topic]) return shortFacts[topic]; return null; }
+function miniAIFallback(user){
+  const t=user.trim();
+  if(isMathExpression(t)){ try{ return "Result: "+evalMath(t); }catch(e){ return "I couldn't calculate that.";} }
+  const conv = tryConvert(t); if(conv) return conv;
+  const expl = shortExplain(t); if(expl) return expl;
+  if(/thank|thanks|nice|good job/i.test(t)) return "You're welcome! 😊";
+  if(/story|short story/i.test(t)) return "Short story: A student met SarasAI and learned well.";
+  if(/poem|write a poem/i.test(t)) return "A short poem:\nSoft code that listens and replies.";
+  return {text:`I don't have a precise built-in answer for: "${t}". Try rephrasing or click Search web.`, suggestSearch:true};
+}
+
+/* process user */
+function processUser(text){
+  if(!text) return;
+  if(processOneTime(text)) return;
+  addMessage(text,'user');
+  autoSwitchPersona(text);
+  addTyping();
+  setTimeout(()=>{
+    removeTyping();
+    if(isMathExpression(text)){ try{ const res=evalMath(text); reply(personaWrap("Answer: "+res)); return; }catch(e){} }
+    const conv = tryConvert(text); if(conv){ reply(personaWrap(conv)); return; }
+    const s = shortExplain(text); if(s){ reply(personaWrap(s)); return; }
+    const mini = miniAIFallback(text);
+    if(typeof mini==='string'){ reply(personaWrap(mini)); return; }
+    if(mini && mini.suggestSearch){ replyWithSearch(mini.text, text); return; }
+    reply(personaWrap("I am not sure. Try rephrasing or click Search web."), true);
+  }, 500 + Math.min(1000, text.length*5));
+}
+
+/* reply helpers */
+function reply(msg){ addMessage(msg,'bot'); if(voiceReply) speak(msg); }
+function replyWithSearch(msg, query){ const html=`<div style="margin-top:8px"><button class="search-button" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(query)}','_blank')">Search web for: "${escapeHtml(query)}"</button></div>`; addMessage(msg,'bot',html); if(voiceReply) speak(msg); }
+function personaWrap(text){ if(currentPersona==='lovely') return text+' 💙'; if(currentPersona==='teacher') return '📘 '+text; if(currentPersona==='funny') return text+' 😂'; if(currentPersona==='caring') return '💖 '+text+' — take care!'; return text; }
+
+/* quiz (basic) */
 function runQuickQuiz(){
-  const list = loadFlashcards(); if(!list.length) return addMessage('No flashcards for quiz.', 'bot');
-  const pool = [...list]; shuffle(pool);
+  const list = loadFlashcards(); if(!list.length) return addMessage('No flashcards for quiz.','bot');
+  const pool = [...list]; shuffleArray(pool);
   const quiz = pool.slice(0, Math.min(5, pool.length));
   let idx=0, score=0;
-  addMessage('Starting quick quiz. Answer in chat.', 'bot');
+  addMessage('Starting quick quiz. Answer in chat.','bot');
   const ask = ()=>{
-    if(idx>=quiz.length){ addMessage(`Quiz finished. Score ${score}/${quiz.length}`, 'bot'); return; }
-    addMessage(`Q${idx+1}: ${quiz[idx].q}`, 'bot');
+    if(idx>=quiz.length){ addMessage(`Quiz finished. Score ${score}/${quiz.length}`,'bot'); return; }
+    addMessage(`Q${idx+1}: ${quiz[idx].q}`,'bot');
     const one = (ans)=>{
       const correct = normalize(quiz[idx].a);
       const given = normalize(ans);
-      if(correct && given && given.includes(correct) || (correct==='' && given.length>0)) { score++; addMessage('Correct!','bot'); }
+      if(correct && given && given.includes(correct) || (correct==='' && given.length>0)) { score++; addMessage('Correct! 🎉','bot'); }
       else addMessage(`Not quite. Answer: ${quiz[idx].a || '—'}`,'bot');
       idx++; removeOneHandler(one); setTimeout(ask, 300);
     };
@@ -268,304 +472,93 @@ function runQuickQuiz(){
   };
   ask();
 }
-
-/* one-time handlers for quiz */
 function addOneHandler(fn){ oneTimeHandlers.push(fn); }
-function removeOneHandler(fn){ const i=oneTimeHandlers.indexOf(fn); if(i>=0) oneTimeHandlers.splice(i,1); }
-function processOneTime(text){ if(oneTimeHandlers.length){ const f=oneTimeHandlers.shift(); try{ f(text); }catch(e){} return true;} return false; }
+function removeOneHandler(fn){ const i = oneTimeHandlers.indexOf(fn); if(i>=0) oneTimeHandlers.splice(i,1); }
+function processOneTime(text){ if(oneTimeHandlers.length){ const f=oneTimeHandlers.shift(); try{ f(text); }catch(e){} return true } return false; }
 
-/* ===== Pomodoro ===== */
-function startPomodoro(minutes=25){
-  if(pomOn) return addMessage('Pomodoro already running.', 'bot');
-  pomRemaining = minutes*60; pomOn=true;
-  pomStatus.textContent = `Pomodoro: ${formatTime(pomRemaining)}`;
-  addMessage(`Pomodoro started for ${minutes} minutes. Focus!`, 'bot');
-  pomTimer = setInterval(()=>{
-    pomRemaining--; pomStatus.textContent = `Pomodoro: ${formatTime(pomRemaining)}`;
-    if(pomRemaining<=0){ clearInterval(pomTimer); pomOn=false; pomStatus.textContent='Pomodoro: stopped'; addMessage('Pomodoro finished — take a short break!', 'bot'); speak('Pomodoro finished! Take a break.'); }
-  },1000);
-}
+/* pomodoro */
+function startPomodoro(minutes=25){ if(pomOn) return addMessage('Pomodoro already running.','bot'); pomRemaining=minutes*60; pomOn=true; pomStatus.textContent=`Pomodoro: ${formatTime(pomRemaining)}`; addMessage(`Pomodoro started for ${minutes} minutes. Focus!`,'bot'); pomTimer=setInterval(()=>{ pomRemaining--; pomStatus.textContent=`Pomodoro: ${formatTime(pomRemaining)}`; if(pomRemaining<=0){ clearInterval(pomTimer); pomOn=false; pomStatus.textContent='Pomodoro: stopped'; addMessage('Pomodoro finished — take a short break!','bot'); speak('Pomodoro finished! Take a break.'); } },1000); }
 function stopPomodoro(){ if(pomTimer) clearInterval(pomTimer); pomOn=false; pomStatus.textContent='Pomodoro: stopped'; addMessage('Pomodoro stopped.','bot'); }
 function formatTime(sec){ const m=Math.floor(sec/60); const s=sec%60; return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; }
 
-/* ===== Notes & formula sheet ===== */
-function saveNote(text){ const notes = loadJSON(STORAGE.NOTES, []); notes.push({text,ts:Date.now()}); saveJSON(STORAGE.NOTES, notes); addMessage('Note saved.', 'bot'); }
-function viewNotes(){ const notes = loadJSON(STORAGE.NOTES, []); if(!notes.length) return addMessage('No notes saved.', 'bot'); addMessage(`You have ${notes.length} notes:`, 'bot'); notes.slice(-10).reverse().forEach(n=> addMessage(`${new Date(n.ts).toLocaleString()}: ${n.text}`,'bot')); }
-function saveFormula(name, value){ const f = loadJSON(STORAGE.FORM, {}); f[name]=value; saveJSON(STORAGE.FORM, f); addMessage(`Saved formula "${name}".`,'bot'); }
-function viewFormulas(){ const f = loadJSON(STORAGE.FORM, {}); const keys = Object.keys(f); if(!keys.length) return addMessage('No formulas saved.','bot'); addMessage('Saved formulas:','bot'); keys.forEach(k=> addMessage(`${k}: ${f[k]}`,'bot')); }
+/* export/import */
+function exportAll(){ const data = { flash: loadFlashcards(), notes: loadNotes(), form: loadFormulas() }; const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='sarasai-data.json'; a.click(); URL.revokeObjectURL(url); addMessage('Exported study data (download started).','bot'); }
+function importAll(){ openModal('Import data (paste JSON)','Paste exported JSON here',(val)=>{ try{ const j=JSON.parse(val); if(j.flash) saveFlashcards(j.flash); if(j.notes) saveNotes(j.notes); if(j.form) saveFormulas(j.form); addMessage('Imported data successfully.','bot'); renderFlashList(); renderNotesList(); renderFormList(); }catch(e){ addMessage('Invalid JSON. Import failed.','bot'); } }); }
 
-/* ===== Export / Import ===== */
-function exportAll(){
-  const data = { flash: loadFlashcards(), notes: loadJSON(STORAGE.NOTES,[]), form: loadJSON(STORAGE.FORM,{}) };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='sarasai-data.json'; a.click(); URL.revokeObjectURL(url);
-  addMessage('Exported study data (download started).', 'bot');
-}
-function importAll(){
-  openModal('Import data (paste JSON)', 'Paste the JSON exported earlier', (val)=>{
-    try{
-      const j = JSON.parse(val);
-      if(j.flash) saveFlashcards(j.flash);
-      if(j.notes) saveJSON(STORAGE.NOTES, j.notes);
-      if(j.form) saveJSON(STORAGE.FORM, j.form);
-      addMessage('Imported data successfully.', 'bot');
-    }catch(e){ addMessage('Invalid JSON. Import failed.','bot'); }
-  }, '');
-}
-
-/* ===== Small helpers ===== */
-function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } }
-function normalize(s){ return (s||'').toString().trim().toLowerCase().replace(/[^\w\s]/g,''); }
-
-/* ===== Math & converter (safe) ===== */
-function isMathExpression(s){
-  const t = s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+|^evaluate\s+/,'');
-  return /^[0-9\s+\-*/().,^%]+$/.test(t);
-}
-function evalMath(s){
-  const t = s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+|^evaluate\s+/,'').replace(/\^/g,'**').replace(/%/g,'/100');
-  if(t.length>200) throw new Error('too long');
-  if(!/^[0-9+\-*/().\s*]+$/.test(t.replace(/\*\*/g,'*'))) throw new Error('invalid');
-  try{ const r = Function('"use strict";return ('+t+')')(); return String(typeof r==='number' && !Number.isInteger(r) ? parseFloat(r.toFixed(6)) : r); }catch(e){ throw e; }
-}
-function tryConvert(text){
-  const m = text.toLowerCase().match(/convert\s+([\d.]+)\s*(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)\s+to\s+(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)/);
-  if(!m) return null;
-  const val = parseFloat(m[1]); const from = m[2].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb'); const to = m[3].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb');
-  const dist = { km:1000, m:1, cm:0.01, mm:0.001 }; const mass = { kg:1000, g:1, lb:453.59237 };
-  if(from in dist && to in dist){ const out=(val*dist[from])/dist[to]; return `${val} ${from} = ${out} ${to}`; }
-  if(from in mass && to in mass){ const out=(val*mass[from])/mass[to]; return `${val} ${from} = ${out} ${to}`; }
-  return null;
-}
-
-/* ===== Short facts & inventor map ===== */
-const shortFacts = {
-  photosynthesis:"Photosynthesis: plants convert sunlight + CO₂ + water into sugars and oxygen using chlorophyll.",
-  gravity:"Gravity is the force that pulls masses toward each other; Newton described the law of universal gravitation and Einstein explained gravity as curvature of spacetime.",
-  democracy:"Democracy: a system where people vote to choose leaders or decide on laws.",
-  nucleus:"Nucleus: cell's control center storing DNA and managing cell functions."
-};
-const inventorMap = {
-  "gravity":"Gravity was described mathematically by Sir Isaac Newton (17th century); Einstein later explained it as spacetime curvature.",
-  "penicillin":"Penicillin was discovered by Alexander Fleming in 1928; Florey & Chain later developed it into a drug.",
-  "telephone":"Alexander Graham Bell (1876) is credited with the first practical telephone; others had similar ideas at the same time.",
-  "light bulb":"Thomas Edison (1879) made a durable incandescent bulb and a practical lighting system; Joseph Swan and others contributed earlier.",
-  "x-ray":"X-rays were discovered by Wilhelm Röntgen in 1895.",
-  "radio":"Guglielmo Marconi developed practical radio systems; many scientists (Hertz, Tesla, Popov) contributed.",
-  "wheel":"The wheel developed in ancient times (~3500–3000 BCE); it was not a single inventor but a technological innovation.",
-  "computer":"Early concepts by Charles Babbage; modern electronic computers were built by many contributors (Turing, von Neumann, Eckert, Mauchly).",
-  "electricity":"Knowledge built over centuries: Franklin, Volta, Faraday, Maxwell and many others advanced electrical science.",
-  "vaccination":"Edward Jenner developed the smallpox vaccine concept in the late 18th century using cowpox to protect from smallpox."
-};
-
-/* ===== Improved summariser: pick top sentences by keyword frequency ===== */
-function summarizeText(paragraph, maxSentences=3){
-  if(!paragraph) return '';
-  const sents = paragraph.match(/[^.!?]+[.!?]?/g) || [paragraph];
-  const textLower = paragraph.toLowerCase();
-  const words = textLower.replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean);
-  const freq = {};
-  words.forEach(w=>{ if(w.length>3) freq[w] = (freq[w]||0) + 1; });
-  const scoreSent = sents.map(sent=>{
-    const wordsSent = sent.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean);
-    let score = 0; wordsSent.forEach(w=>{ if(freq[w]) score += freq[w]; }); score += Math.min(sent.length/100,2);
-    return {sent,score};
-  });
-  scoreSent.sort((a,b)=>b.score-a.score);
-  return scoreSent.slice(0,Math.min(maxSentences, scoreSent.length)).map(x=>x.sent.trim()).join(' ');
-}
-
-/* ===== Mini-AI fallback & intelligent pipeline ===== */
-function shortExplain(text){ const m=text.toLowerCase().match(/(?:what is|define|definition of)\s+(.+)/); const topic = m?m[1].split(/[?.]/)[0].trim():text; if(shortFacts[topic]) return shortFacts[topic]; return null; }
-
-function miniAIFallback(user){
-  const t = user.trim();
-  if(isMathExpression(t)){ try{ return "Result: " + evalMath(t); } catch(e){ return "I couldn't calculate that expression. Try simpler math like 2+2."; } }
-  const conv = tryConvert(t); if(conv) return conv;
-  const expl = shortExplain(t); if(expl) return expl;
-  // who invented/discovered pattern
-  const whoMatch = t.toLowerCase().match(/who\s+(?:invented|discovered|created|found)\s+(?:the\s+)?(.+?)[?.!]*$/i);
-  if(whoMatch){
-    const topicRaw = whoMatch[1].trim().toLowerCase().replace(/[?.!]*$/,'');
-    if(inventorMap[topicRaw]) return inventorMap[topicRaw];
-    for(const key of Object.keys(inventorMap)) if(topicRaw.includes(key)) return inventorMap[key];
-    return {text:`I don't have a built-in entry for "${topicRaw}". Many discoveries are results of multiple people. Click Search web for precise history.`, suggestSearch:true};
-  }
-  if(/summariz|summarise|short summary/i.test(t)) return 'Use the Summarize tool (click Summarize) and paste the paragraph you want summarised.';
-  if(/how to buy|buy.*phone|recommend.*phone|which phone/i.test(t)) return 'I can guide buying phones — tell me your budget and use (e.g., "Budget 20000 gaming").';
-  if(/story|short story/i.test(t)) return "Short story: A student met SarasAI late at night; SarasAI helped and the student smiled.";
-  if(/poem|write a poem/i.test(t)) return "A short poem:\nSoft code that listens and replies,\nBrightening study nights and dreams.";
-  if(/thank|thanks/i.test(t)) return "You're welcome! 😊";
-  return {text:`I don't have a precise built-in answer for: "${t}". Try rephrasing or click Search web.`, suggestSearch:true};
-}
-
-/* ===== Process user messages (main pipeline) ===== */
-function processUser(text){
-  if(!text) return;
-  if(processOneTime(text)) return;
-  addMessage(text, 'user');
-
-  // Auto-personality & pleasant typing feel
-  autoSwitchPersona(text);
-  addTyping();
-
-  setTimeout(()=>{
-    removeTyping();
-
-    // 1) Math first (if user asked to solve)
-    if(isMathExpression(text)){
-      try{
-        const res = evalMath(text);
-        reply(personaWrap("Answer: " + res));
-        return;
-      }catch(e){}
-    }
-
-    // 2) Conversion (convert 10 km to m)
-    const conv = tryConvert(text);
-    if(conv){
-      reply(personaWrap(conv));
-      return;
-    }
-
-    // 3) DEFINITIONS & "what is / define X" — run BEFORE the generic rules
-    const s = shortExplain(text);
-    if(s){
-      reply(personaWrap(s));
-      return;
-    }
-
-    // 4) Shopping / recommendation intent (student-friendly)
-    const shop = handleShoppingIntent(text);
-    if(shop){
-      reply(personaWrap(shop));
-      return;
-    }
-
-    // 5) Generic rules (greetings, study tips, etc.)
-    const r = matchRules(text);
-    if(r){
-      reply(personaWrap(r));
-      return;
-    }
-
-    // 6) mini-AI fallback (stories, poems, assist)
-    const mini = miniAIFallback(text);
-    if(typeof mini === 'string'){
-      reply(personaWrap(mini));
-      return;
-    }
-    if(mini && mini.suggestSearch){
-      replyWithSearch(mini.text, text);
-      return;
-    }
-
-    // 7) final fallback with search helper
-    reply(personaWrap("I am not sure. Try rephrasing or click Search web."), true);
-
-  }, 600 + Math.min(1200, text.length * 6));
-}
-
-/* ===== Reply helpers ===== */
-function reply(msg, showSearch=false){
-  addMessage(msg, 'bot');
-  if(voiceReply) speak(msg);
-}
-function replyWithSearch(msg, query){
-  const html = `<div style="margin-top:8px"><button class="search-button" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(query)}','_blank')">Search web for: "${escapeHtml(query)}"</button></div>`;
-  addMessage(msg, 'bot', html);
-  if(voiceReply) speak(msg);
-}
-function personaWrap(text){
-  if(currentPersona==='lovely') return text + ' 💙';
-  if(currentPersona==='teacher') return '📘 ' + text;
-  if(currentPersona==='funny') return text + ' 😂';
-  if(currentPersona==='caring') return '💖 ' + text + ' — take care!';
-  return text;
-}
-
-/* ===== Rules & shopping (student-first) ===== */
-/* NOTE: removed the generic ['define','what is'] trigger so shortExplain runs first */
-const rules = [
-  {q:['hello','hi','hey'], a:'Hello! Ready to study or have fun?'},
-  {q:['your name','who are you'], a:'I am SarasAI — your student helper.'},
-  {q:['who created you','creator'], a:'I was created lovingly by Mamatha.'},
-  {q:['what can you do','what can you do for me'], a:'I can solve math, create flashcards, summarize text, run quick quizzes, convert units, and suggest study tips.'},
-  {q:['study tips','how to study'], a:'Use Pomodoro, active recall (flashcards), and practice problems. Short sessions & spaced repetition help.'},
-  {q:['thank you','thanks'], a:'You’re welcome — happy studying!'},
-  {q:['help','how to use'], a:'Type a question or press the mic. Try: "Define photosynthesis", "What is gravity", "Solve 2+2", or click Summarize.'}
-];
-function matchRules(text){
-  const t=text.toLowerCase();
-  for(const r of rules) for(const kw of r.q) if(t.includes(kw)) return r.a;
-  return null;
-}
-
-/* ===== Search helper for fallback ===== */
-function makeSearchButton(query){
-  return `<div><button class="search-button" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(query)}','_blank')">Search web for: "${escapeHtml(query)}"</button></div>`;
-}
-
-/* ===== Speech synthesis & recognition ===== */
-function speak(text){
-  if(!('speechSynthesis' in window) || !voiceReply) return;
-  try{
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text.replace(/<[^>]*>/g,''));
-    const voices = speechSynthesis.getVoices();
-    if(voices && voices.length){ u.voice = voices.find(v=>/female|zira|kyoko|kathy|susan|english/i.test(v.name)) || voices[0]; }
-    u.rate = 1;
-    speechSynthesis.speak(u);
-  }catch(e){ console.warn('speak err', e); }
-}
+/* speech */
+function speak(text){ if(!('speechSynthesis' in window) || !voiceReply) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text.replace(/<[^>]*>/g,'')); const voices=speechSynthesis.getVoices(); if(voices && voices.length) u.voice = voices.find(v=>/female|zira|kyoko|kathy|susan|english/i.test(v.name)) || voices[0]; u.rate=1; speechSynthesis.speak(u);}catch(e){console.warn(e);} }
 let recognition, listening=false;
-if(window.SpeechRecognition || window.webkitSpeechRecognition){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SR(); recognition.lang='en-IN'; recognition.interimResults=false; recognition.maxAlternatives=1;
-  recognition.onresult = (e)=>{ const t = e.results[0][0].transcript; inputEl.value = t; processUser(t); };
-  recognition.onend = ()=>{ listening=false; micBtn.classList.remove('active'); micBtn.title='Start voice input'; };
-  recognition.onerror = (ev)=>{ listening=false; micBtn.classList.remove('active'); console.warn(ev); };
-} else { micBtn.title = 'Voice input not supported in this browser'; }
+if(window.SpeechRecognition || window.webkitSpeechRecognition){ const SR = window.SpeechRecognition || window.webkitSpeechRecognition; recognition = new SR(); recognition.lang='en-IN'; recognition.interimResults=false; recognition.maxAlternatives=1; recognition.onresult=(e)=>{ const t=e.results[0][0].transcript; inputEl.value=t; processUser(t); }; recognition.onend=()=>{ listening=false; micBtn.classList.remove('active'); micBtn.title='Start voice input'; }; recognition.onerror=(ev)=>{ listening=false; micBtn.classList.remove('active'); console.warn(ev); }; } else micBtn.title='Voice input not supported in this browser';
 
-/* ===== Event bindings ===== */
+/* events wiring */
 sendBtn.addEventListener('click', ()=>{ processUser(inputEl.value.trim()); inputEl.value=''; });
 inputEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ processUser(inputEl.value.trim()); inputEl.value=''; }});
 micBtn.addEventListener('click', ()=>{ if(!recognition){ alert('Voice not supported in this browser. Use Chrome/Edge.'); return;} if(listening){ recognition.stop(); listening=false; micBtn.classList.remove('active'); } else { recognition.start(); listening=true; micBtn.classList.add('active'); }});
 toggleSpeak.addEventListener('click', ()=>{ voiceReply = !voiceReply; toggleSpeak.textContent = voiceReply ? 'ON':'OFF'; });
 
-flashBtn.addEventListener('click', ()=>{ openModal('Create Flashcards (Q | A per line)', 'Q | A\nExample: What is photosynthesis? | Process by which plants...', (val)=>{ if(val) createFlashcardsFromInput(val); }); });
+flashBtn.addEventListener('click', ()=> openAddFlashModal());
 quizBtn.addEventListener('click', ()=> runQuickQuiz());
-summBtn.addEventListener('click', ()=>{ openModal('Summarize text (paste paragraph)', 'Paste paragraph...', (val)=>{ if(!val) return addMessage('No text provided.','bot'); const s = summarizeText(val,3); addMessage('Summary:\n'+s,'bot'); }); });
-pomBtn.addEventListener('click', ()=>{ if(!pomOn) startPomodoro(25); else stopPomodoro(); });
-notesBtn.addEventListener('click', ()=>{ openModal('Save a quick note', 'Type note...', (val)=>{ if(val) saveNote(val); }); });
+summBtn.addEventListener('click', ()=> openModal('Summarize text (paste paragraph)','Paste paragraph...',(val)=>{ if(!val) return addMessage('No text provided.','bot'); const s = summarizeText(val,3); addMessage('Summary:\\n'+s,'bot'); }));
+pomBtn.addEventListener('click', ()=> { if(!pomOn) startPomodoro(25); else stopPomodoro(); });
+notesBtn.addEventListener('click', ()=> openAddNoteModal());
+worksheetBtn.addEventListener('click', ()=> { sidePanel.style.display='flex'; openSide('flash'); });
+loadSamplesBtn.addEventListener('click', ()=> { sidePanel.style.display='flex'; openSide('flash'); });
 exportBtn.addEventListener('click', ()=> exportAll());
 importBtn.addEventListener('click', ()=> importAll());
-flashView.addEventListener('click', ()=> viewFlashcards());
-notesView.addEventListener('click', ()=> viewNotes());
-formView.addEventListener('click', ()=> viewFormulas());
+viewNotesBtn.addEventListener('click', ()=> openSide('notes'));
+viewFlashBtn.addEventListener('click', ()=> openSide('flash'));
+viewFormBtn.addEventListener('click', ()=> openSide('form'));
+document.getElementById('closeSide').addEventListener('click', ()=> sidePanel.style.display='none');
 
-/* personality manual click */
-personalityBar.querySelectorAll('label').forEach(lbl=>{
-  lbl.addEventListener('click', ()=>{ personalityBar.querySelectorAll('label').forEach(l=>l.classList.remove('activeP')); lbl.classList.add('activeP'); currentPersona = lbl.getAttribute('data-p'); addMessage('Personality set to: '+currentPersona,'bot'); });
+/* pack row handler */
+packRow.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.pack-btn');
+  if(!btn) return;
+  const p = btn.dataset.pack;
+  if(p==='math' || p==='physics' || p==='bio'){ mergeSamplePack(p); renderFlashList(); }
+  if(btn.id==='loadAllPacks'){ ['math','physics','bio'].forEach(p=>mergeSamplePack(p)); renderFlashList(); addMessage('All sample packs loaded.','bot'); }
 });
 
-/* modal helpers */
-function openModal(title, placeholder, callback, initial=''){
-  modalRoot.style.display='flex'; modalTitle.textContent = title; modalInput.value = initial; modalInput.placeholder = placeholder;
-  modalSave.onclick = ()=>{ const val = modalInput.value.trim(); modalRoot.style.display='none'; if(callback) callback(val); };
-  modalCancel.onclick = ()=>{ modalRoot.style.display='none'; };
+/* worksheet controls */
+genWorksheetBtn.addEventListener('click', ()=>{
+  const n = Math.max(1, Math.min(50, parseInt(numQ.value||10)));
+  const type = wsType.value || 'mixed';
+  const marks = Math.max(1, parseInt(marksQ.value||1));
+  const timePer = Math.max(0, parseInt(timeQ.value||2));
+  const includeAns = includeAnswers.checked;
+  const html = generateWorksheetHTML(n, type, marks, timePer, includeAns);
+  worksheetOutput.innerHTML = html; worksheetOutput.style.display = 'block';
+});
+downloadWS.addEventListener('click', ()=>{
+  const html = worksheetOutput.innerHTML || 'No worksheet';
+  const doc = `<!doctype html><html><head><meta charset="utf-8"><title>Worksheet</title></head><body>${html}</body></html>`;
+  const blob = new Blob([doc], {type:'text/html'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='worksheet.html'; a.click(); URL.revokeObjectURL(url); addMessage('Worksheet downloaded.','bot');
+});
+printWS.addEventListener('click', ()=>{
+  const html = worksheetOutput.innerHTML || 'No worksheet';
+  const includeAns = includeAnswers.checked;
+  const win = window.open('','_blank','noopener');
+  const doc = `<!doctype html><html><head><meta charset="utf-8"><title>Worksheet</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:20px;color:#061a1e}h2{margin-bottom:6px}ol{margin-left:18px}</style></head><body>${html}</body></html>`;
+  win.document.open(); win.document.write(doc); win.document.close();
+  setTimeout(()=>{ try{ win.focus(); win.print(); }catch(e){ console.warn(e); } }, 400);
+});
+copyWS.addEventListener('click', ()=>{ const sel = worksheetOutput.innerText || worksheetOutput.textContent || ''; navigator.clipboard.writeText(sel).then(()=> addMessage('Worksheet copied to clipboard.','bot')); });
+
+/* summarizer */
+function summarizeText(paragraph, maxSentences=3){
+  if(!paragraph) return '';
+  const sents = paragraph.match(/[^.!?]+[.!?]?/g) || [paragraph];
+  const textLower = paragraph.toLowerCase();
+  const words = textLower.replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean);
+  const freq = {}; words.forEach(w=>{ if(w.length>3) freq[w] = (freq[w]||0)+1; });
+  const scoreSent = sents.map(sent=>{ const wordsSent = sent.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean); let score=0; wordsSent.forEach(w=>{ if(freq[w]) score += freq[w]; }); score += Math.min(sent.length/100,2); return {sent,score}; });
+  scoreSent.sort((a,b)=>b.score-a.score);
+  return scoreSent.slice(0,Math.min(maxSentences,scoreSent.length)).map(x=>x.sent.trim()).join(' ');
 }
-window.addEventListener('click', e=>{ if(e.target.id==='modalRoot') modalRoot.style.display='none'; });
 
-/* export/import wiring */
-function exportAll(){ const data = { flash: loadFlashcards(), notes: loadJSON(STORAGE.NOTES,[]), form: loadJSON(STORAGE.FORM,{}) }; const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='sarasai-data.json'; a.click(); URL.revokeObjectURL(url); addMessage('Export started.','bot'); }
-function importAll(){ openModal('Import JSON data (paste)', 'Paste previously exported JSON', (val)=>{ try{ const j=JSON.parse(val); if(j.flash) saveFlashcards(j.flash); if(j.notes) saveJSON(STORAGE.NOTES,j.notes); if(j.form) saveJSON(STORAGE.FORM,j.form); addMessage('Import complete.','bot'); }catch(e){ addMessage('Invalid JSON.','bot'); } }); }
+/* ready message */
+window.addEventListener('load', ()=>{ setTimeout(()=>{ addMessage('Welcome! SarasAI Student Pro ready — use side panel to load samples or create printable worksheets.'); },200); speechSynthesis.getVoices(); });
 
-/* ===== Initial ready message ===== */
-window.addEventListener('load', ()=>{ setTimeout(()=>{ addMessage('Welcome! SarasAI Student Pro ready — try math, conversions, flashcards, summarize, or speak using the mic.'); },200); // ensure voices loaded
-  speechSynthesis.getVoices();
-});
 </script>
 </body>
 </html>
