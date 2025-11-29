@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SarasAI — Student Smart Chatbot (Zero Cost)</title>
+<style>
+:root{--bg:#0b0f13;--panel:#0f1418;--muted:#9aa6b2;--accent:#6ad1ff;--bubble-user:#153447;--bubble-bot:#0b2530;--bubble-radius:18px;--glass: rgba(255,255,255,0.03);}
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg,#030409 0%, #07101a 100%);color:#e6eef6}
+.container{max-width:980px;margin:18px auto;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6);}
+header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.title{display:flex;gap:12px;align-items:center}
+h1{margin:0;font-size:20px}
+.sub{color:var(--muted);font-size:13px}
+.controls{display:flex;gap:8px;align-items:center}
+.btn,.iconbtn{background:var(--panel);border:1px solid rgba(255,255,255,0.03);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
+.iconbtn{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center}
+.chat-wrap{margin-top:14px;border-radius:10px;background:var(--glass);padding:18px;height:480px;overflow:auto;border:1px solid rgba(255,255,255,0.02)}
+.messages{display:flex;flex-direction:column;gap:12px}
+.msg{max-width:78%;padding:12px 16px;border-radius:var(--bubble-radius);line-height:1.35;word-break:break-word;box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+.user{align-self:flex-end;background:linear-gradient(180deg,var(--bubble-user),#0b3240);color:#e6f7ff;border-bottom-right-radius:6px;border-bottom-left-radius:18px}
+.bot{align-self:flex-start;background:linear-gradient(180deg,var(--bubble-bot),#07121b);color:#dff3ff;border-bottom-left-radius:6px;border-bottom-right-radius:18px}
+.meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+.footer{display:flex;gap:8px;align-items:center;margin-top:12px}
+input[type="text"]{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:#08121a;color:#e8f6ff}
+.tiny{font-size:12px;color:var(--muted)}
+.personality{display:flex;gap:8px;align-items:center}
+.personality label{cursor:pointer;padding:6px 10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+.activeP{background:linear-gradient(90deg,#143b4a,#0c2e3a);color:#bff0ff;border:1px solid rgba(106,209,255,0.15)}
+.smallbtn{padding:6px 8px;border-radius:8px}
+.tools{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tool-btn{background:#072c36;border:1px solid rgba(106,209,255,0.12);color:#bff0ff;padding:8px 10px;border-radius:8px;cursor:pointer}
+.panel{margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+.small{font-size:13px;color:var(--muted)}
+.search-button{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.12);color:#bff0ff;cursor:pointer}
+.flashcard{background:linear-gradient(180deg,#071b22,#091a1e);padding:10px;border-radius:8px;margin:6px 0}
+.timer{font-weight:600;color:#bff0ff}
+</style>
+</head>
+<body>
+<div class="container" role="application" aria-label="SarasAI student chat">
+  <header>
+    <div class="title">
+      <h1>✨ SarasAI — Student Helper</h1>
+      <div class="sub">Auto-mood personality • Study tools • Flashcards • Pomodoro • Voice/Text</div>
+    </div>
+    <div class="controls">
+      <div class="tiny">Voice Reply</div>
+      <button id="toggleSpeak" class="btn smallbtn" title="Toggle voice replies">ON</button>
+    </div>
+  </header>
+
+  <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+    <div>
+      <div class="tiny">Personality (auto):</div>
+      <div id="personalityBar" class="personality" role="tablist" aria-label="Choose personality">
+        <label data-p="lovely">Lovely</label>
+        <label data-p="teacher">Teacher</label>
+        <label data-p="funny">Funny</label>
+        <label data-p="caring">Caring</label>
+      </div>
+    </div>
+    <div style="margin-left:auto">
+      <button id="clearBtn" class="btn smallbtn">Clear chat</button>
+    </div>
+  </div>
+
+  <div class="tools">
+    <button id="flashBtn" class="tool-btn">Flashcards</button>
+    <button id="quizBtn" class="tool-btn">Quick Quiz</button>
+    <button id="summBtn" class="tool-btn">Summarize Text</button>
+    <button id="pomBtn" class="tool-btn">Pomodoro</button>
+    <button id="notesBtn" class="tool-btn">Notes</button>
+    <button id="formulaBtn" class="tool-btn">Formula Sheet</button>
+  </div>
+
+  <div id="panel" class="panel small">SarasAI ready — talk, study, and have fun. Try: "Solve 2+2", "Convert 10 km to m", "How to buy a phone", or click Flashcards to create study cards.</div>
+
+  <div id="chat-wrap" class="chat-wrap" aria-live="polite">
+    <div id="messages" class="messages">
+      <div class="meta">SarasAI ready — student mode active.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button id="micBtn" class="iconbtn" title="Start voice input">🎤</button>
+    <input id="input" type="text" placeholder="Type a message or press the mic to speak">
+    <button id="sendBtn" class="btn">Send</button>
+  </div>
+</div>
+
+<!-- Modals (simple) -->
+<div id="modalRoot" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;padding:18px;z-index:9999">
+  <div id="modal" style="max-width:760px;width:100%;background:#07121a;border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.04);color:#e6eef6">
+    <div id="modalTitle" style="font-weight:700;margin-bottom:8px"></div>
+    <textarea id="modalInput" style="width:100%;height:180px;background:#0b1418;border:1px solid rgba(255,255,255,0.04);color:#e6eef6;padding:8px;border-radius:8px"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end">
+      <button id="modalCancel" class="btn smallbtn">Cancel</button>
+      <button id="modalSave" class="btn smallbtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* SarasAI — Student edition (zero-cost, client-side) */
+
+/* Hooks */
+const messagesEl = document.getElementById('messages');
+const inputEl = document.getElementById('input');
+const sendBtn = document.getElementById('sendBtn');
+const micBtn = document.getElementById('micBtn');
+const clearBtn = document.getElementById('clearBtn');
+const toggleSpeak = document.getElementById('toggleSpeak');
+const personalityBar = document.getElementById('personalityBar');
+const panel = document.getElementById('panel');
+
+let voiceReply = true;
+let currentPersona = 'lovely'; // will auto-change
+let lastMood = null;
+
+/* ---------- Storage keys ---------- */
+const STORAGE = {
+  FLASH: 'sarasai_flashcards_v1',
+  NOTES: 'sarasai_notes_v1',
+  FORM: 'sarasai_formulas_v1'
+};
+
+/* ---------- Utilities ---------- */
+function escapeHtml(s){ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function addMessage(text, who='bot', extraHTML=''){
+  const div = document.createElement('div');
+  div.className = 'msg ' + (who==='user'?'user':'bot');
+  const name = (who==='user'?'You':'SarasAI');
+  const safe = escapeHtml(text).replace(/\n/g,'<br>');
+  div.innerHTML = `<strong>${name}:</strong> ${safe}${extraHTML||''}`;
+  messagesEl.appendChild(div);
+  document.getElementById('chat-wrap').scrollTop = document.getElementById('chat-wrap').scrollHeight;
+}
+
+/* ---------- Personality & Mood detection ---------- */
+function detectMood(text){
+  const t = text.toLowerCase();
+  // sadness / stress
+  const sad = ['sad','depressed','upset','stressed','anxious','tired','angry','frustrated','help me please','i failed','i am low','cant'];
+  const happy = ['happy','great','good','awesome','nice','thank you','thanks','yay','love','excited','cool'];
+  const questiony = ['how','what','why','explain','define','solve','calculate','how to','help me','teach'];
+  const joke = ['joke','funny','lol','haha','😂','😄'];
+  // check
+  for(const w of sad) if(t.includes(w)) return 'caring';
+  for(const w of questiony) if(t.startsWith(w) || t.includes('how to') || t.includes('solve') || t.includes('explain')) return 'teacher';
+  for(const w of joke) if(t.includes(w)) return 'funny';
+  for(const w of happy) if(t.includes(w)) return 'lovely';
+  // punctuation heuristics
+  if(t.endsWith('?')) return 'teacher';
+  // default: if message has many exclamation marks -> fun/lovely
+  if((t.match(/!/g)||[]).length>1) return 'funny';
+  return null;
+}
+function autoSwitchPersona(text){
+  const mood = detectMood(text);
+  if(mood && mood !== currentPersona){
+    currentPersona = mood;
+    // visually select the persona button if exists
+    personalityBar.querySelectorAll('label').forEach(l=>l.classList.remove('activeP'));
+    const lbl = personalityBar.querySelector(`label[data-p="${mood}"]`);
+    if(lbl) lbl.classList.add('activeP');
+    addMessage(`(Auto) switched personality to: ${mood}`, 'bot');
+    lastMood = mood;
+  }
+}
+
+/* ---------- Rules, math, convert, shopping (student-friendly) ---------- */
+const rules = [
+  {q:['hello','hi','hey'], a:'Hello! Ready to study or have fun?'},
+  {q:['your name','who are you'], a:'I am SarasAI — your student helper.'},
+  {q:['who created you','creator'], a:'I was created lovingly by Mamatha.'},
+  {q:['what can you do','what can you do for me'], a:'I can solve math, make flashcards, summarize text, run a quick quiz, do unit conversions, and offer study tips.'},
+  {q:['tell me a joke','joke'], a:'Why did the math book look sad? Because it had too many problems! 😄'},
+  {q:['study tips','how to study'], a:'Use Pomodoro (25 min sessions), active recall (flashcards), and practice problems. Short, frequent sessions are best.'},
+  {q:['good morning','good night'], a:'Good wishes! Study well and rest well.'},
+  {q:['thank you','thanks'], a:'You’re welcome! I am always here to help.'},
+  {q:['define','definition','what is'], a:'Ask like "Define photosynthesis" or "What is gravity" and I will give a short summary.'},
+];
+
+/* ---------- Math helpers ---------- */
+function isMathExpression(s){
+  const t = s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+|^evaluate\s+/,'');
+  return /^[0-9\s+\-*/().,^%]+$/.test(t);
+}
+function evalMath(s){
+  const t = s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+|^evaluate\s+/,'').replace(/\^/g,'**').replace(/%/g,'/100');
+  if(t.length>200) throw new Error('too long');
+  if(!/^[0-9+\-*/().\s*]+$/.test(t.replace(/\*\*/g,'*'))) throw new Error('invalid');
+  try{ const r = Function('"use strict";return ('+t+')')(); return String(typeof r==='number' && !Number.isInteger(r) ? parseFloat(r.toFixed(6)) : r); }catch(e){ throw e; }
+}
+
+/* ---------- Converter ---------- */
+function tryConvert(text){
+  const m = text.toLowerCase().match(/convert\s+([\d.]+)\s*(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)\s+to\s+(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)/);
+  if(!m) return null;
+  const val = parseFloat(m[1]);
+  const from = m[2].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb');
+  const to = m[3].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb');
+  const dist = { km:1000, m:1, cm:0.01, mm:0.001 };
+  const mass = { kg:1000, g:1, lb:453.59237 };
+  if(from in dist && to in dist){ const out = (val * dist[from]) / dist[to]; return `${val} ${from} = ${out} ${to}`; }
+  if(from in mass && to in mass){ const out = (val * mass[from]) / mass[to]; return `${val} ${from} = ${out} ${to}`; }
+  return null;
+}
+
+/* ---------- Short explain templates ---------- */
+const shortFacts = {
+  photosynthesis: "Photosynthesis: plants convert sunlight + CO₂ + water into sugars and oxygen; chlorophyll absorbs light.",
+  gravity: "Gravity: force pulling masses together; keeps planets in orbit and objects on ground.",
+  democracy: "Democracy: system where people vote to choose leaders and make decisions.",
+  nucleus: "Nucleus: cell part holding DNA, controlling cell activities."
+};
+function shortExplain(text){
+  const m = text.toLowerCase().match(/(?:what is|define|definition of)\s+(.+)/);
+  const topic = m ? m[1].split(/[?.]/)[0].trim() : text;
+  if(shortFacts[topic]) return shortFacts[topic];
+  return null;
+}
+
+/* ---------- Mini AI fallback tuned for students ---------- */
+function miniAIFallback(user){
+  const t = user.trim();
+  if(isMathExpression(t)){ try{ return "Result: " + evalMath(t); }catch(e){ return "I couldn't calculate that. Try a simpler expression like 2+2."; } }
+  const conv = tryConvert(t); if(conv) return conv;
+  const expl = shortExplain(t); if(expl) return expl;
+  if(/summarize|short summary|summarise/i.test(t)) return "Use the Summarize tool (click Summarize Text) and paste the paragraph you want summarised.";
+  if(/how to buy|buy.*phone|recommend.*phone|which phone/i.test(t)) return "Use 'How to buy a phone'—I can guide step-by-step and ask your budget.";
+  if(/story|short story/i.test(t)) return "Short story: A student met SarasAI at midnight — the bot helped and the student smiled.";
+  if(/poem|write a poem/i.test(t)) return "A short poem:\nCode that listens, soft and bright,\nSarasAI helps you study at night.";
+  if(/thank|thanks/i.test(t)) return "You're welcome! 😊";
+  // fallback: offer search button
+  return {text:`I don't have a precise built-in answer for: "${t}". Try refining your question or click Search web.`, suggestSearch:true};
+}
+
+/* ---------- Flashcards (localStorage) ---------- */
+function loadFlashcards(){ try{ return JSON.parse(localStorage.getItem(STORAGE.FLASH)||'[]'); }catch(e){ return []; } }
+function saveFlashcards(list){ localStorage.setItem(STORAGE.FLASH, JSON.stringify(list)); }
+function openModal(title, placeholder, callbackSave, initial=''){
+  const root = document.getElementById('modalRoot'); const titleEl = document.getElementById('modalTitle'); const input = document.getElementById('modalInput');
+  titleEl.textContent = title; input.value = initial; input.placeholder = placeholder; root.style.display='flex';
+  document.getElementById('modalCancel').onclick = ()=>{ root.style.display='none'; };
+  document.getElementById('modalSave').onclick = ()=>{ const val = input.value.trim(); root.style.display='none'; callbackSave(val); };
+}
+function createFlashcardsFromInput(text){
+  // Expect user to enter lines like "Q | A" or "Q - A"
+  const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+  const existing = loadFlashcards();
+  let added = 0;
+  for(const line of lines){
+    const sep = line.includes('|') ? '|' : (line.includes('-')?'-':null);
+    if(sep){
+      const [q,a] = line.split(sep).map(s=>s.trim());
+      if(q && a){ existing.push({q,a}); added++; }
+    } else {
+      // try to split into question+short answer automatically
+      const words = line.split(' ');
+      const q = line; const a = '';
+      existing.push({q,a}); added++;
+    }
+  }
+  saveFlashcards(existing);
+  addMessage(`Saved ${added} flashcard(s). Use Quick Quiz to test.`, 'bot');
+}
+function showFlashcards(){
+  const list = loadFlashcards();
+  if(!list.length){ addMessage("No flashcards found. Click Flashcards and create some (format: Question | Answer, one per line).", 'bot'); return; }
+  addMessage(`You have ${list.length} flashcards:`, 'bot');
+  // show briefly up to 10
+  for(let i=0;i<Math.min(list.length, 10); i++){
+    const f = list[i];
+    const html = `<div class="flashcard"><strong>Q:</strong> ${escapeHtml(f.q)}<br><strong>A:</strong> ${escapeHtml(f.a||'—')}</div>`;
+    // inject as extra HTML
+    addMessage('', 'bot', html);
+  }
+}
+
+/* ---------- Quiz ---------- */
+function runQuickQuiz(){
+  const list = loadFlashcards();
+  if(!list.length){ addMessage("No flashcards — create some first.", 'bot'); return; }
+  // pick up to 5 random
+  const pool = [...list]; shuffleArray(pool);
+  const quiz = pool.slice(0, Math.min(5, pool.length));
+  let idx=0, score=0;
+  addMessage("Starting quick quiz! Answer in chat. (Type the answer)", 'bot');
+  const askNext = ()=>{
+    if(idx>=quiz.length){ addMessage(`Quiz finished. Score: ${score}/${quiz.length}`, 'bot'); return; }
+    addMessage(`Q${idx+1}: ${quiz[idx].q}`, 'bot');
+    // wait for user's answer — attach temporary handler
+    const handler = (msg)=>{
+      const correct = normalizeAnswer(quiz[idx].a);
+      const given = normalizeAnswer(msg);
+      if(given && correct && given.includes(correct) || given === correct || (!correct && given.length>0)) { score++; addMessage('Correct! 🎉','bot'); }
+      else addMessage(`Not quite. Answer: ${quiz[idx].a || '—'}`,'bot');
+      idx++; removeListener(); setTimeout(askNext, 300);
+    };
+    const removeListener = attachOneTimeUserHandler(handler);
+  };
+  askNext();
+}
+
+/* helpers: normalize & attach one-time user handler */
+function normalizeAnswer(s){ return (s||'').toString().trim().toLowerCase().replace(/[^\w\s]/g,''); }
+function attachOneTimeUserHandler(fn){
+  function h(text){ fn(text); }
+  oneTimeHandlers.push(h);
+  return ()=>{ const i = oneTimeHandlers.indexOf(h); if(i>=0) oneTimeHandlers.splice(i,1); };
+}
+let oneTimeHandlers = [];
+function processOneTime(text){
+  if(oneTimeHandlers.length){ const f = oneTimeHandlers.shift(); try{ f(text); }catch(e){} return true; } return false;
+}
+
+/* ---------- Pomodoro timer ---------- */
+let pomTimer=null; let pomRemaining=0; let pomOn=false;
+function startPomodoro(minutes=25){
+  if(pomOn){ addMessage("Pomodoro already running.", 'bot'); return; }
+  pomRemaining = minutes*60; pomOn=true;
+  addMessage(`Pomodoro started: ${minutes} minutes. Focus!`, 'bot');
+  panel.innerHTML = `<div class="timer">Pomodoro: ${formatTime(pomRemaining)}</div>`;
+  pomTimer = setInterval(()=>{
+    pomRemaining--;
+    panel.innerHTML = `<div class="timer">Pomodoro: ${formatTime(pomRemaining)}</div>`;
+    if(pomRemaining<=0){ clearInterval(pomTimer); pomOn=false; panel.innerHTML='Pomodoro finished! Take a 5-min break.'; speakText('Pomodoro finished! Take a short break.'); addMessage('Pomodoro finished — take a break!', 'bot'); }
+  },1000);
+}
+function stopPomodoro(){ if(pomTimer) clearInterval(pomTimer); pomOn=false; panel.innerHTML='Pomodoro stopped.'; addMessage('Pomodoro stopped.','bot'); }
+function formatTime(sec){ const m = Math.floor(sec/60); const s = sec%60; return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; }
+
+/* ---------- Notes ---------- */
+function saveNote(text){
+  const notes = JSON.parse(localStorage.getItem(STORAGE.NOTES)||'[]');
+  notes.push({text, ts:Date.now()});
+  localStorage.setItem(STORAGE.NOTES, JSON.stringify(notes));
+  addMessage('Note saved.', 'bot');
+}
+function showNotes(){
+  const notes = JSON.parse(localStorage.getItem(STORAGE.NOTES)||'[]');
+  if(!notes.length){ addMessage('No notes yet. Use Notes -> Save to store short notes.', 'bot'); return; }
+  addMessage(`You have ${notes.length} notes:`, 'bot');
+  notes.slice().reverse().slice(0,10).forEach(n=> addMessage(new Date(n.ts).toLocaleString()+': '+n.text, 'bot'));
+}
+
+/* ---------- Formula sheet ---------- */
+function loadFormulas(){ try{ return JSON.parse(localStorage.getItem(STORAGE.FORM)||'{}'); }catch(e){ return {}; } }
+function saveFormula(name, value){ const f = loadFormulas(); f[name]=value; localStorage.setItem(STORAGE.FORM, JSON.stringify(f)); addMessage(`Saved formula "${name}".`, 'bot'); }
+function showFormulas(){ const f=loadFormulas(); const keys=Object.keys(f); if(!keys.length){ addMessage('No formulas saved. Use Formula Sheet to add.', 'bot'); return; } addMessage('Saved formulas:', 'bot'); keys.forEach(k=>addMessage(`${k}: ${f[k]}`, 'bot')); }
+
+/* ---------- Helpers ---------- */
+function shuffleArray(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } }
+function speakText(text){ if(!('speechSynthesis' in window) || !voiceReply) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text.replace(/<[^>]*>/g,'')); const voices=speechSynthesis.getVoices(); if(voices && voices.length) u.voice = voices.find(v=>/female|zira|kyoko|kathy|susan|english/i.test(v.name)) || voices[0]; u.rate=1; speechSynthesis.speak(u);}catch(e){console.warn(e);} }
+
+/* ---------- Main pipeline ---------- */
+function processUser(text){
+  if(!text) return;
+  // check one-time handlers first (quiz answers etc.)
+  if(processOneTime(text)) return;
+  addMessage(text,'user');
+  autoSwitchPersona(text); // mood-based personality
+  // shopping intent (student-friendly)
+  const shop = handleShoppingIntent(text);
+  if(shop){ setTimeout(()=>{ addMessage(personaModify(shop),'bot'); if(voiceReply) speakText(shop); },300); return; }
+  // rules
+  const r = matchRule(text);
+  if(r){ const out = personaModify(r); setTimeout(()=>{ addMessage(out,'bot'); if(voiceReply) speakText(out); },250); return; }
+  // conversions
+  const conv = tryConvert(text);
+  if(conv){ const out = personaModify(conv); setTimeout(()=>{ addMessage(out,'bot'); if(voiceReply) speakText(out); },300); return; }
+  // math
+  if(isMathExpression(text)){
+    try{ const ans = evalMath(text); const out = personaModify("Answer: " + ans); setTimeout(()=>{ addMessage(out,'bot'); if(voiceReply) speakText(out); },300); return; }catch(e){ /* fallthrough */ }
+  }
+  // short explain
+  const expl = shortExplain(text);
+  if(expl){ const out = personaModify(expl); setTimeout(()=>{ addMessage(out,'bot'); if(voiceReply) speakText(out); },300); return; }
+  // mini AI fallback
+  const mini = miniAIFallback(text);
+  if(typeof mini==='string'){ const out=personaModify(mini); setTimeout(()=>{ addMessage(out,'bot'); if(voiceReply) speakText(out); },350); return; }
+  if(mini && mini.suggestSearch){ const out=personaModify(mini.text); setTimeout(()=>{ addMessage(out,'bot', makeSearchButton(text)); if(voiceReply) speakText(out); },350); return; }
+  // default fallback
+  const fallback = personaModify("I am not sure, try rephrasing or click Search web.");
+  setTimeout(()=>{ addMessage(fallback,'bot', makeSearchButton(text)); if(voiceReply) speakText(fallback); },350);
+}
+
+/* ---------- Helpers used by pipeline ---------- */
+function matchRule(userText){
+  const t = userText.toLowerCase();
+  for(const r of rules) for(const kw of r.q) if(t.includes(kw)) return r.a;
+  return null;
+}
+function personaModify(text){
+  const p = currentPersona;
+  if(p==='lovely') return text + ' 💙';
+  if(p==='teacher') return '📘 ' + text;
+  if(p==='funny') return text + ' 😂';
+  if(p==='caring') return '💖 ' + text + ' — take care!';
+  return text;
+}
+function makeSearchButton(query){
+  const encoded = encodeURIComponent(query);
+  const html = `<div><button class="search-button" onclick="window.open('https://www.google.com/search?q=${encoded}','_blank')">Search web for: "${escapeHtml(query)}"</button></div>`;
+  return html;
+}
+
+/* ---------- Shopping intent (from earlier) ---------- */
+function handleShoppingIntent(text){
+  const t = text.toLowerCase();
+  if(/buy.*phone|how to buy.*phone|which phone|recommend.*phone|best phone/i.test(t)){
+    const guide = [
+      "1) Decide budget (low: ₹8k-15k, mid: ₹15k-30k, high: ₹30k+).",
+      "2) Choose priorities: camera/battery/gaming/updates.",
+      "3) Look for battery ≥4000 mAh and decent charging speed.",
+      "4) For camera, check sample photos & reviews.",
+      "5) For gaming, prefer recent chipset and 90/120Hz display.",
+      "6) Buy from official sellers & check warranty."
+    ].join('\n\n');
+    return guide + '\n\nTell me your budget and main use (e.g., "Budget 20000 gaming").';
+  }
+  const m = t.match(/(?:budget\s*)(\d{3,6})\s*(?:in|₹)?\s*(.*)/i);
+  if(m){
+    const b = parseInt(m[1],10); const use = (m[2]||'').trim();
+    const rec = getRecommendationByBudget(b);
+    if(rec){ let out = `Budget: ${b}. Category: ${rec.label}.\n${rec.desc}`; if(use.includes('camera')) out += '\n\nFocus on OIS and software processing.'; if(use.includes('gaming')) out += '\n\nFocus on chipset, display refresh, and cooling.'; return out; }
+  }
+  return null;
+}
+const recommendations = [
+  {min:0,max:15000,label:'Budget',desc:'Good for basics: 4GB RAM, 64GB storage, 4000mAh battery.'},
+  {min:15001,max:30000,label:'Mid-range',desc:'6-8GB RAM, 128GB, 5000mAh battery, balanced camera.'},
+  {min:30001,max:70000,label:'Upper-mid',desc:'Flag-like performance, AMOLED, better cameras.'},
+  {min:70001,max:9999999,label:'Flagship',desc:'Top-tier performance, best cameras & displays.'}
+];
+function getRecommendationByBudget(b){ for(const r of recommendations) if(b>=r.min && b<=r.max) return r; return null; }
+
+/* ---------- Events ---------- */
+sendBtn.addEventListener('click', ()=>{ processUser(inputEl.value.trim()); inputEl.value=''; });
+inputEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ processUser(inputEl.value.trim()); inputEl.value=''; }});
+clearBtn.addEventListener('click', ()=>{ messagesEl.innerHTML = '<div class="meta">Chat cleared. SarasAI student mode active.</div>'; });
+toggleSpeak.addEventListener('click', ()=>{ voiceReply = !voiceReply; toggleSpeak.textContent = voiceReply ? 'ON' : 'OFF'; });
+
+/* persona bar manual click (but we auto-switch too) */
+personalityBar.querySelectorAll('label').forEach(lbl=>{
+  lbl.addEventListener('click', ()=>{ personalityBar.querySelectorAll('label').forEach(l=>l.classList.remove('activeP')); lbl.classList.add('activeP'); currentPersona = lbl.getAttribute('data-p'); addMessage('Personality set to: '+currentPersona,'bot'); });
+});
+
+/* tool buttons */
+document.getElementById('flashBtn').addEventListener('click', ()=> {
+  openModal('Create Flashcards (one per line — format: Question | Answer)', 'Q | A\nExample: What is photosynthesis? | Process by which plants...', (val)=>{ if(val) createFlashcardsFromInput(val); });
+});
+document.getElementById('quizBtn').addEventListener('click', ()=> runQuickQuiz());
+document.getElementById('summBtn').addEventListener('click', ()=> {
+  openModal('Summarize text (paste paragraph)', 'Paste the paragraph to summarize', (val)=>{
+    if(!val){ addMessage('No text provided for summary.','bot'); return; }
+    // simple summarizer: pick top 3 sentences by length/position heuristic
+    const sents = val.match(/[^.!?]+[.!?]*/g) || [val];
+    const pick = sents.slice(0,3).join(' ');
+    addMessage('Summary:\n' + pick,'bot');
+  });
+});
+document.getElementById('pomBtn').addEventListener('click', ()=> {
+  if(!pomOn) startPomodoro(25); else stopPomodoro();
+});
+document.getElementById('notesBtn').addEventListener('click', ()=> {
+  openModal('Save a Quick Note', 'Type a short note (will be saved locally).', (val)=>{ if(val) saveNote(val); });
+});
+document.getElementById('formulaBtn').addEventListener('click', ()=> {
+  openModal('Add formula (format: name | formula)', 'e.g. Quadratic formula | x = (-b ± sqrt(b^2-4ac))/(2a)', (val)=>{
+    if(!val){ addMessage('No formula added.','bot'); return; }
+    const sep = val.includes('|') ? '|' : '-';
+    if(!sep){ addMessage('Use format: name | formula','bot'); return; }
+    const [n,f] = val.split(sep).map(x=>x.trim());
+    if(n && f) saveFormula(n,f); else addMessage('Invalid format.','bot');
+  });
+});
+
+/* ---------- Voice recognition ---------- */
+let recognition, listening=false;
+if(window.SpeechRecognition || window.webkitSpeechRecognition){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.lang='en-IN';
+  recognition.interimResults=false; recognition.maxAlternatives=1;
+  recognition.onresult = (e)=>{ const t = e.results[0][0].transcript; inputEl.value = t; processUser(t); };
+  recognition.onend = ()=>{ listening=false; micBtn.classList.remove('mic-on'); micBtn.title='Start voice input'; };
+  recognition.onerror = (ev)=>{ listening=false; micBtn.classList.remove('mic-on'); console.warn('speech error',ev); };
+} else micBtn.title='Voice not supported';
+micBtn.addEventListener('click', ()=>{ if(!recognition){ alert('Voice input not supported in this browser'); return; } if(listening){ recognition.stop(); listening=false; micBtn.classList.remove('mic-on'); } else { recognition.start(); listening=true; micBtn.classList.add('mic-on'); } });
+
+/* ---------- Modal handlers - for notes/flashcards/summary ---------- */
+document.getElementById('modalRoot').addEventListener('click', (e)=>{ if(e.target.id==='modalRoot') document.getElementById('modalRoot').style.display='none'; });
+
+/* ---------- On load ---------- */
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{ addMessage('Welcome! SarasAI Student Helper ready. Try: "Solve 2+2", "Summarize", create flashcards, or start Pomodoro."', 'bot'); }, 200);
+  // ensure voices loaded
+  speechSynthesis.getVoices();
+});
+
+</script>
+</body>
+</html>
