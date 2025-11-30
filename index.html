@@ -1,548 +1,401 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>SarasAI — Student Pro (Worksheets, Samples)</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SarasAI — Student Chat (Zero-cost Wiki Lookup)</title>
 <style>
-:root{--bg:#071017;--panel:#0d1418;--muted:#9aa6b2;--accent:#6ad1ff;--user:#0e3b4a;--bot:#07212a;--bubble-radius:16px}
-*{box-sizing:border-box}body{margin:0;height:100%;font-family:Inter,Segoe UI,Arial,system-ui;background:linear-gradient(180deg,var(--bg),#031018);color:#eaf5ff}
-.container{max-width:1200px;margin:18px auto;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(0,0,0,0.6)}
-.header{display:flex;align-items:center;gap:12px;justify-content:space-between}.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#0ba6e6,#6ad1ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#04202a}h1{margin:0;font-size:20px}.sub{color:var(--muted);font-size:13px}.controls{display:flex;gap:8px;align-items:center}.btn{background:var(--panel);border:1px solid rgba(255,255,255,0.03);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}.iconbtn{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center}.tools{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.tool-btn{background:linear-gradient(90deg,#072c36,#0b2630);border:1px solid rgba(106,209,255,0.08);color:#bff0ff;padding:8px 10px;border-radius:10px;cursor:pointer}.panel{margin-top:12px;padding:12px;border-radius:10px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02);color:var(--muted)}.chat-area{display:flex;gap:12px;margin-top:12px}.left{flex:1}.right{width:320px}.chat-wrap{border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:14px;height:560px;overflow:auto;border:1px solid rgba(255,255,255,0.02)}.messages{display:flex;flex-direction:column;gap:12px}.msg{max-width:78%;padding:12px 16px;border-radius:var(--bubble-radius);line-height:1.35;word-break:break-word;box-shadow:0 10px 30px rgba(0,0,0,0.45)}.msg.bot{align-self:flex-start;background:linear-gradient(180deg,var(--bot),#03151b);color:#dff6ff;border-bottom-left-radius:8px}.msg.user{align-self:flex-end;background:linear-gradient(180deg,var(--user),#063642);color:#e9fbff;border-bottom-right-radius:8px}.meta{font-size:12px;color:var(--muted);margin-bottom:6px}.footer{display:flex;gap:8px;align-items:center;margin-top:12px}.input{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:#071218;color:#eaffff}.small{font-size:13px;color:var(--muted)}.personality{display:flex;gap:8px;align-items:center}.personality label{cursor:pointer;padding:6px 10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}.activeP{background:linear-gradient(90deg,#143b4a,#0c2e3a);color:#bff0ff;border:1px solid rgba(106,209,255,0.15)}.card{background:linear-gradient(180deg,#05121a,#07151a);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}.search-button{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.12);color:#bff0ff;cursor:pointer}.typing-dots{display:inline-block;height:22px;padding:6px;border-radius:12px;background:rgba(255,255,255,0.02)}.dot{display:inline-block;width:6px;height:6px;margin:0 3px;border-radius:50%;background:#9fdfff;opacity:0.9;animation:blink 1s infinite}@keyframes blink{0%{opacity:.9}50%{opacity:.2}100%{opacity:.9}}.side-panel{position:fixed;right:18px;top:18px;width:420px;bottom:18px;background:#06141a;border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 40px rgba(0,0,0,0.6);display:none;flex-direction:column;z-index:2000}.side-header{display:flex;justify-content:space-between;align-items:center;gap:8px}.side-list{overflow:auto;padding-top:8px;flex:1}.item{background:linear-gradient(180deg,#071b22,#091a1e);padding:10px;border-radius:8px;margin:8px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.item .text{flex:1}.item .meta{color:var(--muted);font-size:12px}.item .actions{display:flex;gap:6px}.smallbtn{padding:6px 8px;border-radius:8px}.worksheet-area{margin-top:8px}.worksheet-output{background:#06161a;padding:10px;border-radius:8px;max-height:300px;overflow:auto}.controls-row{display:flex;gap:8px;margin-top:8px;align-items:center}.hide{display:none}.pack-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pack-btn{padding:8px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.07);cursor:pointer;color:#bff0ff}.tips{font-size:13px;color:var(--muted);margin-top:8px}
-/* responsive */
-@media(max-width:1000px){ .side-panel{position:static;width:100%;height:50vh;margin-top:12px} .right{display:none} .container{max-width:920px} }
+  :root{
+    --bg:#031517; --panel:#06191d; --muted:#9fb6bf; --accent:#6ad1ff;
+    --left:#04242b; --right:#06383f; --radius:18px;
+  }
+  *{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Arial,system-ui}
+  body{margin:0;background:linear-gradient(180deg,var(--bg),#021214);color:#e8fbff}
+  .app{max-width:980px;margin:18px auto;padding:18px}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0bb7e8,#6ad1ff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#012; font-size:22px}
+  h1{margin:0;font-size:20px}
+  .sub{color:var(--muted);font-size:13px}
+  .controls{display:flex;gap:8px;align-items:center}
+  .btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+  .tools{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .tool-btn{background:linear-gradient(90deg,#072c36,#0b2630);border:1px solid rgba(106,209,255,0.06);color:#bff0ff;padding:8px 10px;border-radius:10px;cursor:pointer}
+  .main{display:flex;gap:16px;margin-top:12px}
+  .chat{flex:1; display:flex; flex-direction:column}
+  .chat-window{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006)); border-radius:12px; padding:14px; height:560px; overflow:auto; border:1px solid rgba(255,255,255,0.02)}
+  .messages{display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:78%;padding:12px 16px;border-radius:var(--radius);line-height:1.35;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+  .msg.bot{align-self:flex-start;background:linear-gradient(180deg,var(--left),#012426);color:#dbfbff;border-bottom-left-radius:8px}
+  .msg.user{align-self:flex-end;background:linear-gradient(180deg,var(--right),#033b3f);color:#eaffff;border-bottom-right-radius:8px}
+  .meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .footer{display:flex;gap:8px;align-items:center;margin-top:12px}
+  .input{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:#071417;color:#eaffff}
+  .personality{display:flex;gap:8px;align-items:center}
+  .personality label{cursor:pointer;padding:6px 10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
+  .activeP{background:linear-gradient(90deg,#133c4b,#0c2f36);color:#bff0ff;border:1px solid rgba(106,209,255,0.15)}
+  .right{width:320px}
+  .card{background:linear-gradient(180deg,#04171a,#05181b);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+  .list{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+  .small{font-size:13px;color:var(--muted)}
+  .typing{display:inline-block;padding:6px;border-radius:12px;background:rgba(255,255,255,0.02)}
+  .dot{display:inline-block;width:6px;height:6px;margin:0 3px;border-radius:50%;background:#9fdfff;animation:blink 1s infinite}
+  @keyframes blink{0%{opacity:1}50%{opacity:.2}100%{opacity:1}}
+  .flash-item{padding:8px;border-radius:8px;background:linear-gradient(90deg,#022a2d,#03363a);color:#dff7ff;display:flex;justify-content:space-between;align-items:center}
+  .search-button{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.12);color:#bff0ff;cursor:pointer}
+  footer.small{margin-top:14px;text-align:center;color:var(--muted);font-size:12px}
+  @media(max-width:940px){ .main{flex-direction:column} .right{width:100%} .chat-window{height:420px} }
 </style>
 </head>
 <body>
-<div class="container" role="application" aria-label="SarasAI Pro with Worksheets">
-  <div class="header">
-    <div class="brand">
-      <div class="logo">S</div>
-      <div>
-        <h1>SarasAI — Student Pro</h1>
-        <div class="sub">Notes, Flashcards, Worksheet generator, Pomodoro, Voice & Text</div>
-      </div>
-    </div>
-    <div class="controls">
-      <div class="small">Voice</div>
-      <button id="toggleSpeak" class="btn">ON</button>
-    </div>
-  </div>
-
-  <div class="tools">
-    <button id="flashBtn" class="tool-btn">Flashcards</button>
-    <button id="quizBtn" class="tool-btn">Quick Quiz</button>
-    <button id="summBtn" class="tool-btn">Summarize</button>
-    <button id="pomBtn" class="tool-btn">Pomodoro</button>
-    <button id="notesBtn" class="tool-btn">Notes</button>
-    <button id="worksheetBtn" class="tool-btn">Create Worksheet</button>
-    <button id="loadSamples" class="tool-btn">Load Sample Packs</button>
-    <button id="exportBtn" class="tool-btn">Export Data</button>
-    <button id="importBtn" class="tool-btn">Import Data</button>
-  </div>
-
-  <div class="panel card small">Now with sample packs, printable worksheet layout, marks/time settings, and MCQ/Short/Mixed worksheet options.</div>
-
-  <div class="chat-area">
-    <div class="left">
-      <div class="chat-wrap" id="chat-wrap" aria-live="polite">
-        <div id="messages" class="messages">
-          <div class="meta">SarasAI ready — student-first tools enabled.</div>
+  <div class="app" role="application" aria-label="SarasAI">
+    <div class="top">
+      <div class="brand">
+        <div class="logo">S</div>
+        <div>
+          <h1>SarasAI — Student Chat</h1>
+          <div class="sub">Dark • Bubble • Voice + Text • Wiki lookup (free)</div>
         </div>
       </div>
+      <div class="controls">
+        <div class="small">Voice Reply</div>
+        <button id="toggleSpeak" class="btn">ON</button>
+      </div>
+    </div>
 
-      <div class="footer">
-        <button id="micBtn" class="iconbtn">🎤</button>
-        <input id="input" class="input" placeholder="Type a message or press mic to speak">
-        <button id="sendBtn" class="btn">Send</button>
-        <div class="footer-right">
-          <div class="personality" id="personalityBar" aria-label="Personality (auto)">
-            <label data-p="lovely">Lovely</label>
+    <div class="tools">
+      <button id="jokeBtn" class="tool-btn">Tell a joke</button>
+      <button id="poemBtn" class="tool-btn">Short poem</button>
+      <button id="summBtn" class="tool-btn">Summarize (paste)</button>
+      <button id="flashBtn" class="tool-btn">Add flashcards</button>
+    </div>
+
+    <div class="main">
+      <div class="chat">
+        <div class="chat-window" id="chatWindow" aria-live="polite">
+          <div class="messages" id="messages">
+            <div class="meta">SarasAI ready — try "solve 2+2", "define photosynthesis", or "tell me a joke".</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <button id="micBtn" class="btn" title="Voice input">🎤</button>
+          <input id="input" class="input" placeholder="Type a message or press mic to speak" aria-label="Message input">
+          <button id="sendBtn" class="btn">Send</button>
+
+          <div class="personality" id="personalityBar" title="Personality">
+            <label data-p="lovely" class="activeP">Lovely</label>
             <label data-p="teacher">Teacher</label>
             <label data-p="funny">Funny</label>
             <label data-p="caring">Caring</label>
+            <label data-p="auto">Auto</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div><strong>Quick tools</strong><div class="small">Student-friendly</div></div>
+            <div class="small" id="statusVoice">Voice: ON</div>
+          </div>
+          <div class="list">
+            <div class="small">Flashcards (local)</div>
+            <div id="flashList" style="max-height:160px;overflow:auto"></div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button id="addFlashBtn" class="btn">Add</button>
+              <button id="clearFlashBtn" class="btn">Clear</button>
+            </div>
+            <div style="margin-top:8px">
+              <div class="small">Fallback</div>
+              <div class="small">If I don't know, I try Wikipedia (free) or give a Google button.</div>
+              <div style="margin-top:8px"><button id="openGoogle" class="search-button">Open Google</button></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="right">
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div><strong>Study Tools</strong><div class="small">Quick access</div></div>
-          <div id="pomStatus" class="small">Pomodoro: stopped</div>
-        </div>
-        <hr style="border-color:rgba(255,255,255,0.02);margin:8px 0"/>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <button id="viewNotes" class="btn">View Notes</button>
-          <button id="viewFlash" class="btn">View Flashcards</button>
-          <button id="viewForm" class="btn">Formula Sheet</button>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:12px">
-        <div><strong>Quick Tips</strong></div>
-        <ul style="padding-left:18px;color:var(--muted);font-size:13px">
-          <li>Use flashcards + quiz for active recall</li>
-          <li>Try Pomodoro for focused sessions</li>
-          <li>Create worksheets and print to PDF for practice</li>
-        </ul>
-      </div>
-    </div>
+    <footer class="small">SarasAI — offline-first student helper. Wikipedia lookups are free and run from your browser.</footer>
   </div>
-</div>
-
-<!-- Side panel -->
-<div id="sidePanel" class="side-panel" role="region" aria-label="Side panel">
-  <div class="side-header">
-    <div><strong id="sideTitle">Notes</strong><div class="small" id="sideSubtitle">Manage and edit</div></div>
-    <div><button id="closeSide" class="btn">Close</button></div>
-  </div>
-  <div style="display:flex;gap:8px;margin-top:8px">
-    <button id="addItemBtn" class="btn smallbtn">Add</button>
-    <button id="deleteAllBtn" class="btn smallbtn">Delete All</button>
-    <div style="margin-left:auto" class="small">Total: <span id="sideCount">0</span></div>
-  </div>
-  <div class="pack-row" id="packRow">
-    <button class="pack-btn" data-pack="math">Load Math Pack</button>
-    <button class="pack-btn" data-pack="physics">Load Physics Pack</button>
-    <button class="pack-btn" data-pack="bio">Load Biology Pack</button>
-    <button class="pack-btn" id="loadAllPacks">Load All Packs</button>
-  </div>
-  <div class="side-list" id="sideList"></div>
-
-  <div class="worksheet-area">
-    <hr style="border-color:rgba(255,255,255,0.02)"/>
-    <div style="display:flex;gap:8px;align-items:center">
-      <label class="small">Number</label>
-      <input id="numQ" type="number" min="1" max="50" value="10" style="width:70px;padding:6px;border-radius:6px;background:#071218;border:1px solid rgba(255,255,255,0.03);color:#eaffff">
-      <label class="small">Type</label>
-      <select id="wsType" style="padding:6px;border-radius:6px;background:#071218;border:1px solid rgba(255,255,255,0.03);color:#eaffff">
-        <option value="mixed">Mixed</option><option value="mcq">MCQ only</option><option value="short">Short answer</option>
-      </select>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
-      <label class="small">Marks/Q</label>
-      <input id="marksQ" type="number" min="1" max="20" value="1" style="width:70px;padding:6px;border-radius:6px;background:#071218;border:1px solid rgba(255,255,255,0.03);color:#eaffff">
-      <label class="small">Time/Q (min)</label>
-      <input id="timeQ" type="number" min="0" max="60" value="2" style="width:70px;padding:6px;border-radius:6px;background:#071218;border:1px solid rgba(255,255,255,0.03);color:#eaffff">
-      <button id="genWorksheet" class="btn">Generate</button>
-    </div>
-    <div class="tips">When printing: use browser Print → Save as PDF. Use "Include answers" to print teacher copy.</div>
-    <div class="worksheet-output" id="worksheetOutput" style="margin-top:8px;display:none"></div>
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button id="downloadWS" class="btn">Download HTML</button>
-      <button id="printWS" class="btn">Print (PDF)</button>
-      <button id="copyWS" class="btn">Copy</button>
-      <label style="margin-left:auto"><input id="includeAnswers" type="checkbox"> Include answers</label>
-    </div>
-  </div>
-</div>
-
-<!-- modal root -->
-<div id="modalRoot" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;padding:18px;z-index:9999">
-  <div id="modal" style="max-width:760px;width:100%;background:#07121a;border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.04);color:#e6eef6">
-    <div id="modalTitle" style="font-weight:700;margin-bottom:8px"></div>
-    <textarea id="modalInput" style="width:100%;height:220px;background:#0b1418;border:1px solid rgba(255,255,255,0.04);color:#e6eef6;padding:8px;border-radius:8px"></textarea>
-    <div style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end">
-      <button id="modalCancel" class="btn">Cancel</button>
-      <button id="modalSave" class="btn">Save</button>
-    </div>
-  </div>
-</div>
 
 <script>
-/* SarasAI — upgraded with sample packs & printable worksheets */
-
-/* STORAGE */
-const STORAGE = { FLASH:'saras_flash_v3', NOTES:'saras_notes_v3', FORM:'saras_form_v3' };
+/* SarasAI — single-file zero-cost Wikipedia lookup chat */
 
 /* DOM */
 const messagesEl = document.getElementById('messages');
+const chatWindow = document.getElementById('chatWindow');
 const inputEl = document.getElementById('input');
 const sendBtn = document.getElementById('sendBtn');
 const micBtn = document.getElementById('micBtn');
-const flashBtn = document.getElementById('flashBtn');
-const quizBtn = document.getElementById('quizBtn');
-const summBtn = document.getElementById('summBtn');
-const pomBtn = document.getElementById('pomBtn');
-const notesBtn = document.getElementById('notesBtn');
-const worksheetBtn = document.getElementById('worksheetBtn');
-const loadSamplesBtn = document.getElementById('loadSamples');
-const exportBtn = document.getElementById('exportBtn');
-const importBtn = document.getElementById('importBtn');
-const viewNotesBtn = document.getElementById('viewNotes');
-const viewFlashBtn = document.getElementById('viewFlash');
-const viewFormBtn = document.getElementById('viewForm');
 const toggleSpeak = document.getElementById('toggleSpeak');
+const statusVoice = document.getElementById('statusVoice');
 const personalityBar = document.getElementById('personalityBar');
-const modalRoot = document.getElementById('modalRoot');
-const modalInput = document.getElementById('modalInput');
-const modalTitle = document.getElementById('modalTitle');
-const modalCancel = document.getElementById('modalCancel');
-const modalSave = document.getElementById('modalSave');
-
-const sidePanel = document.getElementById('sidePanel');
-const sideTitle = document.getElementById('sideTitle');
-const sideList = document.getElementById('sideList');
-const sideCount = document.getElementById('sideCount');
-const addItemBtn = document.getElementById('addItemBtn');
-const deleteAllBtn = document.getElementById('deleteAllBtn');
-const closeSide = document.getElementById('closeSide');
-const packRow = document.getElementById('packRow');
-
-const genWorksheetBtn = document.getElementById('genWorksheet');
-const worksheetOutput = document.getElementById('worksheetOutput');
-const downloadWS = document.getElementById('downloadWS');
-const printWS = document.getElementById('printWS');
-const copyWS = document.getElementById('copyWS');
-const numQ = document.getElementById('numQ');
-const wsType = document.getElementById('wsType');
-const marksQ = document.getElementById('marksQ');
-const timeQ = document.getElementById('timeQ');
-const includeAnswers = document.getElementById('includeAnswers');
+const jokeBtn = document.getElementById('jokeBtn');
+const poemBtn = document.getElementById('poemBtn');
+const summBtn = document.getElementById('summBtn');
+const flashBtn = document.getElementById('flashBtn');
+const addFlashBtn = document.getElementById('addFlashBtn');
+const clearFlashBtn = document.getElementById('clearFlashBtn');
+const flashListEl = document.getElementById('flashList');
+const openGoogle = document.getElementById('openGoogle');
 
 let voiceReply = true;
-let currentPersona = 'lovely';
+let currentPersona = 'lovely'; // lovely|teacher|funny|caring|auto
 let oneTimeHandlers = [];
-let pomTimer = null, pomRemaining = 0, pomOn = false;
-
-/* Sample packs */
-const samplePacks = {
-  math: [
-    {q:"What is 7*8?", a:"56"},
-    {q:"Differentiate x^2", a:"2x"},
-    {q:"Integrate 2x dx", a:"x^2 + C"},
-    {q:"What is the area of a circle with radius r?", a:"πr^2"},
-    {q:"Solve: 3x+5=20", a:"x=5"}
-  ],
-  physics: [
-    {q:"State Newton's second law.", a:"F = ma"},
-    {q:"What is the speed of light (approx)?", a:"3×10^8 m/s"},
-    {q:"Define kinetic energy.", a:"½ mv^2"},
-    {q:"Ohm's law equation?", a:"V = IR"},
-    {q:"Unit of force?", a:"Newton (N)"}
-  ],
-  bio: [
-    {q:"What is photosynthesis?", a:"Process by which plants convert sunlight into chemical energy."},
-    {q:"Where is DNA stored in a cell?", a:"Nucleus"},
-    {q:"Name the basic unit of life.", a:"Cell"},
-    {q:"What carries oxygen in blood?", a:"Hemoglobin"},
-    {q:"What organelle makes ATP?", a:"Mitochondria"}
-  ]
-};
-
-/* utils */
-function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function addMessage(text, who='bot', extraHTML=''){ const div=document.createElement('div'); div.className='msg '+(who==='user'?'user':'bot'); const name=(who==='user'?'You':'SarasAI'); const safe=escapeHtml(text).replace(/\n/g,'<br>'); div.innerHTML=`<strong>${name}:</strong> ${safe}${extraHTML||''}`; messagesEl.appendChild(div); document.getElementById('chat-wrap').scrollTop = document.getElementById('chat-wrap').scrollHeight;}
-function addTyping(){ const div=document.createElement('div'); div.id='typing'; div.className='msg bot'; div.innerHTML=`<div class="typing-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`; messagesEl.appendChild(div); document.getElementById('chat-wrap').scrollTop=document.getElementById('chat-wrap').scrollHeight;}
-function removeTyping(){ const t=document.getElementById('typing'); if(t) t.remove(); }
-
-/* storage */
-function loadJSON(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback)); }catch(e){return fallback;} }
-function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
-function loadFlashcards(){ return loadJSON(STORAGE.FLASH, []); }
-function saveFlashcards(list){ saveJSON(STORAGE.FLASH, list); }
-function loadNotes(){ return loadJSON(STORAGE.NOTES, []); }
-function saveNotes(list){ saveJSON(STORAGE.NOTES, list); }
-function loadFormulas(){ return loadJSON(STORAGE.FORM, {}); }
-function saveFormulas(obj){ saveJSON(STORAGE.FORM, obj); }
-
-/* add sample packs*/
-function mergeSamplePack(name){
-  const pack = samplePacks[name];
-  if(!pack) return;
-  const cur = loadFlashcards();
-  let added = 0;
-  pack.forEach(p=>{
-    cur.push({q:p.q, a:p.a});
-    added++;
-  });
-  saveFlashcards(cur);
-  addMessage(`Loaded ${added} flashcards from ${name} pack.`, 'bot');
-}
-
-/* open side panel */
-function openSide(kind){
-  sidePanel.style.display='flex';
-  worksheetOutput.style.display='none';
-  sideList.innerHTML=''; sideTitle.textContent = kind === 'notes' ? 'Notes' : (kind === 'flash' ? 'Flashcards' : 'Formula Sheet');
-  if(kind === 'notes'){ renderNotesList(); addItemBtn.onclick = ()=> openAddNoteModal(); deleteAllBtn.onclick = ()=> { if(confirm('Delete all notes?')){ saveNotes([]); renderNotesList(); addMessage('All notes deleted.','bot'); } } }
-  if(kind === 'flash'){ renderFlashList(); addItemBtn.onclick = ()=> openAddFlashModal(); deleteAllBtn.onclick = ()=> { if(confirm('Delete all flashcards?')){ saveFlashcards([]); renderFlashList(); addMessage('All flashcards deleted.','bot'); } } }
-  if(kind === 'form'){ renderFormList(); addItemBtn.onclick = ()=> openAddFormulaModal(); deleteAllBtn.onclick = ()=> { if(confirm('Delete all formulas?')){ saveFormulas({}); renderFormList(); addMessage('All formulas deleted.','bot'); } } }
-}
-
-/* renderers */
-function renderNotesList(){
-  const notes = loadNotes().slice().reverse();
-  sideCount.textContent = notes.length;
-  sideList.innerHTML = '';
-  notes.forEach((n, idx)=> {
-    const el = document.createElement('div'); el.className='item';
-    const txt = document.createElement('div'); txt.className='text'; txt.innerHTML = `<div class="meta">${new Date(n.ts).toLocaleString()}</div><div>${escapeHtml(n.text)}</div>`;
-    const actions = document.createElement('div'); actions.className='actions';
-    const edit = document.createElement('button'); edit.className='btn smallbtn'; edit.textContent='Edit'; edit.onclick = ()=> openEditNoteModal(notes.length-1-idx);
-    const del = document.createElement('button'); del.className='btn smallbtn'; del.textContent='Delete'; del.onclick = ()=> { if(confirm('Delete this note?')){ const all=loadNotes(); all.splice(all.length-1-idx,1); saveNotes(all); renderNotesList(); addMessage('Note deleted.','bot'); } };
-    actions.appendChild(edit); actions.appendChild(del);
-    el.appendChild(txt); el.appendChild(actions); sideList.appendChild(el);
-  });
-}
-function renderFlashList(){
-  const cards = loadFlashcards();
-  sideCount.textContent = cards.length;
-  sideList.innerHTML='';
-  cards.forEach((f, idx)=>{
-    const el=document.createElement('div'); el.className='item';
-    const txt=document.createElement('div'); txt.className='text'; txt.innerHTML=`<div class="meta">Q</div><div><strong>${escapeHtml(f.q)}</strong></div><div class="meta">A</div><div>${escapeHtml(f.a||'—')}</div>`;
-    const actions=document.createElement('div'); actions.className='actions';
-    const edit=document.createElement('button'); edit.className='btn smallbtn'; edit.textContent='Edit'; edit.onclick=()=> openEditFlashModal(idx);
-    const del=document.createElement('button'); del.className='btn smallbtn'; del.textContent='Delete'; del.onclick=()=>{ if(confirm('Delete this flashcard?')){ const all=loadFlashcards(); all.splice(idx,1); saveFlashcards(all); renderFlashList(); addMessage('Flashcard deleted.','bot'); } };
-    actions.appendChild(edit); actions.appendChild(del);
-    el.appendChild(txt); el.appendChild(actions); sideList.appendChild(el);
-  });
-}
-function renderFormList(){
-  const f = loadFormulas(); const keys = Object.keys(f);
-  sideCount.textContent = keys.length;
-  sideList.innerHTML='';
-  keys.forEach((k)=>{ const el=document.createElement('div'); el.className='item';
-    const txt=document.createElement('div'); txt.className='text'; txt.innerHTML=`<div class="meta">${escapeHtml(k)}</div><div>${escapeHtml(f[k])}</div>`;
-    const actions=document.createElement('div'); actions.className='actions';
-    const edit=document.createElement('button'); edit.className='btn smallbtn'; edit.textContent='Edit'; edit.onclick=()=> openEditFormulaModal(k);
-    const del=document.createElement('button'); del.className='btn smallbtn'; del.textContent='Delete'; del.onclick=()=>{ if(confirm('Delete this formula?')){ const cur=loadFormulas(); delete cur[k]; saveFormulas(cur); renderFormList(); addMessage('Formula deleted.','bot'); } };
-    actions.appendChild(edit); actions.appendChild(del);
-    el.appendChild(txt); el.appendChild(actions); sideList.appendChild(el);
-  });
-}
-
-/* modal helpers */
-function openModal(title, placeholder, callback, initial=''){ modalRoot.style.display='flex'; modalTitle.textContent = title; modalInput.value = initial; modalInput.placeholder = placeholder; modalSave.onclick = ()=>{ const val=modalInput.value.trim(); modalRoot.style.display='none'; if(callback) callback(val); }; modalCancel.onclick = ()=> modalRoot.style.display='none'; }
-function openAddNoteModal(){ openModal('Add Note','Type your note here (short).', (val)=>{ if(!val) return; const notes = loadNotes(); notes.push({text:val,ts:Date.now()}); saveNotes(notes); renderNotesList(); addMessage('Note saved.','bot'); }); }
-function openEditNoteModal(indexFromStart){ const notes = loadNotes(); const idx = indexFromStart; const item = notes[idx]; openModal('Edit Note','Edit note text', (val)=>{ if(val===null) return; notes[idx].text = val; saveNotes(notes); renderNotesList(); addMessage('Note updated.','bot'); }, item.text); }
-function openAddFlashModal(){ openModal('Add Flashcards (Q | A)', 'One per line: Q | A', (val)=>{ if(!val) return createFlashcardsFromInput(val); }); }
-function openEditFlashModal(idx){ const cards = loadFlashcards(); const c = cards[idx]; openModal('Edit Flashcard','Q | A', (val)=>{ if(!val) return; const sep = val.includes('|') ? '|' : (val.includes('-')?'-':null); if(sep){ const [q,a] = val.split(sep).map(s=>s.trim()); cards[idx] = {q,a}; saveFlashcards(cards); renderFlashList(); addMessage('Flashcard updated.','bot'); } else addMessage('Invalid format. Use Q | A','bot'); }, `${c.q} | ${c.a}`); }
-function openAddFormulaModal(){ openModal('Add Formula (name | formula)','e.g. Quadratic | x = (-b ± sqrt(b^2-4ac))/(2a)', (val)=>{ if(!val) return; const sep = val.includes('|') ? '|' : '-'; if(!sep){ addMessage('Use format: name | formula','bot'); return; } const [n,f] = val.split(sep).map(s=>s.trim()); if(n && f){ const all = loadFormulas(); all[n] = f; saveFormulas(all); renderFormList(); addMessage(`Saved formula "${n}".`,'bot'); } }); }
-function openEditFormulaModal(key){ const all = loadFormulas(); openModal('Edit formula', 'name | formula', (val)=>{ if(!val) return; const sep = val.includes('|') ? '|' : '-'; const [n,f] = val.split(sep).map(s=>s.trim()); if(n && f){ delete all[key]; all[n]=f; saveFormulas(all); renderFormList(); addMessage('Formula updated.','bot'); } }, `${key} | ${all[key]}`); }
-
-/* flashcard parsing */
-function createFlashcardsFromInput(text){
-  const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-  const existing = loadFlashcards();
-  let added=0;
-  for(const line of lines){
-    const sep = line.includes('|') ? '|' : (line.includes('-')?'-':null);
-    if(sep){ const [q,a] = line.split(sep).map(s=>s.trim()); if(q){ existing.push({q,a}); added++; } } else { existing.push({q:line,a:''}); added++; }
-  }
-  saveFlashcards(existing); addMessage(`Saved ${added} flashcard(s).`,'bot');
-}
-
-/* worksheet content gathering */
-function gatherContentForWorksheet(){
-  const notes = loadNotes();
-  const flash = loadFlashcards();
-  const qpool = [];
-  flash.forEach(f=>{ if(f.q) qpool.push({type:'short',q:f.q,a:f.a}); });
-  notes.forEach(n=>{
-    const sents = n.text.match(/[^.!?]+[.!?]?/g) || [n.text];
-    sents.slice(0,5).forEach(sent=>{
-      const trimmed = sent.trim();
-      if(trimmed.length>20) qpool.push({type:'short',q:`Explain: ${trimmed.substring(0,140)}`, a: trimmed});
-    });
-  });
-  return qpool;
-}
-
-/* make MCQ */
-function makeMCQFromPair(q,a){
-  const correct = a || 'Answer';
-  const wrong1 = (correct.length>10)? correct.slice(0,Math.floor(correct.length/2)) + '...' : correct + 'X';
-  const wrong2 = 'Not ' + (correct.split(' ')[0] || 'that');
-  const wrong3 = correct.split(' ').reverse().slice(0,3).join(' ') || (correct + 'Y');
-  const opts = [correct, wrong1, wrong2, wrong3].map(s=>s.trim());
-  for(let i=opts.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [opts[i],opts[j]]=[opts[j],opts[i]]; }
-  return opts;
-}
-
-/* generate worksheet html (student view or teacher with answers) */
-function generateWorksheetHTML(numQuestions=10, type='mixed', marksPerQ=1, timePerQ=2, includeAns=false){
-  const pool = gatherContentForWorksheet();
-  if(!pool.length) return '<div>No study content found. Add notes or flashcards first.</div>';
-  const out = []; let used=0;
-  shuffleArray(pool);
-  for(let i=0;i<pool.length && used<numQuestions;i++){
-    const item = pool[i];
-    // choose question type based on requested type
-    let chooseMCQ = (type==='mcq') || (type==='mixed' && Math.random()>0.4);
-    if(type==='short') chooseMCQ = false;
-    if(chooseMCQ){
-      const opts = makeMCQFromPair(item.q, item.a||'—');
-      out.push({q:item.q, type:'mcq', opts, ans:item.a});
-    } else {
-      out.push({q:item.q, type:'short', ans:item.a});
-    }
-    used++;
-  }
-  // build printable HTML
-  let totalMarks = used * marksPerQ;
-  let timeTotal = used * timePerQ;
-  let html = `<div style="font-family:Arial,Helvetica,sans-serif;color:#061a1e"><h2>SarasAI Worksheet</h2><div>Questions: ${used} &nbsp; Marks/Q: ${marksPerQ} &nbsp; Total Marks: ${totalMarks} &nbsp; Time: ${timeTotal} min</div><hr/>`;
-  html += `<ol>`;
-  out.forEach((it, idx)=>{
-    if(it.type==='mcq'){
-      html += `<li style="margin-bottom:10px"><div style="font-weight:600">${escapeHtml(it.q)}</div><div style="margin-left:12px">`;
-      it.opts.forEach((o,j)=> html += `<div>${String.fromCharCode(65+j)}. ${escapeHtml(o)}</div>`);
-      html += `</div><div style="margin-top:6px;color:#333">${marksPerQ} mark(s)</div></li>`;
-    } else {
-      html += `<li style="margin-bottom:12px"><div style="font-weight:600">${escapeHtml(it.q)}</div><div style="margin-top:6px;color:#333">Answer: _________________________</div><div style="margin-top:6px;color:#333">${marksPerQ} mark(s)</div></li>`;
-    }
-  });
-  html += `</ol>`;
-  if(includeAns){
-    html += `<hr/><h3>Answer Key</h3><ol>`;
-    out.forEach(it=>{ if(it.type==='mcq'){ html += `<li>${escapeHtml(it.ans||'—')}</li>` } else { html += `<li>${escapeHtml(it.ans||'—')}</li>` } });
-    html += `</ol>`;
-  }
-  html += `</div>`;
-  return html;
-}
+let flashcards = loadJSON('saras_flash_v0', []);
+let recognition, listening=false;
 
 /* helpers */
-function shuffleArray(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } }
-function normalize(s){ return (s||'').toString().trim().toLowerCase().replace(/[^\w\s]/g,''); }
+function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function addMessage(text, who='bot', extra=''){
+  const div = document.createElement('div');
+  div.className = 'msg ' + (who==='user'?'user':'bot');
+  const safe = escapeHtml(text).replace(/\n/g,'<br>');
+  div.innerHTML = `<strong>${who==='user'?'You':'SarasAI'}:</strong> ${safe} ${extra||''}`;
+  messagesEl.appendChild(div);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+function addTyping(){ const d=document.createElement('div'); d.id='typing'; d.className='msg bot'; d.innerHTML = `<div class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`; messagesEl.appendChild(d); chatWindow.scrollTop = chatWindow.scrollHeight; }
+function removeTyping(){ const t=document.getElementById('typing'); if(t) t.remove(); }
+function loadJSON(k,fallback){ try{ return JSON.parse(localStorage.getItem(k)||JSON.stringify(fallback)); }catch(e){ return fallback; } }
+function saveJSON(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
 
-/* small mini-AI (math, conv, short facts) */
-function isMathExpression(s){ const t=s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+|^evaluate\s+/,''); return /^[0-9\s+\-*/().,^%]+$/.test(t); }
-function evalMath(s){ const t=s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+|^evaluate\s+/,'').replace(/\^/g,'**').replace(/%/g,'/100'); if(t.length>200) throw new Error('too long'); if(!/^[0-9+\-*/().\s*]+$/.test(t.replace(/\*\*/g,'*'))) throw new Error('invalid'); try{ const r = Function('"use strict";return ('+t+')')(); return String(typeof r==='number' && !Number.isInteger(r) ? parseFloat(r.toFixed(6)) : r); }catch(e){ throw e; } }
-function tryConvert(text){ const m=text.toLowerCase().match(/convert\s+([\d.]+)\s*(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)\s+to\s+(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)/); if(!m) return null; const val=parseFloat(m[1]); const from=m[2].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb'); const to=m[3].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb'); const dist={km:1000,m:1,cm:0.01,mm:0.001}; const mass={kg:1000,g:1,lb:453.59237}; if(from in dist && to in dist){ const out=(val*dist[from])/dist[to]; return `${val} ${from} = ${out} ${to}`; } if(from in mass && to in mass){ const out=(val*mass[from])/mass[to]; return `${val} ${from} = ${out} ${to}`; } return null; }
-const shortFacts = { photosynthesis:"Photosynthesis: plants convert sunlight + CO₂ + water into sugars and oxygen using chlorophyll.", gravity:"Gravity is the force that pulls masses toward each other; Newton described the law.", nucleus:"Nucleus: cell's control center storing DNA and managing cell functions." };
-function shortExplain(text){ const m=text.toLowerCase().match(/(?:what is|define|definition of)\s+(.+)/); const topic = m?m[1].split(/[?.]/)[0].trim():text; if(shortFacts[topic]) return shortFacts[topic]; return null; }
-function miniAIFallback(user){
-  const t=user.trim();
-  if(isMathExpression(t)){ try{ return "Result: "+evalMath(t); }catch(e){ return "I couldn't calculate that.";} }
-  const conv = tryConvert(t); if(conv) return conv;
-  const expl = shortExplain(t); if(expl) return expl;
-  if(/thank|thanks|nice|good job/i.test(t)) return "You're welcome! 😊";
-  if(/story|short story/i.test(t)) return "Short story: A student met SarasAI and learned well.";
-  if(/poem|write a poem/i.test(t)) return "A short poem:\nSoft code that listens and replies.";
-  return {text:`I don't have a precise built-in answer for: "${t}". Try rephrasing or click Search web.`, suggestSearch:true};
+/* personality UI */
+function setPersona(p){
+  currentPersona = p;
+  personalityBar.querySelectorAll('label').forEach(l=>l.classList.remove('activeP'));
+  const lbl = personalityBar.querySelector(`label[data-p="${p}"]`);
+  if(lbl) lbl.classList.add('activeP');
+}
+personalityBar.querySelectorAll('label').forEach(lbl=>{
+  lbl.addEventListener('click', ()=> setPersona(lbl.dataset.p));
+});
+
+/* simple mood detection */
+function detectMood(text){
+  const t=text.toLowerCase();
+  if(/\b(sad|tired|upset|stressed|angry|depressed)\b/.test(t)) return 'caring';
+  if(/\b(joke|lol|haha|funny|😀|😁|😂)\b/.test(t)) return 'funny';
+  if(/^(what|why|how|explain|define|solve|calculate)/i.test(t)) return 'teacher';
+  return null;
 }
 
-/* process user */
-function processUser(text){
+/* voice */
+toggleSpeak.addEventListener('click', ()=>{ voiceReply = !voiceReply; toggleSpeak.textContent = voiceReply ? 'ON':'OFF'; statusVoice.textContent = 'Voice: ' + (voiceReply?'ON':'OFF'); if(!voiceReply) speechSynthesis.cancel(); });
+
+function speak(text){
+  if(!voiceReply) return;
+  if(!('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text.replace(/<[^>]+>/g,''));
+    const voices = speechSynthesis.getVoices();
+    if(voices && voices.length) u.voice = voices.find(v=>/female|zira|kyoko|kathy|susan|english/i.test(v.name)) || voices[0];
+    u.rate = 1;
+    speechSynthesis.speak(u);
+  }catch(e){ console.warn(e); }
+}
+
+/* speech recognition */
+if(window.SpeechRecognition || window.webkitSpeechRecognition){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.lang = 'en-IN';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+  recognition.onresult = (e)=>{ const t = e.results[0][0].transcript; inputEl.value = t; processUser(t); };
+  recognition.onend = ()=>{ listening=false; micBtn.classList.remove('active'); };
+  recognition.onerror = (e)=>{ listening=false; micBtn.classList.remove('active'); console.warn(e); };
+  micBtn.addEventListener('click', ()=> {
+    if(!recognition) return alert('Voice not supported in this browser (use Chrome/Edge).');
+    if(listening){ recognition.stop(); listening=false; micBtn.classList.remove('active'); }
+    else { recognition.start(); listening=true; micBtn.classList.add('active'); }
+  });
+} else {
+  micBtn.addEventListener('click', ()=> alert('Voice input not supported in this browser.'));
+}
+
+/* small knowledge, jokes, poems */
+const shortFacts = {
+  photosynthesis: "Photosynthesis: plants convert sunlight + CO₂ + water into sugars and oxygen using chlorophyll.",
+  gravity: "Gravity is the force pulling masses together; Newton gave a classical law and Einstein explained spacetime curvature.",
+  nucleus: "Nucleus: cell's control center, storing DNA and directing activities."
+};
+const inventorMap = {
+  telephone: "Alexander Graham Bell is credited with early telephone work; many contributed.",
+  penicillin: "Alexander Fleming discovered penicillin in 1928; others developed it into medicine.",
+  gravity: "Isaac Newton formulated universal gravitation; Einstein later expanded the theory."
+};
+const jokes = [
+  "Why did the math book look sad? Because it had too many problems. 😢➕",
+  "Why don't scientists trust atoms? Because they make up everything! 😆",
+  "I told a geometry joke — it went over everyone's head (it was acute)."
+];
+const poems = [
+  "Short poem:\nLate-night study, coffee strong,\nSarasAI hums a friendly song.",
+  "Tiny poem:\nBooks and stars and little fights,\nWe learn, we laugh, we code all night."
+];
+
+/* utils: math & conversion */
+function isMathExpression(s){
+  const t = s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+/,'');
+  return /^[0-9\s+\-*/().,^%]+$/.test(t);
+}
+function evalMath(s){
+  const t = s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+/,'').replace(/\^/g,'**').replace(/%/g,'/100');
+  if(t.length>200) throw new Error('too long');
+  if(!/^[0-9+\-*/().\s*]+$/.test(t.replace(/\*\*/g,'*'))) throw new Error('invalid');
+  try{ const r = Function('"use strict";return ('+t+')')(); return (typeof r==='number' && !Number.isInteger(r)) ? parseFloat(r.toFixed(6)) : r; }catch(e){ throw e; }
+}
+function tryConvert(text){
+  const m = text.toLowerCase().match(/convert\s+([\d.]+)\s*(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)\s+to\s+(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)/);
+  if(!m) return null;
+  const val = parseFloat(m[1]); const from = m[2].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb'); const to = m[3].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb');
+  const dist = { km:1000, m:1, cm:0.01, mm:0.001 }; const mass = { kg:1000, g:1, lb:453.59237 };
+  if(from in dist && to in dist){ const out=(val*dist[from])/dist[to]; return `${val} ${from} = ${out} ${to}`; }
+  if(from in mass && to in mass){ const out=(val*mass[from])/mass[to]; return `${val} ${from} = ${out} ${to}`; }
+  return null;
+}
+
+/* fallback & NLU */
+function miniAIFallback(user){
+  const t = user.trim();
+  if(/^(thanks|thank you|thx|nice|good job|awesome)/i.test(t)) return "You're welcome! 😊";
+  if(/joke|tell me a joke|funny/i.test(t)) return jokes[Math.floor(Math.random()*jokes.length)];
+  if(/poem|write a poem/i.test(t)) return poems[Math.floor(Math.random()*poems.length)];
+  if(/who (?:invented|discovered|created)/i.test(t)){
+    const m = t.toLowerCase().match(/who (?:invented|discovered|created) (?:the\s+)?(.+?)[?.!]*$/i);
+    if(m){
+      const topic = m[1].trim().toLowerCase();
+      if(inventorMap[topic]) return inventorMap[topic];
+      for(const k of Object.keys(inventorMap)) if(topic.includes(k)) return inventorMap[k];
+      return {text:`I don't have a built-in answer for "${topic}". Try rephrasing or click Search web.`, suggestSearch:true};
+    }
+  }
+  if(/summariz|summarise|short summary/i.test(t)) return 'Click Summarize and paste the paragraph you want shortened.';
+  if(/how to buy|buy.*phone|which phone/i.test(t)) return 'Tell me your budget and needs (battery/gaming/camera) and I will guide you.';
+  if(/story|short story/i.test(t)) return "Short story: A student learned patiently with SarasAI and smiled at the end.";
+  return {text:`I don't have a precise built-in answer for: "${t}". Try rephrasing or I will try Wikipedia.`, suggestSearch:true};
+}
+
+/* persona wrapper */
+function personaWrap(text){
+  if(currentPersona==='auto'){ const m = detectMood(text); if(m) { /* optional auto-switch */ } }
+  if(currentPersona==='lovely') return text + ' 💙';
+  if(currentPersona==='teacher') return '📘 ' + text;
+  if(currentPersona==='funny') return text + ' 😂';
+  if(currentPersona==='caring') return '💖 ' + text + ' — take care!';
+  return text;
+}
+
+/* Wikipedia lookup (zero-cost, client-side) */
+async function wikiLookup(query){
+  try {
+    const title = encodeURIComponent(query.trim().split(/\s+/).slice(0,6).join('_'));
+    const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${title}`;
+    const res = await fetch(url);
+    if(!res.ok) return null;
+    const j = await res.json();
+    if(j.extract){
+      return {
+        title: j.title || query,
+        extract: j.extract,
+        url: j.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${title}`
+      };
+    }
+    return null;
+  } catch(e){
+    return null;
+  }
+}
+
+/* process user (async because we may call wiki) */
+async function processUser(raw){
+  const text = String(raw||'').trim();
   if(!text) return;
   if(processOneTime(text)) return;
-  addMessage(text,'user');
-  autoSwitchPersona(text);
+  addMessage(text, 'user');
+  // auto persona
+  if(currentPersona==='auto'){ const m = detectMood(text); if(m) setPersona(m); }
   addTyping();
-  setTimeout(()=>{
+
+  setTimeout(async ()=>{
     removeTyping();
-    if(isMathExpression(text)){ try{ const res=evalMath(text); reply(personaWrap("Answer: "+res)); return; }catch(e){} }
-    const conv = tryConvert(text); if(conv){ reply(personaWrap(conv)); return; }
-    const s = shortExplain(text); if(s){ reply(personaWrap(s)); return; }
+
+    // 1) math
+    if(isMathExpression(text)){
+      try{
+        const r = evalMath(text);
+        const out = personaWrap('Answer: ' + r);
+        addMessage(out, 'bot'); speak(out);
+        return;
+      }catch(e){}
+    }
+
+    // 2) conversions
+    const conv = tryConvert(text);
+    if(conv){ const out = personaWrap(conv); addMessage(out,'bot'); speak(out); return; }
+
+    // 3) definitions from built-in
+    const def = shortExplain(text);
+    if(def){ const out = personaWrap(def); addMessage(out,'bot'); speak(out); return; }
+
+    // 4) fallback / mini AI
     const mini = miniAIFallback(text);
-    if(typeof mini==='string'){ reply(personaWrap(mini)); return; }
-    if(mini && mini.suggestSearch){ replyWithSearch(mini.text, text); return; }
-    reply(personaWrap("I am not sure. Try rephrasing or click Search web."), true);
-  }, 500 + Math.min(1000, text.length*5));
+    if(typeof mini === 'string'){ const out = personaWrap(mini); addMessage(out,'bot'); speak(out); return; }
+    if(mini && mini.suggestSearch){
+      // Try Wikipedia (free) first
+      const result = await wikiLookup(text);
+      if(result){
+        const html = `
+          <div style="margin-top:8px">
+            <strong>${escapeHtml(result.title)}</strong>
+            <div style="margin-top:6px">${escapeHtml(result.extract)}</div>
+            <div style="margin-top:6px"><a target="_blank" href="${escapeHtml(result.url)}">Read more on Wikipedia</a></div>
+          </div>`;
+        addMessage(personaWrap("Here's a summary I found:"), 'bot', html);
+        speak('I found a short summary for you.');
+        return;
+      }
+      // else show Google button fallback
+      addMessage(personaWrap(mini.text), 'bot', `<div style="margin-top:8px"><button class="search-button" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(text)}','_blank')">Search web for "${escapeHtml(text)}"</button></div>`);
+      speak(mini.text);
+      return;
+    }
+
+    // 5) final fallback
+    const fallback = "I don't have a precise built-in answer. Try rephrasing or ask me to search.";
+    const out = personaWrap(fallback);
+    addMessage(out,'bot'); speak(out);
+  }, 350 + Math.min(1200, text.length * 6));
 }
 
-/* reply helpers */
-function reply(msg){ addMessage(msg,'bot'); if(voiceReply) speak(msg); }
-function replyWithSearch(msg, query){ const html=`<div style="margin-top:8px"><button class="search-button" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(query)}','_blank')">Search web for: "${escapeHtml(query)}"</button></div>`; addMessage(msg,'bot',html); if(voiceReply) speak(msg); }
-function personaWrap(text){ if(currentPersona==='lovely') return text+' 💙'; if(currentPersona==='teacher') return '📘 '+text; if(currentPersona==='funny') return text+' 😂'; if(currentPersona==='caring') return '💖 '+text+' — take care!'; return text; }
-
-/* quiz (basic) */
-function runQuickQuiz(){
-  const list = loadFlashcards(); if(!list.length) return addMessage('No flashcards for quiz.','bot');
-  const pool = [...list]; shuffleArray(pool);
-  const quiz = pool.slice(0, Math.min(5, pool.length));
-  let idx=0, score=0;
-  addMessage('Starting quick quiz. Answer in chat.','bot');
-  const ask = ()=>{
-    if(idx>=quiz.length){ addMessage(`Quiz finished. Score ${score}/${quiz.length}`,'bot'); return; }
-    addMessage(`Q${idx+1}: ${quiz[idx].q}`,'bot');
-    const one = (ans)=>{
-      const correct = normalize(quiz[idx].a);
-      const given = normalize(ans);
-      if(correct && given && given.includes(correct) || (correct==='' && given.length>0)) { score++; addMessage('Correct! 🎉','bot'); }
-      else addMessage(`Not quite. Answer: ${quiz[idx].a || '—'}`,'bot');
-      idx++; removeOneHandler(one); setTimeout(ask, 300);
-    };
-    addOneHandler(one);
-  };
-  ask();
-}
+/* processOneTime handlers (reserved) */
 function addOneHandler(fn){ oneTimeHandlers.push(fn); }
 function removeOneHandler(fn){ const i = oneTimeHandlers.indexOf(fn); if(i>=0) oneTimeHandlers.splice(i,1); }
-function processOneTime(text){ if(oneTimeHandlers.length){ const f=oneTimeHandlers.shift(); try{ f(text); }catch(e){} return true } return false; }
+function processOneTime(text){ if(oneTimeHandlers.length){ const f = oneTimeHandlers.shift(); try{ f(text); }catch(e){} return true; } return false; }
 
-/* pomodoro */
-function startPomodoro(minutes=25){ if(pomOn) return addMessage('Pomodoro already running.','bot'); pomRemaining=minutes*60; pomOn=true; pomStatus.textContent=`Pomodoro: ${formatTime(pomRemaining)}`; addMessage(`Pomodoro started for ${minutes} minutes. Focus!`,'bot'); pomTimer=setInterval(()=>{ pomRemaining--; pomStatus.textContent=`Pomodoro: ${formatTime(pomRemaining)}`; if(pomRemaining<=0){ clearInterval(pomTimer); pomOn=false; pomStatus.textContent='Pomodoro: stopped'; addMessage('Pomodoro finished — take a short break!','bot'); speak('Pomodoro finished! Take a break.'); } },1000); }
-function stopPomodoro(){ if(pomTimer) clearInterval(pomTimer); pomOn=false; pomStatus.textContent='Pomodoro: stopped'; addMessage('Pomodoro stopped.','bot'); }
-function formatTime(sec){ const m=Math.floor(sec/60); const s=sec%60; return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; }
+/* shortExplain for define */
+function shortExplain(text){
+  const m = text.toLowerCase().match(/(?:what is|define|definition of)\s+(.+)/);
+  const topic = m?m[1].split(/[?.]/)[0].trim():null;
+  if(topic && shortFacts[topic]) return shortFacts[topic];
+  return null;
+}
 
-/* export/import */
-function exportAll(){ const data = { flash: loadFlashcards(), notes: loadNotes(), form: loadFormulas() }; const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='sarasai-data.json'; a.click(); URL.revokeObjectURL(url); addMessage('Exported study data (download started).','bot'); }
-function importAll(){ openModal('Import data (paste JSON)','Paste exported JSON here',(val)=>{ try{ const j=JSON.parse(val); if(j.flash) saveFlashcards(j.flash); if(j.notes) saveNotes(j.notes); if(j.form) saveFormulas(j.form); addMessage('Imported data successfully.','bot'); renderFlashList(); renderNotesList(); renderFormList(); }catch(e){ addMessage('Invalid JSON. Import failed.','bot'); } }); }
-
-/* speech */
-function speak(text){ if(!('speechSynthesis' in window) || !voiceReply) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text.replace(/<[^>]*>/g,'')); const voices=speechSynthesis.getVoices(); if(voices && voices.length) u.voice = voices.find(v=>/female|zira|kyoko|kathy|susan|english/i.test(v.name)) || voices[0]; u.rate=1; speechSynthesis.speak(u);}catch(e){console.warn(e);} }
-let recognition, listening=false;
-if(window.SpeechRecognition || window.webkitSpeechRecognition){ const SR = window.SpeechRecognition || window.webkitSpeechRecognition; recognition = new SR(); recognition.lang='en-IN'; recognition.interimResults=false; recognition.maxAlternatives=1; recognition.onresult=(e)=>{ const t=e.results[0][0].transcript; inputEl.value=t; processUser(t); }; recognition.onend=()=>{ listening=false; micBtn.classList.remove('active'); micBtn.title='Start voice input'; }; recognition.onerror=(ev)=>{ listening=false; micBtn.classList.remove('active'); console.warn(ev); }; } else micBtn.title='Voice input not supported in this browser';
-
-/* events wiring */
-sendBtn.addEventListener('click', ()=>{ processUser(inputEl.value.trim()); inputEl.value=''; });
-inputEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ processUser(inputEl.value.trim()); inputEl.value=''; }});
-micBtn.addEventListener('click', ()=>{ if(!recognition){ alert('Voice not supported in this browser. Use Chrome/Edge.'); return;} if(listening){ recognition.stop(); listening=false; micBtn.classList.remove('active'); } else { recognition.start(); listening=true; micBtn.classList.add('active'); }});
-toggleSpeak.addEventListener('click', ()=>{ voiceReply = !voiceReply; toggleSpeak.textContent = voiceReply ? 'ON':'OFF'; });
-
-flashBtn.addEventListener('click', ()=> openAddFlashModal());
-quizBtn.addEventListener('click', ()=> runQuickQuiz());
-summBtn.addEventListener('click', ()=> openModal('Summarize text (paste paragraph)','Paste paragraph...',(val)=>{ if(!val) return addMessage('No text provided.','bot'); const s = summarizeText(val,3); addMessage('Summary:\\n'+s,'bot'); }));
-pomBtn.addEventListener('click', ()=> { if(!pomOn) startPomodoro(25); else stopPomodoro(); });
-notesBtn.addEventListener('click', ()=> openAddNoteModal());
-worksheetBtn.addEventListener('click', ()=> { sidePanel.style.display='flex'; openSide('flash'); });
-loadSamplesBtn.addEventListener('click', ()=> { sidePanel.style.display='flex'; openSide('flash'); });
-exportBtn.addEventListener('click', ()=> exportAll());
-importBtn.addEventListener('click', ()=> importAll());
-viewNotesBtn.addEventListener('click', ()=> openSide('notes'));
-viewFlashBtn.addEventListener('click', ()=> openSide('flash'));
-viewFormBtn.addEventListener('click', ()=> openSide('form'));
-document.getElementById('closeSide').addEventListener('click', ()=> sidePanel.style.display='none');
-
-/* pack row handler */
-packRow.addEventListener('click', (e)=>{
-  const btn = e.target.closest('.pack-btn');
-  if(!btn) return;
-  const p = btn.dataset.pack;
-  if(p==='math' || p==='physics' || p==='bio'){ mergeSamplePack(p); renderFlashList(); }
-  if(btn.id==='loadAllPacks'){ ['math','physics','bio'].forEach(p=>mergeSamplePack(p)); renderFlashList(); addMessage('All sample packs loaded.','bot'); }
-});
-
-/* worksheet controls */
-genWorksheetBtn.addEventListener('click', ()=>{
-  const n = Math.max(1, Math.min(50, parseInt(numQ.value||10)));
-  const type = wsType.value || 'mixed';
-  const marks = Math.max(1, parseInt(marksQ.value||1));
-  const timePer = Math.max(0, parseInt(timeQ.value||2));
-  const includeAns = includeAnswers.checked;
-  const html = generateWorksheetHTML(n, type, marks, timePer, includeAns);
-  worksheetOutput.innerHTML = html; worksheetOutput.style.display = 'block';
-});
-downloadWS.addEventListener('click', ()=>{
-  const html = worksheetOutput.innerHTML || 'No worksheet';
-  const doc = `<!doctype html><html><head><meta charset="utf-8"><title>Worksheet</title></head><body>${html}</body></html>`;
-  const blob = new Blob([doc], {type:'text/html'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='worksheet.html'; a.click(); URL.revokeObjectURL(url); addMessage('Worksheet downloaded.','bot');
-});
-printWS.addEventListener('click', ()=>{
-  const html = worksheetOutput.innerHTML || 'No worksheet';
-  const includeAns = includeAnswers.checked;
-  const win = window.open('','_blank','noopener');
-  const doc = `<!doctype html><html><head><meta charset="utf-8"><title>Worksheet</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:20px;color:#061a1e}h2{margin-bottom:6px}ol{margin-left:18px}</style></head><body>${html}</body></html>`;
-  win.document.open(); win.document.write(doc); win.document.close();
-  setTimeout(()=>{ try{ win.focus(); win.print(); }catch(e){ console.warn(e); } }, 400);
-});
-copyWS.addEventListener('click', ()=>{ const sel = worksheetOutput.innerText || worksheetOutput.textContent || ''; navigator.clipboard.writeText(sel).then(()=> addMessage('Worksheet copied to clipboard.','bot')); });
+/* flashcards UI */
+function renderFlashList(){
+  flashListEl.innerHTML = '';
+  if(!flashcards.length){ flashListEl.innerHTML = '<div class="small">No flashcards yet.</div>'; return; }
+  flashcards.forEach((f,i)=>{
+    const d = document.createElement('div'); d.className='flash-item';
+    d.innerHTML = `<div style="max-width:220px"><div style="font-weight:600">${escapeHtml(f.q)}</div><div class="small" style="color:var(--muted)">${escapeHtml(f.a||'—')}</div></div>`;
+    const right = document.createElement('div');
+    const del = document.createElement('button'); del.className='btn'; del.textContent='Del'; del.onclick = ()=> { if(confirm('Delete this card?')){ flashcards.splice(i,1); saveJSON('saras_flash_v0', flashcards); renderFlashList(); addMessage('Flashcard deleted.','bot'); } };
+    right.appendChild(del); d.appendChild(right); flashListEl.appendChild(d);
+  });
+}
 
 /* summarizer */
 function summarizeText(paragraph, maxSentences=3){
@@ -550,14 +403,49 @@ function summarizeText(paragraph, maxSentences=3){
   const sents = paragraph.match(/[^.!?]+[.!?]?/g) || [paragraph];
   const textLower = paragraph.toLowerCase();
   const words = textLower.replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean);
-  const freq = {}; words.forEach(w=>{ if(w.length>3) freq[w] = (freq[w]||0)+1; });
+  const freq = {};
+  words.forEach(w=>{ if(w.length>3) freq[w] = (freq[w]||0)+1; });
   const scoreSent = sents.map(sent=>{ const wordsSent = sent.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean); let score=0; wordsSent.forEach(w=>{ if(freq[w]) score += freq[w]; }); score += Math.min(sent.length/100,2); return {sent,score}; });
   scoreSent.sort((a,b)=>b.score-a.score);
-  return scoreSent.slice(0,Math.min(maxSentences,scoreSent.length)).map(x=>x.sent.trim()).join(' ');
+  return scoreSent.slice(0,Math.min(maxSentences, scoreSent.length)).map(x=>x.sent.trim()).join(' ');
 }
 
-/* ready message */
-window.addEventListener('load', ()=>{ setTimeout(()=>{ addMessage('Welcome! SarasAI Student Pro ready — use side panel to load samples or create printable worksheets.'); },200); speechSynthesis.getVoices(); });
+/* events wiring */
+sendBtn.addEventListener('click', ()=>{ processUser(inputEl.value); inputEl.value=''; });
+inputEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ processUser(inputEl.value); inputEl.value=''; }});
+
+jokeBtn.addEventListener('click', ()=> { const j = jokes[Math.floor(Math.random()*jokes.length)]; addMessage(j,'bot'); speak(j); });
+poemBtn.addEventListener('click', ()=> { const p = poems[Math.floor(Math.random()*poems.length)]; addMessage(p,'bot'); speak(p); });
+summBtn.addEventListener('click', ()=> {
+  const text = prompt('Paste paragraph to summarize:');
+  if(!text) return;
+  const s = summarizeText(text, 3);
+  addMessage('Summary: ' + s, 'bot'); speak('Summary ready');
+});
+flashBtn.addEventListener('click', ()=> {
+  const text = prompt('Add flashcards (one per line, Q | A):');
+  if(!text) return;
+  const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+  let added=0;
+  lines.forEach(line=>{
+    const sep = line.includes('|') ? '|' : (line.includes('-')?'-':null);
+    if(sep){ const [q,a] = line.split(sep).map(s=>s.trim()); if(q){ flashcards.push({q,a}); added++; } } else { flashcards.push({q:line,a:''}); added++; }
+  });
+  saveJSON('saras_flash_v0', flashcards); renderFlashList(); addMessage(`Added ${added} flashcard(s).`, 'bot'); speak(`${added} flashcards added`);
+});
+addFlashBtn.addEventListener('click', ()=> {
+  const q = prompt('Question:'); if(!q) return;
+  const a = prompt('Answer (optional):') || '';
+  flashcards.push({q,a}); saveJSON('saras_flash_v0', flashcards); renderFlashList(); addMessage('Flashcard saved.','bot'); speak('Saved flashcard');
+});
+clearFlashBtn.addEventListener('click', ()=> {
+  if(!confirm('Clear all flashcards?')) return;
+  flashcards = []; saveJSON('saras_flash_v0', flashcards); renderFlashList(); addMessage('All flashcards cleared.','bot'); speak('Cleared flashcards');
+});
+openGoogle.addEventListener('click', ()=> window.open('https://www.google.com','_blank'));
+
+/* initial */
+window.addEventListener('load', ()=>{ addMessage('Hello! I am SarasAI — friendly student helper. Ask me questions or say "tell a joke".', 'bot'); renderFlashList(); speechSynthesis.getVoices(); });
 
 </script>
 </body>
