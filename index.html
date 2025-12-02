@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SarasAI — Student Chat (Hello fix + Wiki safe)</title>
+<title>SarasAI — Student Chat (Fixed Math, Zero-cost Wiki)</title>
 <style>
   :root{
     --bg:#031517; --panel:#06191d; --muted:#9fb6bf; --accent:#6ad1ff;
@@ -120,7 +120,9 @@
   </div>
 
 <script>
-/* SarasAI final — greeting-safe + wiki rules + CSP-safe math parser */
+/* SarasAI — single-file zero-cost Wikipedia lookup chat
+   IMPORTANT: math evaluator here uses a safe parser (no eval / no Function),
+   to avoid GitHub Pages CSP blocking. */
 
 const messagesEl = document.getElementById('messages');
 const chatWindow = document.getElementById('chatWindow');
@@ -140,9 +142,9 @@ const flashListEl = document.getElementById('flashList');
 const openGoogle = document.getElementById('openGoogle');
 
 let voiceReply = true;
-let currentPersona = 'lovely';
+let currentPersona = 'lovely'; // lovely|teacher|funny|caring|auto
 let oneTimeHandlers = [];
-let flashcards = loadJSON('saras_flash_v2', []);
+let flashcards = loadJSON('saras_flash_v1', []);
 let recognition, listening=false;
 
 function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -159,7 +161,7 @@ function removeTyping(){ const t=document.getElementById('typing'); if(t) t.remo
 function loadJSON(k,fallback){ try{ return JSON.parse(localStorage.getItem(k)||JSON.stringify(fallback)); }catch(e){ return fallback; } }
 function saveJSON(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
 
-/* personality UI */
+/* personality */
 function setPersona(p){
   currentPersona = p;
   personalityBar.querySelectorAll('label').forEach(l=>l.classList.remove('activeP'));
@@ -170,7 +172,7 @@ personalityBar.querySelectorAll('label').forEach(lbl=>{
   lbl.addEventListener('click', ()=> setPersona(lbl.dataset.p));
 });
 
-/* simple mood detection */
+/* quick mood detection */
 function detectMood(text){
   const t=text.toLowerCase();
   if(/\b(sad|tired|upset|stressed|angry|depressed)\b/.test(t)) return 'caring';
@@ -181,7 +183,19 @@ function detectMood(text){
 
 /* voice */
 toggleSpeak.addEventListener('click', ()=>{ voiceReply = !voiceReply; toggleSpeak.textContent = voiceReply ? 'ON':'OFF'; statusVoice.textContent = 'Voice: ' + (voiceReply?'ON':'OFF'); if(!voiceReply) speechSynthesis.cancel(); });
-function speak(text){ if(!voiceReply) return; if(!('speechSynthesis' in window)) return; try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(String(text).replace(/<[^>]+>/g,'')); const voices = speechSynthesis.getVoices(); if(voices && voices.length) u.voice = voices.find(v=>/female|zira|kyoko|kathy|susan|english/i.test(v.name)) || voices[0]; u.rate = 1; speechSynthesis.speak(u); }catch(e){ console.warn(e); } }
+
+function speak(text){
+  if(!voiceReply) return;
+  if(!('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(String(text).replace(/<[^>]+>/g,''));
+    const voices = speechSynthesis.getVoices();
+    if(voices && voices.length) u.voice = voices.find(v=>/female|zira|kyoko|kathy|susan|english/i.test(v.name)) || voices[0];
+    u.rate = 1;
+    speechSynthesis.speak(u);
+  }catch(e){ console.warn(e); }
+}
 
 /* speech recognition */
 if(window.SpeechRecognition || window.webkitSpeechRecognition){
@@ -202,7 +216,7 @@ if(window.SpeechRecognition || window.webkitSpeechRecognition){
   micBtn.addEventListener('click', ()=> alert('Voice input not supported in this browser.'));
 }
 
-/* small knowledge */
+/* knowledge and fun */
 const shortFacts = {
   photosynthesis: "Photosynthesis: plants convert sunlight + CO₂ + water into sugars and oxygen using chlorophyll.",
   gravity: "Gravity is the force pulling masses together; Newton gave a classical law and Einstein explained spacetime curvature.",
@@ -223,24 +237,34 @@ const poems = [
   "Tiny poem:\nBooks and stars and little fights,\nWe learn, we laugh, we code all night."
 ];
 
-/* ===== SAFE MATH ===== */
+/* SAFE math parser (no eval / no Function()) */
 function isMathExpression(s){
   const t = s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+/,'');
+  // allow digits, spaces, operators, parentheses, decimal
   return /^[0-9\s+\-*/().,^%]+$/.test(t);
 }
+
 function evalMath(s){
+  // normalize
   let expr = s.toString().trim().toLowerCase()
     .replace(/^solve\s+/, '')
     .replace(/^calculate\s+/, '')
     .replace(/^what is\s+/, '')
     .replace(/%/g, '/100')
     .trim();
+  // allow safe characters only (digits, operators, parentheses, decimal, ^)
   if(!/^[0-9+\-*/().\s^]+$/.test(expr)) throw new Error('Invalid math expression.');
+  // replace ^ with ^ token (we handle power in parser)
+  // remove extra spaces
   expr = expr.replace(/\s+/g,'');
+  // compute with safe parser
   const result = safeCompute(expr);
   return result;
 }
+
+/* safeCompute: shunting-yard + evaluation (supports ^ as power) */
 function safeCompute(expr){
+  // tokenize numbers and operators (numbers include decimal)
   const tokens = [];
   const re = /([0-9]*\.?[0-9]+)|([\+\-\*\/\^\(\)])/g;
   let m;
@@ -248,10 +272,13 @@ function safeCompute(expr){
     if(m[1]) tokens.push({type:'num', value: m[1]});
     else tokens.push({type:'op', value: m[2]});
   }
+  // operator precedence and associativity
   const prec = { '+':1, '-':1, '*':2, '/':2, '^':3 };
   const rightAssoc = { '^': true };
+
   const outQueue = [];
   const opStack = [];
+
   tokens.forEach(t=>{
     if(t.type === 'num'){ outQueue.push(t); }
     else if(t.type === 'op'){
@@ -261,7 +288,7 @@ function safeCompute(expr){
         while(opStack.length && opStack[opStack.length-1] !== '('){
           outQueue.push({type:'op', value: opStack.pop()});
         }
-        opStack.pop();
+        opStack.pop(); // pop '('
       } else {
         while(opStack.length){
           const top = opStack[opStack.length-1];
@@ -278,7 +305,12 @@ function safeCompute(expr){
       }
     }
   });
-  while(opStack.length) outQueue.push({type:'op', value: opStack.pop()});
+
+  while(opStack.length){
+    outQueue.push({type:'op', value: opStack.pop()});
+  }
+
+  // evaluate RPN in outQueue
   const stack = [];
   outQueue.forEach(token=>{
     if(token.type === 'num'){ stack.push(parseFloat(token.value)); }
@@ -301,6 +333,7 @@ function safeCompute(expr){
   });
   if(stack.length !== 1) throw new Error('Invalid expression');
   let out = stack[0];
+  // pretty formatting: if integer show integer else round to 6 decimals max
   if(Number.isFinite(out)){
     if(Math.abs(out - Math.round(out)) < 1e-12) out = Math.round(out);
     else out = parseFloat(out.toFixed(6));
@@ -308,7 +341,7 @@ function safeCompute(expr){
   return out;
 }
 
-/* conversions & explain */
+/* conversion and short explanations */
 function tryConvert(text){
   const m = text.toLowerCase().match(/convert\s+([\d.]+)\s*(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)\s+to\s+(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)/);
   if(!m) return null;
@@ -318,6 +351,7 @@ function tryConvert(text){
   if(from in mass && to in mass){ const out=(val*mass[from])/mass[to]; return `${val} ${from} = ${out} ${to}`; }
   return null;
 }
+
 function shortExplain(text){
   const m = text.toLowerCase().match(/(?:what is|define|definition of)\s+(.+)/);
   const topic = m?m[1].split(/[?.]/)[0].trim():null;
@@ -325,14 +359,9 @@ function shortExplain(text){
   return null;
 }
 
-/* mini fallback with greeting handling */
+/* mini fallback NLU */
 function miniAIFallback(user){
-  const t = (user||'').trim();
-  if(!t) return "Say something and I will try to help!";
-  // greetings (avoid wiki)
-  if(/^(hi|hello|hey|good morning|good afternoon|good evening|what's up|sup)\b/i.test(t)){
-    return "Hello! 👋 I'm SarasAI — ready to help. Try: 'Solve 2+2', 'Define photosynthesis', or 'Who is Albert Einstein?'.";
-  }
+  const t = user.trim();
   if(/^(thanks|thank you|thx|nice|good job|awesome)/i.test(t)) return "You're welcome! 😊";
   if(/joke|tell me a joke|funny/i.test(t)) return jokes[Math.floor(Math.random()*jokes.length)];
   if(/poem|write a poem/i.test(t)) return poems[Math.floor(Math.random()*poems.length)];
@@ -342,21 +371,13 @@ function miniAIFallback(user){
       const topic = m[1].trim().toLowerCase();
       if(inventorMap[topic]) return inventorMap[topic];
       for(const k of Object.keys(inventorMap)) if(topic.includes(k)) return inventorMap[k];
-      return {text:`I don't have a built-in answer for "${topic}". Try rephrasing or I can search Wikipedia.`, suggestSearch:true};
+      return {text:`I don't have a built-in answer for "${topic}". Try rephrasing or click Search web.`, suggestSearch:true};
     }
   }
   if(/summariz|summarise|short summary/i.test(t)) return 'Click Summarize and paste the paragraph you want shortened.';
   if(/how to buy|buy.*phone|which phone/i.test(t)) return 'Tell me your budget and needs (battery/gaming/camera) and I will guide you.';
   if(/story|short story/i.test(t)) return "Short story: A student learned patiently with SarasAI and smiled at the end.";
   return {text:`I don't have a precise built-in answer for: "${t}". Try rephrasing or I will try Wikipedia.`, suggestSearch:true};
-}
-
-/* helper to detect proper-name like "Albert Einstein" */
-function isProperName(phrase){
-  const words = phrase.trim().split(/\s+/).filter(Boolean);
-  if(words.length < 2) return false;
-  // require each word to start with uppercase letter and followed by lowercase letters (basic heuristic)
-  return words.every(w => /^[A-Z][a-z]+$/.test(w));
 }
 
 function personaWrap(text){
@@ -387,7 +408,7 @@ async function wikiLookup(query){
   } catch(e){ return null; }
 }
 
-/* processUser with guarded wiki trigger */
+/* process user (async because of wiki) */
 async function processUser(raw){
   const text = String(raw||'').trim();
   if(!text) return;
@@ -401,10 +422,17 @@ async function processUser(raw){
 
     // math
     if(isMathExpression(text)){
-      try{ const r = evalMath(text); const out = personaWrap('Answer: ' + r); addMessage(out, 'bot'); speak(out); return; }catch(e){ /* continue */ }
+      try{
+        const r = evalMath(text);
+        const out = personaWrap('Answer: ' + r);
+        addMessage(out, 'bot'); speak(out);
+        return;
+      }catch(e){
+        // fall through to other handlers
+      }
     }
 
-    // conversion
+    // conversions
     const conv = tryConvert(text);
     if(conv){ const out = personaWrap(conv); addMessage(out,'bot'); speak(out); return; }
 
@@ -416,32 +444,23 @@ async function processUser(raw){
     const mini = miniAIFallback(text);
     if(typeof mini === 'string'){ const out = personaWrap(mini); addMessage(out,'bot'); speak(out); return; }
     if(mini && mini.suggestSearch){
-      // Decide whether to auto-search Wikipedia:
-      const qTrim = text.trim();
-      const wordCount = qTrim.split(/\s+/).filter(Boolean).length;
-      const looksLikeQuestion = /^(who|what|when|where|why|how|define|explain|tell me about)/i.test(qTrim);
-      const properName = isProperName(qTrim); // e.g., "Albert Einstein"
-      if(looksLikeQuestion || wordCount >= 3 || (wordCount === 2 && properName)){
-        const result = await wikiLookup(text);
-        if(result){
-          const html = `
-            <div style="margin-top:8px">
-              <strong>${escapeHtml(result.title)}</strong>
-              <div style="margin-top:6px">${escapeHtml(result.extract)}</div>
-              <div style="margin-top:6px"><a target="_blank" href="${escapeHtml(result.url)}">Read more on Wikipedia</a></div>
-            </div>`;
-          addMessage(personaWrap("Here's a summary I found:"), 'bot', html);
-          speak('I found a short summary for you.');
-          return;
-        }
+      const result = await wikiLookup(text);
+      if(result){
+        const html = `
+          <div style="margin-top:8px">
+            <strong>${escapeHtml(result.title)}</strong>
+            <div style="margin-top:6px">${escapeHtml(result.extract)}</div>
+            <div style="margin-top:6px"><a target="_blank" href="${escapeHtml(result.url)}">Read more on Wikipedia</a></div>
+          </div>`;
+        addMessage(personaWrap("Here's a summary I found:"), 'bot', html);
+        speak('I found a short summary for you.');
+        return;
       }
-      // if we didn't search or wiki failed -> show search button and the fallback message
       addMessage(personaWrap(mini.text), 'bot', `<div style="margin-top:8px"><button class="search-button" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(text)}','_blank')">Search web for "${escapeHtml(text)}"</button></div>`);
       speak(mini.text);
       return;
     }
 
-    // final fallback
     const fallback = "I don't have a precise built-in answer. Try rephrasing or ask me to search.";
     const out = personaWrap(fallback);
     addMessage(out,'bot'); speak(out);
@@ -453,7 +472,7 @@ function addOneHandler(fn){ oneTimeHandlers.push(fn); }
 function removeOneHandler(fn){ const i = oneTimeHandlers.indexOf(fn); if(i>=0) oneTimeHandlers.splice(i,1); }
 function processOneTime(text){ if(oneTimeHandlers.length){ const f = oneTimeHandlers.shift(); try{ f(text); }catch(e){} return true; } return false; }
 
-/* flashcards UI */
+/* flashcards */
 function renderFlashList(){
   flashListEl.innerHTML = '';
   if(!flashcards.length){ flashListEl.innerHTML = '<div class="small">No flashcards yet.</div>'; return; }
@@ -461,7 +480,7 @@ function renderFlashList(){
     const d = document.createElement('div'); d.className='flash-item';
     d.innerHTML = `<div style="max-width:220px"><div style="font-weight:600">${escapeHtml(f.q)}</div><div class="small" style="color:var(--muted)">${escapeHtml(f.a||'—')}</div></div>`;
     const right = document.createElement('div');
-    const del = document.createElement('button'); del.className='btn'; del.textContent='Del'; del.onclick = ()=> { if(confirm('Delete this card?')){ flashcards.splice(i,1); saveJSON('saras_flash_v2', flashcards); renderFlashList(); addMessage('Flashcard deleted.','bot'); } };
+    const del = document.createElement('button'); del.className='btn'; del.textContent='Del'; del.onclick = ()=> { if(confirm('Delete this card?')){ flashcards.splice(i,1); saveJSON('saras_flash_v1', flashcards); renderFlashList(); addMessage('Flashcard deleted.','bot'); } };
     right.appendChild(del); d.appendChild(right); flashListEl.appendChild(d);
   });
 }
@@ -500,16 +519,16 @@ flashBtn.addEventListener('click', ()=> {
     const sep = line.includes('|') ? '|' : (line.includes('-')?'-':null);
     if(sep){ const [q,a] = line.split(sep).map(s=>s.trim()); if(q){ flashcards.push({q,a}); added++; } } else { flashcards.push({q:line,a:''}); added++; }
   });
-  saveJSON('saras_flash_v2', flashcards); renderFlashList(); addMessage(`Added ${added} flashcard(s).`, 'bot'); speak(`${added} flashcards added`);
+  saveJSON('saras_flash_v1', flashcards); renderFlashList(); addMessage(`Added ${added} flashcard(s).`, 'bot'); speak(`${added} flashcards added`);
 });
 addFlashBtn.addEventListener('click', ()=> {
   const q = prompt('Question:'); if(!q) return;
   const a = prompt('Answer (optional):') || '';
-  flashcards.push({q,a}); saveJSON('saras_flash_v2', flashcards); renderFlashList(); addMessage('Flashcard saved.','bot'); speak('Saved flashcard');
+  flashcards.push({q,a}); saveJSON('saras_flash_v1', flashcards); renderFlashList(); addMessage('Flashcard saved.','bot'); speak('Saved flashcard');
 });
 clearFlashBtn.addEventListener('click', ()=> {
   if(!confirm('Clear all flashcards?')) return;
-  flashcards = []; saveJSON('saras_flash_v2', flashcards); renderFlashList(); addMessage('All flashcards cleared.','bot'); speak('Cleared flashcards');
+  flashcards = []; saveJSON('saras_flash_v1', flashcards); renderFlashList(); addMessage('All flashcards cleared.','bot'); speak('Cleared flashcards');
 });
 openGoogle.addEventListener('click', ()=> window.open('https://www.google.com','_blank'));
 
@@ -519,3 +538,4 @@ window.addEventListener('load', ()=>{ addMessage('Hello! I am SarasAI — friend
 </script>
 </body>
 </html>
+```0
