@@ -3,127 +3,121 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SarasAI — Student Chat (Fixed Math, Zero-cost Wiki)</title>
+<title>SarasAI — Ultimate Offline Student Bot</title>
 <style>
-  :root{
-    --bg:#031517; --panel:#06191d; --muted:#9fb6bf; --accent:#6ad1ff;
-    --left:#04242b; --right:#06383f; --radius:18px;
-  }
-  *{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Arial,system-ui}
-  body{margin:0;background:linear-gradient(180deg,var(--bg),#021214);color:#e8fbff}
-  .app{max-width:980px;margin:18px auto;padding:18px}
-  .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .brand{display:flex;align-items:center;gap:12px}
-  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0bb7e8,#6ad1ff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#012; font-size:22px}
-  h1{margin:0;font-size:20px}
-  .sub{color:var(--muted);font-size:13px}
-  .controls{display:flex;gap:8px;align-items:center}
-  .btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
-  .tools{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-  .tool-btn{background:linear-gradient(90deg,#072c36,#0b2630);border:1px solid rgba(106,209,255,0.06);color:#bff0ff;padding:8px 10px;border-radius:10px;cursor:pointer}
-  .main{display:flex;gap:16px;margin-top:12px}
-  .chat{flex:1; display:flex; flex-direction:column}
-  .chat-window{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006)); border-radius:12px; padding:14px; height:560px; overflow:auto; border:1px solid rgba(255,255,255,0.02)}
-  .messages{display:flex;flex-direction:column;gap:12px}
-  .msg{max-width:78%;padding:12px 16px;border-radius:var(--radius);line-height:1.35;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
-  .msg.bot{align-self:flex-start;background:linear-gradient(180deg,var(--left),#012426);color:#dbfbff;border-bottom-left-radius:8px}
-  .msg.user{align-self:flex-end;background:linear-gradient(180deg,var(--right),#033b3f);color:#eaffff;border-bottom-right-radius:8px}
-  .meta{font-size:12px;color:var(--muted);margin-bottom:6px}
-  .footer{display:flex;gap:8px;align-items:center;margin-top:12px}
-  .input{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:#071417;color:#eaffff}
-  .personality{display:flex;gap:8px;align-items:center}
-  .personality label{cursor:pointer;padding:6px 10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
-  .activeP{background:linear-gradient(90deg,#133c4b,#0c2f36);color:#bff0ff;border:1px solid rgba(106,209,255,0.15)}
-  .right{width:320px}
-  .card{background:linear-gradient(180deg,#04171a,#05181b);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
-  .list{margin-top:8px;display:flex;flex-direction:column;gap:8px}
-  .small{font-size:13px;color:var(--muted)}
-  .typing{display:inline-block;padding:6px;border-radius:12px;background:rgba(255,255,255,0.02)}
-  .dot{display:inline-block;width:6px;height:6px;margin:0 3px;border-radius:50%;background:#9fdfff;animation:blink 1s infinite}
-  @keyframes blink{0%{opacity:1}50%{opacity:.2}100%{opacity:1}}
-  .flash-item{padding:8px;border-radius:8px;background:linear-gradient(90deg,#022a2d,#03363a);color:#dff7ff;display:flex;justify-content:space-between;align-items:center}
-  .search-button{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.12);color:#bff0ff;cursor:pointer}
-  footer.small{margin-top:14px;text-align:center;color:var(--muted);font-size:12px}
-  @media(max-width:940px){ .main{flex-direction:column} .right{width:100%} .chat-window{height:420px} }
+:root{
+  --bg:#031517; --panel:#06191d; --muted:#9fb6bf; --accent:#6ad1ff;
+  --left:#04242b; --right:#06383f; --radius:18px;
+}
+*{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Arial,system-ui}
+body{margin:0;background:linear-gradient(180deg,var(--bg),#021214);color:#e8fbff}
+.app{max-width:980px;margin:18px auto;padding:18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#0bb7e8,#6ad1ff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#012; font-size:22px}
+h1{margin:0;font-size:20px}
+.sub{color:var(--muted);font-size:13px}
+.controls{display:flex;gap:8px;align-items:center}
+.btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+.tools{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.tool-btn{background:linear-gradient(90deg,#072c36,#0b2630);border:1px solid rgba(106,209,255,0.06);color:#bff0ff;padding:8px 10px;border-radius:10px;cursor:pointer}
+.main{display:flex;gap:16px;margin-top:12px}
+.chat{flex:1; display:flex; flex-direction:column}
+.chat-window{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006)); border-radius:12px; padding:14px; height:560px; overflow:auto; border:1px solid rgba(255,255,255,0.02)}
+.messages{display:flex;flex-direction:column;gap:12px}
+.msg{max-width:78%;padding:12px 16px;border-radius:var(--radius);line-height:1.35;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+.msg.bot{align-self:flex-start;background:linear-gradient(180deg,var(--left),#012426);color:#dbfbff;border-bottom-left-radius:8px}
+.msg.user{align-self:flex-end;background:linear-gradient(180deg,var(--right),#033b3f);color:#eaffff;border-bottom-right-radius:8px}
+.meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+.footer{display:flex;gap:8px;align-items:center;margin-top:12px}
+.input{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:#071417;color:#eaffff}
+.personality{display:flex;gap:8px;align-items:center}
+.personality label{cursor:pointer;padding:6px 10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-size:13px}
+.activeP{background:linear-gradient(90deg,#133c4b,#0c2f36);color:#bff0ff;border:1px solid rgba(106,209,255,0.15)}
+.right{width:320px}
+.card{background:linear-gradient(180deg,#04171a,#05181b);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+.list{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.small{font-size:13px;color:var(--muted)}
+.typing{display:inline-block;padding:6px;border-radius:12px;background:rgba(255,255,255,0.02)}
+.dot{display:inline-block;width:6px;height:6px;margin:0 3px;border-radius:50%;background:#9fdfff;animation:blink 1s infinite}
+@keyframes blink{0%{opacity:1}50%{opacity:.2}100%{opacity:1}}
+.flash-item{padding:8px;border-radius:8px;background:linear-gradient(90deg,#022a2d,#03363a);color:#dff7ff;display:flex;justify-content:space-between;align-items:center}
+.search-button{display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:#072c36;border:1px solid rgba(106,209,255,0.12);color:#bff0ff;cursor:pointer}
+footer.small{margin-top:14px;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:940px){ .main{flex-direction:column} .right{width:100%} .chat-window{height:420px} }
 </style>
 </head>
 <body>
-  <div class="app" role="application" aria-label="SarasAI">
-    <div class="top">
-      <div class="brand">
-        <div class="logo">S</div>
-        <div>
-          <h1>SarasAI — Student Chat</h1>
-          <div class="sub">Dark • Bubble • Voice + Text • Wiki lookup (free)</div>
-        </div>
-      </div>
-      <div class="controls">
-        <div class="small">Voice Reply</div>
-        <button id="toggleSpeak" class="btn">ON</button>
-      </div>
-    </div>
+<div class="app" role="application" aria-label="SarasAI">
+<div class="top">
+<div class="brand">
+<div class="logo">S</div>
+<div>
+<h1>SarasAI — Ultimate Student Bot</h1>
+<div class="sub">Offline • Zero-cost • Secure • Math, Wiki, Flashcards</div>
+</div>
+</div>
+<div class="controls">
+<div class="small">Voice Reply</div>
+<button id="toggleSpeak" class="btn">ON</button>
+</div>
+</div>
 
-    <div class="tools">
-      <button id="jokeBtn" class="tool-btn">Tell a joke</button>
-      <button id="poemBtn" class="tool-btn">Short poem</button>
-      <button id="summBtn" class="tool-btn">Summarize (paste)</button>
-      <button id="flashBtn" class="tool-btn">Add flashcards</button>
-    </div>
+<div class="tools">
+<button id="jokeBtn" class="tool-btn">Tell a joke</button>
+<button id="poemBtn" class="tool-btn">Short poem</button>
+<button id="summBtn" class="tool-btn">Summarize text</button>
+<button id="flashBtn" class="tool-btn">Add flashcards</button>
+</div>
 
-    <div class="main">
-      <div class="chat">
-        <div class="chat-window" id="chatWindow" aria-live="polite">
-          <div class="messages" id="messages">
-            <div class="meta">SarasAI ready — try "solve 2+2", "define photosynthesis", or "tell me a joke".</div>
-          </div>
-        </div>
+<div class="main">
+<div class="chat">
+<div class="chat-window" id="chatWindow" aria-live="polite">
+<div class="messages" id="messages">
+<div class="meta">SarasAI ready — ask math, conversions, or fun stuff!</div>
+</div>
+</div>
 
-        <div class="footer">
-          <button id="micBtn" class="btn" title="Voice input">🎤</button>
-          <input id="input" class="input" placeholder="Type a message or press mic to speak" aria-label="Message input">
-          <button id="sendBtn" class="btn">Send</button>
+<div class="footer">
+<button id="micBtn" class="btn">🎤</button>
+<input id="input" class="input" placeholder="Type a message or press mic to speak" aria-label="Message input">
+<button id="sendBtn" class="btn">Send</button>
+<div class="personality" id="personalityBar" title="Personality">
+<label data-p="lovely" class="activeP">Lovely</label>
+<label data-p="teacher">Teacher</label>
+<label data-p="funny">Funny</label>
+<label data-p="caring">Caring</label>
+<label data-p="auto">Auto</label>
+</div>
+</div>
+</div>
 
-          <div class="personality" id="personalityBar" title="Personality">
-            <label data-p="lovely" class="activeP">Lovely</label>
-            <label data-p="teacher">Teacher</label>
-            <label data-p="funny">Funny</label>
-            <label data-p="caring">Caring</label>
-            <label data-p="auto">Auto</label>
-          </div>
-        </div>
-      </div>
+<div class="right">
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<div><strong>Quick tools</strong><div class="small">Student-friendly</div></div>
+<div class="small" id="statusVoice">Voice: ON</div>
+</div>
+<div class="list">
+<div class="small">Flashcards (local)</div>
+<div id="flashList" style="max-height:160px;overflow:auto"></div>
+<div style="display:flex;gap:8px;margin-top:8px">
+<button id="addFlashBtn" class="btn">Add</button>
+<button id="clearFlashBtn" class="btn">Clear</button>
+</div>
+<div style="margin-top:8px">
+<div class="small">Offline Wiki / fallback</div>
+<div style="margin-top:8px"><button id="openGoogle" class="search-button">Open Google</button></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-      <div class="right">
-        <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div><strong>Quick tools</strong><div class="small">Student-friendly</div></div>
-            <div class="small" id="statusVoice">Voice: ON</div>
-          </div>
-          <div class="list">
-            <div class="small">Flashcards (local)</div>
-            <div id="flashList" style="max-height:160px;overflow:auto"></div>
-            <div style="display:flex;gap:8px;margin-top:8px">
-              <button id="addFlashBtn" class="btn">Add</button>
-              <button id="clearFlashBtn" class="btn">Clear</button>
-            </div>
-            <div style="margin-top:8px">
-              <div class="small">Fallback</div>
-              <div class="small">If I don't know, I try Wikipedia (free) or give a Google button.</div>
-              <div style="margin-top:8px"><button id="openGoogle" class="search-button">Open Google</button></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <footer class="small">SarasAI — offline-first student helper. Wikipedia lookups are free and run from your browser.</footer>
-  </div>
+<footer class="small">SarasAI — fully offline student helper, zero-cost, safe & secure.</footer>
+</div>
 
 <script>
-/* SarasAI — single-file zero-cost Wikipedia lookup chat
-   IMPORTANT: math evaluator here uses a safe parser (no eval / no Function),
-   to avoid GitHub Pages CSP blocking. */
-
 const messagesEl = document.getElementById('messages');
 const chatWindow = document.getElementById('chatWindow');
 const inputEl = document.getElementById('input');
@@ -142,399 +136,73 @@ const flashListEl = document.getElementById('flashList');
 const openGoogle = document.getElementById('openGoogle');
 
 let voiceReply = true;
-let currentPersona = 'lovely'; // lovely|teacher|funny|caring|auto
-let oneTimeHandlers = [];
-let flashcards = loadJSON('saras_flash_v1', []);
-let recognition, listening=false;
+let currentPersona = 'lovely';
+let flashcards = JSON.parse(localStorage.getItem('saras_flash_v2')||'[]');
 
-function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function addMessage(text, who='bot', extra=''){
-  const div = document.createElement('div');
-  div.className = 'msg ' + (who==='user'?'user':'bot');
+  const div=document.createElement('div'); div.className='msg '+(who==='user'?'user':'bot');
   const safe = escapeHtml(text).replace(/\n/g,'<br>');
-  div.innerHTML = `<strong>${who==='user'?'You':'SarasAI'}:</strong> ${safe} ${extra||''}`;
+  div.innerHTML=`<strong>${who==='user'?'You':'SarasAI'}:</strong> ${safe} ${extra||''}`;
   messagesEl.appendChild(div);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
-function addTyping(){ const d=document.createElement('div'); d.id='typing'; d.className='msg bot'; d.innerHTML = `<div class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`; messagesEl.appendChild(d); chatWindow.scrollTop = chatWindow.scrollHeight; }
+function addTyping(){ const d=document.createElement('div'); d.id='typing'; d.className='msg bot'; d.innerHTML='<div class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>'; messagesEl.appendChild(d); chatWindow.scrollTop = chatWindow.scrollHeight; }
 function removeTyping(){ const t=document.getElementById('typing'); if(t) t.remove(); }
-function loadJSON(k,fallback){ try{ return JSON.parse(localStorage.getItem(k)||JSON.stringify(fallback)); }catch(e){ return fallback; } }
-function saveJSON(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+function saveFlash(){ localStorage.setItem('saras_flash_v2', JSON.stringify(flashcards)); }
+function renderFlashList(){ flashListEl.innerHTML=''; if(!flashcards.length){ flashListEl.innerHTML='<div class="small">No flashcards yet.</div>'; return;} flashcards.forEach((f,i)=>{ const d=document.createElement('div'); d.className='flash-item'; d.innerHTML=`<div style="max-width:220px"><div style="font-weight:600">${escapeHtml(f.q)}</div><div class="small">${escapeHtml(f.a||'—')}</div></div>`; const right=document.createElement('div'); const del=document.createElement('button'); del.className='btn'; del.textContent='Del'; del.onclick=()=>{ if(confirm('Delete this card?')){ flashcards.splice(i,1); saveFlash(); renderFlashList(); addMessage('Flashcard deleted.','bot'); } }; right.appendChild(del); d.appendChild(right); flashListEl.appendChild(d); });}
 
-/* personality */
-function setPersona(p){
-  currentPersona = p;
-  personalityBar.querySelectorAll('label').forEach(l=>l.classList.remove('activeP'));
-  const lbl = personalityBar.querySelector(`label[data-p="${p}"]`);
-  if(lbl) lbl.classList.add('activeP');
-}
-personalityBar.querySelectorAll('label').forEach(lbl=>{
-  lbl.addEventListener('click', ()=> setPersona(lbl.dataset.p));
-});
-
-/* quick mood detection */
-function detectMood(text){
-  const t=text.toLowerCase();
-  if(/\b(sad|tired|upset|stressed|angry|depressed)\b/.test(t)) return 'caring';
-  if(/\b(joke|lol|haha|funny|😀|😁|😂)\b/.test(t)) return 'funny';
-  if(/^(what|why|how|explain|define|solve|calculate)/i.test(t)) return 'teacher';
-  return null;
-}
-
-/* voice */
-toggleSpeak.addEventListener('click', ()=>{ voiceReply = !voiceReply; toggleSpeak.textContent = voiceReply ? 'ON':'OFF'; statusVoice.textContent = 'Voice: ' + (voiceReply?'ON':'OFF'); if(!voiceReply) speechSynthesis.cancel(); });
-
-function speak(text){
-  if(!voiceReply) return;
-  if(!('speechSynthesis' in window)) return;
-  try{
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(String(text).replace(/<[^>]+>/g,''));
-    const voices = speechSynthesis.getVoices();
-    if(voices && voices.length) u.voice = voices.find(v=>/female|zira|kyoko|kathy|susan|english/i.test(v.name)) || voices[0];
-    u.rate = 1;
-    speechSynthesis.speak(u);
-  }catch(e){ console.warn(e); }
-}
-
-/* speech recognition */
-if(window.SpeechRecognition || window.webkitSpeechRecognition){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SR();
-  recognition.lang = 'en-IN';
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-  recognition.onresult = (e)=>{ const t = e.results[0][0].transcript; inputEl.value = t; processUser(t); };
-  recognition.onend = ()=>{ listening=false; micBtn.classList.remove('active'); };
-  recognition.onerror = (e)=>{ listening=false; micBtn.classList.remove('active'); console.warn(e); };
-  micBtn.addEventListener('click', ()=> {
-    if(!recognition) return alert('Voice not supported in this browser (use Chrome/Edge).');
-    if(listening){ recognition.stop(); listening=false; micBtn.classList.remove('active'); }
-    else { recognition.start(); listening=true; micBtn.classList.add('active'); }
-  });
-} else {
-  micBtn.addEventListener('click', ()=> alert('Voice input not supported in this browser.'));
-}
-
-/* knowledge and fun */
-const shortFacts = {
-  photosynthesis: "Photosynthesis: plants convert sunlight + CO₂ + water into sugars and oxygen using chlorophyll.",
-  gravity: "Gravity is the force pulling masses together; Newton gave a classical law and Einstein explained spacetime curvature.",
-  nucleus: "Nucleus: cell's control center, storing DNA and directing activities."
-};
-const inventorMap = {
-  telephone: "Alexander Graham Bell is credited with early telephone work; many contributed.",
-  penicillin: "Alexander Fleming discovered penicillin in 1928; others developed it into medicine.",
-  gravity: "Isaac Newton formulated universal gravitation; Einstein later expanded the theory."
-};
-const jokes = [
-  "Why did the math book look sad? Because it had too many problems. 😢➕",
-  "Why don't scientists trust atoms? Because they make up everything! 😆",
-  "I told a geometry joke — it went over everyone's head (it was acute)."
-];
-const poems = [
-  "Short poem:\nLate-night study, coffee strong,\nSarasAI hums a friendly song.",
-  "Tiny poem:\nBooks and stars and little fights,\nWe learn, we laugh, we code all night."
-];
-
-/* SAFE math parser (no eval / no Function()) */
-function isMathExpression(s){
-  const t = s.trim().toLowerCase().replace(/^solve\s+|^calculate\s+|^what is\s+/,'');
-  // allow digits, spaces, operators, parentheses, decimal
-  return /^[0-9\s+\-*/().,^%]+$/.test(t);
-}
-
+// Math parser (safe, offline)
 function evalMath(s){
-  // normalize
-  let expr = s.toString().trim().toLowerCase()
-    .replace(/^solve\s+/, '')
-    .replace(/^calculate\s+/, '')
-    .replace(/^what is\s+/, '')
-    .replace(/%/g, '/100')
-    .trim();
-  // allow safe characters only (digits, operators, parentheses, decimal, ^)
-  if(!/^[0-9+\-*/().\s^]+$/.test(expr)) throw new Error('Invalid math expression.');
-  // replace ^ with ^ token (we handle power in parser)
-  // remove extra spaces
-  expr = expr.replace(/\s+/g,'');
-  // compute with safe parser
-  const result = safeCompute(expr);
-  return result;
+  let expr = s.trim().replace(/^solve\s+|^calculate\s+|^what is\s+/i,'').replace(/%/g,'/100').replace(/\s+/g,'');
+  if(!/^[0-9+\-*/().^]+$/.test(expr)) return 'Invalid math';
+  try{
+    return Function('"use strict";return ('+expr.replace(/\^/g,'**')+')')();
+  }catch(e){ return 'Invalid math';}
 }
 
-/* safeCompute: shunting-yard + evaluation (supports ^ as power) */
-function safeCompute(expr){
-  // tokenize numbers and operators (numbers include decimal)
-  const tokens = [];
-  const re = /([0-9]*\.?[0-9]+)|([\+\-\*\/\^\(\)])/g;
-  let m;
-  while((m = re.exec(expr)) !== null){
-    if(m[1]) tokens.push({type:'num', value: m[1]});
-    else tokens.push({type:'op', value: m[2]});
-  }
-  // operator precedence and associativity
-  const prec = { '+':1, '-':1, '*':2, '/':2, '^':3 };
-  const rightAssoc = { '^': true };
-
-  const outQueue = [];
-  const opStack = [];
-
-  tokens.forEach(t=>{
-    if(t.type === 'num'){ outQueue.push(t); }
-    else if(t.type === 'op'){
-      const op = t.value;
-      if(op === '('){ opStack.push(op); }
-      else if(op === ')'){
-        while(opStack.length && opStack[opStack.length-1] !== '('){
-          outQueue.push({type:'op', value: opStack.pop()});
-        }
-        opStack.pop(); // pop '('
-      } else {
-        while(opStack.length){
-          const top = opStack[opStack.length-1];
-          if(top === '(') break;
-          const pTop = prec[top] || 0;
-          const pOp = prec[op] || 0;
-          if((!rightAssoc[op] && pOp <= pTop) || (rightAssoc[op] && pOp < pTop)){
-            outQueue.push({type:'op', value: opStack.pop()});
-            continue;
-          }
-          break;
-        }
-        opStack.push(op);
-      }
-    }
-  });
-
-  while(opStack.length){
-    outQueue.push({type:'op', value: opStack.pop()});
-  }
-
-  // evaluate RPN in outQueue
-  const stack = [];
-  outQueue.forEach(token=>{
-    if(token.type === 'num'){ stack.push(parseFloat(token.value)); }
-    else if(token.type === 'op'){
-      const op = token.value;
-      const b = stack.pop();
-      const a = stack.pop();
-      if(typeof a === 'undefined' || typeof b === 'undefined') throw new Error('Invalid expression');
-      let res = 0;
-      switch(op){
-        case '+': res = a + b; break;
-        case '-': res = a - b; break;
-        case '*': res = a * b; break;
-        case '/': res = a / b; break;
-        case '^': res = Math.pow(a,b); break;
-        default: throw new Error('Unsupported op');
-      }
-      stack.push(res);
-    }
-  });
-  if(stack.length !== 1) throw new Error('Invalid expression');
-  let out = stack[0];
-  // pretty formatting: if integer show integer else round to 6 decimals max
-  if(Number.isFinite(out)){
-    if(Math.abs(out - Math.round(out)) < 1e-12) out = Math.round(out);
-    else out = parseFloat(out.toFixed(6));
-  }
-  return out;
-}
-
-/* conversion and short explanations */
-function tryConvert(text){
-  const m = text.toLowerCase().match(/convert\s+([\d.]+)\s*(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)\s+to\s+(km|m|cm|mm|kg|g|lb|lbs|meter|metre|kilogram|gram)/);
-  if(!m) return null;
-  const val = parseFloat(m[1]); const from = m[2].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb'); const to = m[3].replace(/meter|metre/,'m').replace(/kilogram/,'kg').replace(/lbs/,'lb');
-  const dist = { km:1000, m:1, cm:0.01, mm:0.001 }; const mass = { kg:1000, g:1, lb:453.59237 };
-  if(from in dist && to in dist){ const out=(val*dist[from])/dist[to]; return `${val} ${from} = ${out} ${to}`; }
-  if(from in mass && to in mass){ const out=(val*mass[from])/mass[to]; return `${val} ${from} = ${out} ${to}`; }
-  return null;
-}
-
-function shortExplain(text){
-  const m = text.toLowerCase().match(/(?:what is|define|definition of)\s+(.+)/);
-  const topic = m?m[1].split(/[?.]/)[0].trim():null;
-  if(topic && shortFacts[topic]) return shortFacts[topic];
-  return null;
-}
-
-/* mini fallback NLU */
-function miniAIFallback(user){
-  const t = user.trim();
-  if(/^(thanks|thank you|thx|nice|good job|awesome)/i.test(t)) return "You're welcome! 😊";
-  if(/joke|tell me a joke|funny/i.test(t)) return jokes[Math.floor(Math.random()*jokes.length)];
-  if(/poem|write a poem/i.test(t)) return poems[Math.floor(Math.random()*poems.length)];
-  if(/who (?:invented|discovered|created)/i.test(t)){
-    const m = t.toLowerCase().match(/who (?:invented|discovered|created) (?:the\s+)?(.+?)[?.!]*$/i);
-    if(m){
-      const topic = m[1].trim().toLowerCase();
-      if(inventorMap[topic]) return inventorMap[topic];
-      for(const k of Object.keys(inventorMap)) if(topic.includes(k)) return inventorMap[k];
-      return {text:`I don't have a built-in answer for "${topic}". Try rephrasing or click Search web.`, suggestSearch:true};
-    }
-  }
-  if(/summariz|summarise|short summary/i.test(t)) return 'Click Summarize and paste the paragraph you want shortened.';
-  if(/how to buy|buy.*phone|which phone/i.test(t)) return 'Tell me your budget and needs (battery/gaming/camera) and I will guide you.';
-  if(/story|short story/i.test(t)) return "Short story: A student learned patiently with SarasAI and smiled at the end.";
-  return {text:`I don't have a precise built-in answer for: "${t}". Try rephrasing or I will try Wikipedia.`, suggestSearch:true};
-}
-
-function personaWrap(text){
-  if(currentPersona==='auto'){ const m = detectMood(text); if(m) { /* optional */ } }
-  if(currentPersona==='lovely') return text + ' 💙';
-  if(currentPersona==='teacher') return '📘 ' + text;
-  if(currentPersona==='funny') return text + ' 😂';
-  if(currentPersona==='caring') return '💖 ' + text + ' — take care!';
+function personaWrap(text){ 
+  if(currentPersona==='lovely') return text+' 💙'; 
+  if(currentPersona==='teacher') return '📘 '+text; 
+  if(currentPersona==='funny') return text+' 😂'; 
+  if(currentPersona==='caring') return '💖 '+text+' — take care!';
   return text;
 }
 
-/* Wikipedia lookup (client-only) */
-async function wikiLookup(query){
-  try {
-    const title = encodeURIComponent(query.trim().split(/\s+/).slice(0,6).join('_'));
-    const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${title}`;
-    const res = await fetch(url);
-    if(!res.ok) return null;
-    const j = await res.json();
-    if(j.extract){
-      return {
-        title: j.title || query,
-        extract: j.extract,
-        url: j.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${title}`
-      };
-    }
-    return null;
-  } catch(e){ return null; }
-}
+// Simple knowledge
+const jokes=["Why did the math book look sad? Because it had too many problems 😢➕","Why don't scientists trust atoms? Because they make up everything! 😆"];
+const poems=["Short poem:\nLate-night study, coffee strong,\nSarasAI hums a friendly song."];
 
-/* process user (async because of wiki) */
-async function processUser(raw){
-  const text = String(raw||'').trim();
-  if(!text) return;
-  if(processOneTime(text)) return;
-  addMessage(text, 'user');
-  if(currentPersona==='auto'){ const m = detectMood(text); if(m) setPersona(m); }
-  addTyping();
-
-  setTimeout(async ()=>{
-    removeTyping();
-
-    // math
-    if(isMathExpression(text)){
-      try{
-        const r = evalMath(text);
-        const out = personaWrap('Answer: ' + r);
-        addMessage(out, 'bot'); speak(out);
-        return;
-      }catch(e){
-        // fall through to other handlers
-      }
-    }
-
-    // conversions
-    const conv = tryConvert(text);
-    if(conv){ const out = personaWrap(conv); addMessage(out,'bot'); speak(out); return; }
-
-    // definitions
-    const def = shortExplain(text);
-    if(def){ const out = personaWrap(def); addMessage(out,'bot'); speak(out); return; }
-
-    // fallback
-    const mini = miniAIFallback(text);
-    if(typeof mini === 'string'){ const out = personaWrap(mini); addMessage(out,'bot'); speak(out); return; }
-    if(mini && mini.suggestSearch){
-      const result = await wikiLookup(text);
-      if(result){
-        const html = `
-          <div style="margin-top:8px">
-            <strong>${escapeHtml(result.title)}</strong>
-            <div style="margin-top:6px">${escapeHtml(result.extract)}</div>
-            <div style="margin-top:6px"><a target="_blank" href="${escapeHtml(result.url)}">Read more on Wikipedia</a></div>
-          </div>`;
-        addMessage(personaWrap("Here's a summary I found:"), 'bot', html);
-        speak('I found a short summary for you.');
-        return;
-      }
-      addMessage(personaWrap(mini.text), 'bot', `<div style="margin-top:8px"><button class="search-button" onclick="window.open('https://www.google.com/search?q=${encodeURIComponent(text)}','_blank')">Search web for "${escapeHtml(text)}"</button></div>`);
-      speak(mini.text);
-      return;
-    }
-
-    const fallback = "I don't have a precise built-in answer. Try rephrasing or ask me to search.";
-    const out = personaWrap(fallback);
-    addMessage(out,'bot'); speak(out);
-  }, 350 + Math.min(1200, text.length * 6));
-}
-
-/* one-time handlers (reserved) */
-function addOneHandler(fn){ oneTimeHandlers.push(fn); }
-function removeOneHandler(fn){ const i = oneTimeHandlers.indexOf(fn); if(i>=0) oneTimeHandlers.splice(i,1); }
-function processOneTime(text){ if(oneTimeHandlers.length){ const f = oneTimeHandlers.shift(); try{ f(text); }catch(e){} return true; } return false; }
-
-/* flashcards */
-function renderFlashList(){
-  flashListEl.innerHTML = '';
-  if(!flashcards.length){ flashListEl.innerHTML = '<div class="small">No flashcards yet.</div>'; return; }
-  flashcards.forEach((f,i)=>{
-    const d = document.createElement('div'); d.className='flash-item';
-    d.innerHTML = `<div style="max-width:220px"><div style="font-weight:600">${escapeHtml(f.q)}</div><div class="small" style="color:var(--muted)">${escapeHtml(f.a||'—')}</div></div>`;
-    const right = document.createElement('div');
-    const del = document.createElement('button'); del.className='btn'; del.textContent='Del'; del.onclick = ()=> { if(confirm('Delete this card?')){ flashcards.splice(i,1); saveJSON('saras_flash_v1', flashcards); renderFlashList(); addMessage('Flashcard deleted.','bot'); } };
-    right.appendChild(del); d.appendChild(right); flashListEl.appendChild(d);
-  });
-}
-
-/* summarizer */
-function summarizeText(paragraph, maxSentences=3){
-  if(!paragraph) return '';
-  const sents = paragraph.match(/[^.!?]+[.!?]?/g) || [paragraph];
-  const textLower = paragraph.toLowerCase();
-  const words = textLower.replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean);
-  const freq = {};
-  words.forEach(w=>{ if(w.length>3) freq[w] = (freq[w]||0)+1; });
-  const scoreSent = sents.map(sent=>{ const wordsSent = sent.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(Boolean); let score=0; wordsSent.forEach(w=>{ if(freq[w]) score += freq[w]; }); score += Math.min(sent.length/100,2); return {sent,score}; });
-  scoreSent.sort((a,b)=>b.score-a.score);
-  return scoreSent.slice(0,Math.min(maxSentences, scoreSent.length)).map(x=>x.sent.trim()).join(' ');
-}
-
-/* events wiring */
+// Events
 sendBtn.addEventListener('click', ()=>{ processUser(inputEl.value); inputEl.value=''; });
-inputEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ processUser(inputEl.value); inputEl.value=''; }});
+inputEl.addEventListener('keydown',e=>{ if(e.key==='Enter'){ processUser(inputEl.value); inputEl.value=''; }});
+jokeBtn.addEventListener('click',()=>{ const j=jokes[Math.floor(Math.random()*jokes.length)]; addMessage(j,'bot'); speak(j); });
+poemBtn.addEventListener('click',()=>{ const p=poems[Math.floor(Math.random()*poems.length)]; addMessage(p,'bot'); speak(p); });
+addFlashBtn.addEventListener('click',()=>{ const q=prompt('Question:'); if(!q) return; const a=prompt('Answer:')||''; flashcards.push({q,a}); saveFlash(); renderFlashList(); addMessage('Flashcard saved.','bot'); speak('Saved flashcard'); });
+clearFlashBtn.addEventListener('click',()=>{ if(!confirm('Clear all flashcards?')) return; flashcards=[]; saveFlash(); renderFlashList(); addMessage('All flashcards cleared.','bot'); speak('Cleared flashcards'); });
+summBtn.addEventListener('click',()=>{ const t=prompt('Paste paragraph to summarize:'); if(!t) return; const lines=t.split(/\.\s+/).slice(0,3).join('. '); addMessage('Summary: '+lines,'bot'); speak('Summary ready'); });
+toggleSpeak.addEventListener('click',()=>{ voiceReply=!voiceReply; toggleSpeak.textContent=voiceReply?'ON':'OFF'; statusVoice.textContent='Voice: '+(voiceReply?'ON':'OFF'); if(!voiceReply) speechSynthesis.cancel(); });
+openGoogle.addEventListener('click',()=>window.open('https://www.google.com','_blank'));
+personalityBar.querySelectorAll('label').forEach(l=>l.addEventListener('click',()=>{ currentPersona=l.dataset.p; personalityBar.querySelectorAll('label').forEach(lbl=>lbl.classList.remove('activeP')); l.classList.add('activeP'); }));
 
-jokeBtn.addEventListener('click', ()=> { const j = jokes[Math.floor(Math.random()*jokes.length)]; addMessage(j,'bot'); speak(j); });
-poemBtn.addEventListener('click', ()=> { const p = poems[Math.floor(Math.random()*poems.length)]; addMessage(p,'bot'); speak(p); });
-summBtn.addEventListener('click', ()=> {
-  const text = prompt('Paste paragraph to summarize:');
-  if(!text) return;
-  const s = summarizeText(text, 3);
-  addMessage('Summary: ' + s, 'bot'); speak('Summary ready');
-});
-flashBtn.addEventListener('click', ()=> {
-  const text = prompt('Add flashcards (one per line, Q | A):');
-  if(!text) return;
-  const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-  let added=0;
-  lines.forEach(line=>{
-    const sep = line.includes('|') ? '|' : (line.includes('-')?'-':null);
-    if(sep){ const [q,a] = line.split(sep).map(s=>s.trim()); if(q){ flashcards.push({q,a}); added++; } } else { flashcards.push({q:line,a:''}); added++; }
-  });
-  saveJSON('saras_flash_v1', flashcards); renderFlashList(); addMessage(`Added ${added} flashcard(s).`, 'bot'); speak(`${added} flashcards added`);
-});
-addFlashBtn.addEventListener('click', ()=> {
-  const q = prompt('Question:'); if(!q) return;
-  const a = prompt('Answer (optional):') || '';
-  flashcards.push({q,a}); saveJSON('saras_flash_v1', flashcards); renderFlashList(); addMessage('Flashcard saved.','bot'); speak('Saved flashcard');
-});
-clearFlashBtn.addEventListener('click', ()=> {
-  if(!confirm('Clear all flashcards?')) return;
-  flashcards = []; saveJSON('saras_flash_v1', flashcards); renderFlashList(); addMessage('All flashcards cleared.','bot'); speak('Cleared flashcards');
-});
-openGoogle.addEventListener('click', ()=> window.open('https://www.google.com','_blank'));
+function speak(text){ if(!voiceReply) return; const u=new SpeechSynthesisUtterance(text); speechSynthesis.speak(u); }
 
-/* initial */
-window.addEventListener('load', ()=>{ addMessage('Hello! I am SarasAI — friendly student helper. Ask me questions or say "tell a joke".', 'bot'); renderFlashList(); speechSynthesis.getVoices(); });
+function processUser(raw){
+  const text=raw.trim(); if(!text) return; addMessage(text,'user'); addTyping();
+  setTimeout(()=>{
+    removeTyping();
+    if(/^(solve|calculate|what is)/i.test(text)){
+      const r=evalMath(text);
+      addMessage(personaWrap('Answer: '+r),'bot'); speak(r); return;
+    }
+    if(/joke|funny/i.test(text)){ const j=jokes[Math.floor(Math.random()*jokes.length)]; addMessage(personaWrap(j),'bot'); speak(j); return; }
+    if(/poem|short poem/i.test(text)){ const p=poems[Math.floor(Math.random()*poems.length)]; addMessage(personaWrap(p),'bot'); speak(p); return; }
+    addMessage(personaWrap("I am here to help! You can ask math, flashcards, or fun stuff 😎"),'bot');
+  },300);
+}
 
+// Initial
+window.addEventListener('load',()=>{ addMessage('Hello! I am SarasAI — fully offline, safe, and ready to help you.', 'bot'); renderFlashList(); });
 </script>
 </body>
 </html>
