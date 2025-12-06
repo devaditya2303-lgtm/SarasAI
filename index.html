@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SarasAI — Ultimate Offline Student Bot</title>
+<title>Super SarasAI — Ultimate Offline Student Bot</title>
 <style>
 :root{
   --bg:#031517; --panel:#06191d; --muted:#9fb6bf; --accent:#6ad1ff;
@@ -48,161 +48,48 @@ footer.small{margin-top:14px;text-align:center;color:var(--muted);font-size:12px
 </style>
 </head>
 <body>
-<div class="app" role="application" aria-label="SarasAI">
-<div class="top">
-<div class="brand">
-<div class="logo">S</div>
-<div>
-<h1>SarasAI — Ultimate Student Bot</h1>
-<div class="sub">Offline • Zero-cost • Secure • Math, Wiki, Flashcards</div>
-</div>
-</div>
-<div class="controls">
-<div class="small">Voice Reply</div>
-<button id="toggleSpeak" class="btn">ON</button>
-</div>
-</div>
-
-<div class="tools">
-<button id="jokeBtn" class="tool-btn">Tell a joke</button>
-<button id="poemBtn" class="tool-btn">Short poem</button>
-<button id="summBtn" class="tool-btn">Summarize text</button>
-<button id="flashBtn" class="tool-btn">Add flashcards</button>
-</div>
-
-<div class="main">
-<div class="chat">
-<div class="chat-window" id="chatWindow" aria-live="polite">
-<div class="messages" id="messages">
-<div class="meta">SarasAI ready — ask math, conversions, or fun stuff!</div>
-</div>
-</div>
-
-<div class="footer">
-<button id="micBtn" class="btn">🎤</button>
-<input id="input" class="input" placeholder="Type a message or press mic to speak" aria-label="Message input">
-<button id="sendBtn" class="btn">Send</button>
-<div class="personality" id="personalityBar" title="Personality">
-<label data-p="lovely" class="activeP">Lovely</label>
-<label data-p="teacher">Teacher</label>
-<label data-p="funny">Funny</label>
-<label data-p="caring">Caring</label>
-<label data-p="auto">Auto</label>
-</div>
-</div>
-</div>
-
-<div class="right">
-<div class="card">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<div><strong>Quick tools</strong><div class="small">Student-friendly</div></div>
-<div class="small" id="statusVoice">Voice: ON</div>
-</div>
-<div class="list">
-<div class="small">Flashcards (local)</div>
-<div id="flashList" style="max-height:160px;overflow:auto"></div>
-<div style="display:flex;gap:8px;margin-top:8px">
-<button id="addFlashBtn" class="btn">Add</button>
-<button id="clearFlashBtn" class="btn">Clear</button>
-</div>
-<div style="margin-top:8px">
-<div class="small">Offline Wiki / fallback</div>
-<div style="margin-top:8px"><button id="openGoogle" class="search-button">Open Google</button></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<footer class="small">SarasAI — fully offline student helper, zero-cost, safe & secure.</footer>
-</div>
-
-<script>
-const messagesEl = document.getElementById('messages');
-const chatWindow = document.getElementById('chatWindow');
-const inputEl = document.getElementById('input');
-const sendBtn = document.getElementById('sendBtn');
-const micBtn = document.getElementById('micBtn');
-const toggleSpeak = document.getElementById('toggleSpeak');
-const statusVoice = document.getElementById('statusVoice');
-const personalityBar = document.getElementById('personalityBar');
-const jokeBtn = document.getElementById('jokeBtn');
-const poemBtn = document.getElementById('poemBtn');
-const summBtn = document.getElementById('summBtn');
-const flashBtn = document.getElementById('flashBtn');
-const addFlashBtn = document.getElementById('addFlashBtn');
-const clearFlashBtn = document.getElementById('clearFlashBtn');
-const flashListEl = document.getElementById('flashList');
-const openGoogle = document.getElementById('openGoogle');
-
-let voiceReply = true;
-let currentPersona = 'lovely';
-let flashcards = JSON.parse(localStorage.getItem('saras_flash_v2')||'[]');
-
-function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function addMessage(text, who='bot', extra=''){
-  const div=document.createElement('div'); div.className='msg '+(who==='user'?'user':'bot');
-  const safe = escapeHtml(text).replace(/\n/g,'<br>');
-  div.innerHTML=`<strong>${who==='user'?'You':'SarasAI'}:</strong> ${safe} ${extra||''}`;
-  messagesEl.appendChild(div);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-function addTyping(){ const d=document.createElement('div'); d.id='typing'; d.className='msg bot'; d.innerHTML='<div class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>'; messagesEl.appendChild(d); chatWindow.scrollTop = chatWindow.scrollHeight; }
-function removeTyping(){ const t=document.getElementById('typing'); if(t) t.remove(); }
-function saveFlash(){ localStorage.setItem('saras_flash_v2', JSON.stringify(flashcards)); }
-function renderFlashList(){ flashListEl.innerHTML=''; if(!flashcards.length){ flashListEl.innerHTML='<div class="small">No flashcards yet.</div>'; return;} flashcards.forEach((f,i)=>{ const d=document.createElement('div'); d.className='flash-item'; d.innerHTML=`<div style="max-width:220px"><div style="font-weight:600">${escapeHtml(f.q)}</div><div class="small">${escapeHtml(f.a||'—')}</div></div>`; const right=document.createElement('div'); const del=document.createElement('button'); del.className='btn'; del.textContent='Del'; del.onclick=()=>{ if(confirm('Delete this card?')){ flashcards.splice(i,1); saveFlash(); renderFlashList(); addMessage('Flashcard deleted.','bot'); } }; right.appendChild(del); d.appendChild(right); flashListEl.appendChild(d); });}
-
-// Math parser (safe, offline)
-function evalMath(s){
-  let expr = s.trim().replace(/^solve\s+|^calculate\s+|^what is\s+/i,'').replace(/%/g,'/100').replace(/\s+/g,'');
-  if(!/^[0-9+\-*/().^]+$/.test(expr)) return 'Invalid math';
-  try{
-    return Function('"use strict";return ('+expr.replace(/\^/g,'**')+')')();
-  }catch(e){ return 'Invalid math';}
-}
-
-function personaWrap(text){ 
-  if(currentPersona==='lovely') return text+' 💙'; 
-  if(currentPersona==='teacher') return '📘 '+text; 
-  if(currentPersona==='funny') return text+' 😂'; 
-  if(currentPersona==='caring') return '💖 '+text+' — take care!';
-  return text;
-}
-
-// Simple knowledge
-const jokes=["Why did the math book look sad? Because it had too many problems 😢➕","Why don't scientists trust atoms? Because they make up everything! 😆"];
-const poems=["Short poem:\nLate-night study, coffee strong,\nSarasAI hums a friendly song."];
-
-// Events
-sendBtn.addEventListener('click', ()=>{ processUser(inputEl.value); inputEl.value=''; });
-inputEl.addEventListener('keydown',e=>{ if(e.key==='Enter'){ processUser(inputEl.value); inputEl.value=''; }});
-jokeBtn.addEventListener('click',()=>{ const j=jokes[Math.floor(Math.random()*jokes.length)]; addMessage(j,'bot'); speak(j); });
-poemBtn.addEventListener('click',()=>{ const p=poems[Math.floor(Math.random()*poems.length)]; addMessage(p,'bot'); speak(p); });
-addFlashBtn.addEventListener('click',()=>{ const q=prompt('Question:'); if(!q) return; const a=prompt('Answer:')||''; flashcards.push({q,a}); saveFlash(); renderFlashList(); addMessage('Flashcard saved.','bot'); speak('Saved flashcard'); });
-clearFlashBtn.addEventListener('click',()=>{ if(!confirm('Clear all flashcards?')) return; flashcards=[]; saveFlash(); renderFlashList(); addMessage('All flashcards cleared.','bot'); speak('Cleared flashcards'); });
-summBtn.addEventListener('click',()=>{ const t=prompt('Paste paragraph to summarize:'); if(!t) return; const lines=t.split(/\.\s+/).slice(0,3).join('. '); addMessage('Summary: '+lines,'bot'); speak('Summary ready'); });
-toggleSpeak.addEventListener('click',()=>{ voiceReply=!voiceReply; toggleSpeak.textContent=voiceReply?'ON':'OFF'; statusVoice.textContent='Voice: '+(voiceReply?'ON':'OFF'); if(!voiceReply) speechSynthesis.cancel(); });
-openGoogle.addEventListener('click',()=>window.open('https://www.google.com','_blank'));
-personalityBar.querySelectorAll('label').forEach(l=>l.addEventListener('click',()=>{ currentPersona=l.dataset.p; personalityBar.querySelectorAll('label').forEach(lbl=>lbl.classList.remove('activeP')); l.classList.add('activeP'); }));
-
-function speak(text){ if(!voiceReply) return; const u=new SpeechSynthesisUtterance(text); speechSynthesis.speak(u); }
-
-function processUser(raw){
-  const text=raw.trim(); if(!text) return; addMessage(text,'user'); addTyping();
-  setTimeout(()=>{
-    removeTyping();
-    if(/^(solve|calculate|what is)/i.test(text)){
-      const r=evalMath(text);
-      addMessage(personaWrap('Answer: '+r),'bot'); speak(r); return;
-    }
-    if(/joke|funny/i.test(text)){ const j=jokes[Math.floor(Math.random()*jokes.length)]; addMessage(personaWrap(j),'bot'); speak(j); return; }
-    if(/poem|short poem/i.test(text)){ const p=poems[Math.floor(Math.random()*poems.length)]; addMessage(personaWrap(p),'bot'); speak(p); return; }
-    addMessage(personaWrap("I am here to help! You can ask math, flashcards, or fun stuff 😎"),'bot');
-  },300);
-}
-
-// Initial
-window.addEventListener('load',()=>{ addMessage('Hello! I am SarasAI — fully offline, safe, and ready to help you.', 'bot'); renderFlashList(); });
-</script>
-</body>
-</html>
+<div class="app">
+  <div class="top">
+    <div class="brand">
+      <div class="logo">S</div>
+      <div>
+        <h1>Super SarasAI</h1>
+        <div class="sub">Offline • Safe • Math, Knowledge, Flashcards & Fun</div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="small">Voice Reply</div>
+      <button id="toggleSpeak" class="btn">ON</button>
+    </div>
+  </div>
+  <div class="tools">
+    <button id="jokeBtn" class="tool-btn">Tell a joke</button>
+    <button id="poemBtn" class="tool-btn">Short poem</button>
+    <button id="summBtn" class="tool-btn">Summarize (paste)</button>
+    <button id="flashBtn" class="tool-btn">Add flashcards</button>
+    <button id="quizBtn" class="tool-btn">Quiz me!</button>
+  </div>
+  <div class="main">
+    <div class="chat">
+      <div class="chat-window" id="chatWindow" aria-live="polite">
+        <div class="messages" id="messages">
+          <div class="meta">Super SarasAI ready — type "solve 2+2" or ask anything.</div>
+        </div>
+      </div>
+      <div class="footer">
+        <button id="micBtn" class="btn">🎤</button>
+        <input id="input" class="input" placeholder="Type a message or press mic to speak">
+        <button id="sendBtn" class="btn">Send</button>
+        <div class="personality" id="personalityBar" title="Personality">
+          <label data-p="lovely" class="activeP">Lovely</label>
+          <label data-p="teacher">Teacher</label>
+          <label data-p="funny">Funny</label>
+          <label data-p="caring">Caring</label>
+          <label data-p="auto">Auto</label>
+          <label data-p="geeky">Geeky</label>
+          <label data-p="poetic">Poetic</label>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="card">
